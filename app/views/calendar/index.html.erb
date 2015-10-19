@@ -1,0 +1,54 @@
+<link rel='stylesheet' href='/plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.css' />
+<script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/lib/jquery.min.js'></script>
+<script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/lib/moment.min.js'></script>
+<script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.js'></script>
+
+<h2><%= translate 'calendar' %></h2>
+<div id='calendar'></div>
+
+<script type="text/javascript">
+  var user_query;
+  $(document).ready(function() {
+    $('#calendar').fullCalendar({
+        customButtons: {
+                myTickets: {
+                        text: '<%= translate 'my_issues' %>',
+                        click: function() {
+                          user_query = true;
+                          $('#calendar').fullCalendar( 'refetchEvents' );
+                        }
+                },
+                allTickets: {
+                        text: '<%= translate 'all_issues' %>',
+                        click: function() {
+                          user_query = false;
+                          $('#calendar').fullCalendar( 'refetchEvents' );
+                        }
+                }
+
+        },
+        header: {
+                        left: 'prev,next today allTickets,myTickets',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                },
+        displayEventEnd: true,
+        events: function(start, end, timezone, callback) {
+          $.ajax({
+            url: '/calendar/get_events',
+            dataType: 'json',
+            data: {
+              start: start.format("YYYY-MM-DD HH:MM"),
+              end: end.format("YYYY-MM-DD HH:MM"),
+              user: user_query
+            },
+            success: function(doc) {
+              var events = [];
+              $(doc).each(function() { events.push(this); });
+              callback(events);
+            }
+        });
+      }
+    });
+  });
+</script>

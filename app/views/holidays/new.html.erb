@@ -1,0 +1,54 @@
+<link rel='stylesheet' href='/plugin_assets/mega_calendar/javascripts/datetimepicker/jquery.datetimepicker.css' />
+<script src='/plugin_assets/mega_calendar/javascripts/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
+
+<h1><%= translate 'holiday' %></h1>
+
+<form action="/holidays/create">
+  <table>
+    <tr>
+      <td><label><%= translate 'user' %></label></td>
+      <td>
+        <select name="holiday[user_id]">
+          <% User.where(["users.login IS NOT NULL AND users.login <> ''"]).each do |u| %>
+            <option value="<%= u.id.to_s %>"><%= u.login.to_s %></option>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label><%= translate 'start' %></label></td>
+      <td><input type="text" id="holiday_start" name="holiday[start]" /></td>
+    </tr>
+    <tr>
+      <td><label><%= translate 'end' %></label></td>
+      <td><input type="text" id="holiday_end" name="holiday[end]" /></td>
+    </tr>
+  </table>
+<input type="submit" value="<%= translate 'save' %>" />
+</form>
+
+<%
+  js_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first rescue nil
+  if js_locale.blank? || (js_locale != 'en' && js_locale != 'de')
+    js_locale = 'en'
+  end
+%>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+ $.datetimepicker.setLocale('<%= js_locale %>');
+ var options = {
+   i18n: {
+    de: {
+     months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+     dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
+    }
+   },
+   timepicker: false,
+   datepicker: true,
+   format: 'Y-m-d'
+ };
+ $("#holiday_start").datetimepicker(options);
+ $("#holiday_end").datetimepicker(options);
+ });
+</script>
