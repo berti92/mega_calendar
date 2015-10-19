@@ -1,6 +1,7 @@
 # mega_calendar
 
 Plugin for redmine: Brings a better calendar and more oppurtunities to set holidays.
+Only compatible with redmine 3.0.1
 
 ## Installation
 
