@@ -1,11 +1,18 @@
 <link rel='stylesheet' href='/plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.css' />
+<link rel='stylesheet' href='/plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.css' />
 <script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/lib/jquery.min.js'></script>
 <script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/lib/moment.min.js'></script>
 <script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.js'></script>
+<script src='/plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.js'></script>
 <style>
 .calendar_event {
   pointer:cursor !important;
   color:#000000 !important;
+}
+
+.calendar_event_closed {
+  text-decoration: line-through !important;
+  opacity: 0.6 !important;
 }
 </style>
 <h2><%= translate 'calendar' %></h2>
@@ -53,6 +60,9 @@
               callback(events);
             }
         });
+      },
+      eventRender: function(event, element) {
+          element.qtip({ content: event.description, position: { target: 'mouse', adjust: { x: 5, y: 5}} });
       }
     });
   });

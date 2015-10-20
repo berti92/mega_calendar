@@ -18,3 +18,5 @@ en:
   list: "List"
   def_holiday_color: "Default color for holiday"
   def_color: "Default color"
+  project: "Project"
+  status: "Status"

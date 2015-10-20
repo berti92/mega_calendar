@@ -18,3 +18,5 @@ de:
   list: "Liste"
   def_holiday_color: "Standard Farbe für Urlaubseinträge"
   def_color: "Standard Farbe"
+  project: "Projekt"
+  status: "Status"
