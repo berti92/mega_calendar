@@ -50,14 +50,14 @@
   tt = TicketTime.where({:issue_id => @issue.id}).first rescue nil
   unless @issue.disabled_core_fields.include?('start_date')
     if !tt.blank? && !tt.time_begin.blank?
-      rows.right l(:field_start_date), format_date(@issue.start_date) + tt.time_begin.strftime(' %H:%M'), :class => 'start-date'
+      rows.right l(:field_start_date), format_date(@issue.start_date).to_s + (!tt.blank? && !tt.time_begin.blank? ? tt.time_begin.strftime(' %H:%M') : ''), :class => 'start-date'
     else
       rows.right l(:field_start_date), format_date(@issue.start_date), :class => 'start-date'
     end
   end
   unless @issue.disabled_core_fields.include?('due_date')
     if !tt.blank? && !tt.time_end.blank?
-      rows.right l(:field_due_date), format_date(@issue.due_date) +  tt.time_end.strftime(' %H:%M'), :class => 'due-date'
+      rows.right l(:field_due_date), format_date(@issue.due_date).to_s +  (!tt.blank? && !tt.time_begin.blank? ? tt.time_end.strftime(' %H:%M') : ''), :class => 'due-date'
     else
       rows.right l(:field_due_date), format_date(@issue.due_date), :class => 'due-date'
     end
