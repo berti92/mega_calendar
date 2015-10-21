@@ -53,7 +53,7 @@ class CalendarController < ApplicationController
   def get_events
     fbegin = params[:start].to_date rescue nil
     fend = params[:end].to_date rescue nil
-    fuser = eval(params[:user].to_s) rescue false
+    fuser = params[:user].to_s == 'true'
     fbegin = (Date.today - 1.month) if(fbegin.blank?)
     fend = (Date.today + 1.month) if(fend.blank?)
     holidays = Holiday.where(['holidays.start >= ? AND holidays.end <= ?' + (fuser.blank? ? '' : ' AND holidays.user_id = ' + User.current.id.to_s),fbegin.to_s, fend.to_s]) rescue []
