@@ -61,7 +61,7 @@ class CalendarController < ApplicationController
     @events = []
     def_holiday = '#' + Setting.plugin_mega_calendar['default_holiday_color']
     def_color = '#' + Setting.plugin_mega_calendar['default_event_color']
-    @events = @events + holidays.collect {|h| {:title => h.user.login + ' - ' + (translate 'holiday'), :start => h.start.to_date.to_s, :end => h.end.to_date.to_s, :allDay => true, :color => def_holiday, :url => '/holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }}
+    @events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.login + ' - ') + (translate 'holiday'), :start => h.start.to_date.to_s, :end => h.end.to_date.to_s, :allDay => true, :color => def_holiday, :url => '/holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }}
     issues.each do |i|
       ticket_time = TicketTime.where({:issue_id => i.id}).first rescue nil
       tbegin = ticket_time.time_begin.strftime(" %H:%M") rescue ''
@@ -71,8 +71,36 @@ class CalendarController < ApplicationController
         css_classes << 'calendar_event_closed'
       end
       color = '#' + UserColor.where({:user_id => i.assigned_to_id}).first.color_code rescue def_color
-      @events << {:title => i.id.to_s + ' - ' + i.subject, :start => i.start_date.to_date.to_s + tbegin, :end => i.due_date.to_date.to_s + tend, :color => color, :url => '/issues/' + i.id.to_s, :className => css_classes, :description => form_issue(i) }
+      @events << {:id => i.id.to_s, :controller_name => 'issue', :title => i.id.to_s + ' - ' + i.subject, :start => i.start_date.to_date.to_s + tbegin, :end => i.due_date.to_date.to_s + tend, :color => color, :url => '/issues/' + i.id.to_s, :className => css_classes, :description => form_issue(i) }
     end
     render(:text => @events.to_json.html_safe)
+  end
+  def change_holiday
+    h = Holiday.find(params[:id])
+    if !params[:event_end].blank?
+      h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => params[:event_end].to_date.to_s}) rescue nil
+    else
+      h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => params[:event_begin].to_date.to_s}) rescue nil
+    end
+    render(:text => "")
+  end
+  def change_issue
+    i = Issue.find(params[:id])
+    i.update_attributes({:start_date => params[:event_begin].to_date.to_s, :due_date => params[:event_end].to_date.to_s})
+    if params[:allDay] != 'true'
+      tt = TicketTime.where(:issue_id => params[:id]).first 
+      if tt.blank?
+        tt = TicketTime.new(:issue_id => params[:id])
+      end
+      tt.time_begin = params[:event_begin].to_datetime.to_s
+      if !params[:event_end].blank?
+        tt.time_end = params[:event_end].to_datetime.to_s rescue nil
+      else
+        i.update_attributes({:due_date => (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s})
+        tt.time_end = (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s
+      end
+      tt.save
+    end
+    render(:text => "")
   end
 end

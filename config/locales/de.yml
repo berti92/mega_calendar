@@ -20,3 +20,14 @@ de:
   def_color: "Standard Farbe"
   project: "Projekt"
   status: "Status"
+  save_question: "Möchten Sie das Objekt speichern?"
+  field_start: "Start"
+  field_end: "Ende"
+  select_default: "Bitte auswählen..."
+  activerecord:
+    errors:
+      models:
+        holiday:
+          attributes:
+            end:
+              greater_than_start: "muss größer als Anfangsdatum sein"

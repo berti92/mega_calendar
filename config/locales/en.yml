@@ -20,3 +20,12 @@ en:
   def_color: "Default color"
   project: "Project"
   status: "Status"
+  save_question: "Do you really want to save?"
+  select_default: "Select..."
+  activerecord:
+    errors:
+      models:
+        holiday:
+          attributes:
+            end:
+              greater_than_start: "must be greater than start date"

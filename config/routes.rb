@@ -3,6 +3,8 @@
 get '/calendar', :to => 'calendar#index'
 get '/calendar/index', :to => 'calendar#index'
 get '/calendar/get_events', :to => 'calendar#get_events'
+get '/calendar/change_holiday', :to => 'calendar#change_holiday'
+get '/calendar/change_issue', :to => 'calendar#change_issue'
 get '/holidays/new', :to => 'holidays#new'
 get '/holidays/create', :to => 'holidays#create'
 get '/holidays/show', :to => 'holidays#show'

@@ -3,12 +3,15 @@
 
 <h1><%= translate 'holiday' %></h1>
 
+<%= error_messages_for 'holiday' %>
+
 <form action="/holidays/create">
   <table>
     <tr>
       <td><label><%= translate 'user' %></label></td>
       <td>
         <select name="holiday[user_id]">
+            <option value=""><%= translate 'select_default' %></option>
           <% User.where(["users.login IS NOT NULL AND users.login <> ''"]).each do |u| %>
             <option value="<%= u.id.to_s %>"><%= u.login.to_s %></option>
           <% end %>

@@ -27,11 +27,14 @@ class HolidaysController < ApplicationController
   end
 
   def create
-    holiday = Holiday.new(params[:holiday])
-    if holiday.save
-      redirect_to(:controller => 'holidays', :action => 'show', :id => holiday.id)
+    @holiday = Holiday.new(params[:holiday])
+    if @holiday.save
+      redirect_to(:controller => 'holidays', :action => 'show', :id => @holiday.id)
     else
-      render(:action => :new)
+      respond_to do |format|
+        format.html { render :action => 'new' }
+        format.api  { render_validation_errors(@holiday) }
+      end
     end
   end
 
@@ -43,12 +46,15 @@ class HolidaysController < ApplicationController
   end
 
   def update
-    holiday = Holiday.where(:id => params[:id]).first rescue nil
-    holiday.attributes(params[:holiday])
-    if holiday.save
-      redirect_to(:controller => 'holidays', :action => 'show', :id => holiday.id)
+    @holiday = Holiday.where(:id => params[:id]).first rescue nil
+    @holiday.attributes(params[:holiday])
+    if @holiday.save
+      redirect_to(:controller => 'holidays', :action => 'show', :id => @holiday.id)
     else
-      render(:action => :edit)
+      respond_to do |format|
+        format.html { render :action => 'new' }
+        format.api  { render_validation_errors(@holiday) }
+      end
     end
   end
 
