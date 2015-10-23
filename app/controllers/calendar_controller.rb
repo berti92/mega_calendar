@@ -86,7 +86,12 @@ class CalendarController < ApplicationController
   end
   def change_issue
     i = Issue.find(params[:id])
-    i.update_attributes({:start_date => params[:event_begin].to_date.to_s, :due_date => params[:event_end].to_date.to_s})
+    if params[:event_end].blank?
+      event_end = params[:event_begin]
+    else
+      event_end = params[:event_end]
+    end
+    i.update_attributes({:start_date => params[:event_begin].to_date.to_s, :due_date => event_end.to_date.to_s}) rescue nil
     if params[:allDay] != 'true'
       tt = TicketTime.where(:issue_id => params[:id]).first 
       if tt.blank?
@@ -100,6 +105,11 @@ class CalendarController < ApplicationController
         tt.time_end = (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s
       end
       tt.save
+    else
+      tt = TicketTime.where(:issue_id => params[:id]).first rescue nil
+      if !tt.blank?
+        tt.destroy()
+      end
     end
     render(:text => "")
   end

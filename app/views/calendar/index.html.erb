@@ -4,6 +4,7 @@
 <script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/lib/moment.min.js'></script>
 <script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.js'></script>
 <script src='/plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.js'></script>
+<script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/lang-all.js'></script>
 <style>
 .calendar_event {
   pointer:cursor !important;
@@ -16,12 +17,20 @@
 }
 </style>
 <h2><%= translate 'calendar' %></h2>
-<div id='calendar'></div>
+<center><div id='calendar' style="max-width:900px;"></div></center>
+
+<%
+  js_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first rescue nil
+  if js_locale.blank? || (js_locale != 'en' && js_locale != 'de')
+    js_locale = 'en'
+  end
+%>
 
 <script type="text/javascript">
   var user_query;
   $(document).ready(function() {
     $('#calendar').fullCalendar({
+        lang: '<%= js_locale %>',
         customButtons: {
                 myTickets: {
                         text: '<%= translate 'my_issues' %>',
@@ -63,6 +72,25 @@
       },
       eventRender: function(event, element) {
           element.qtip({ content: event.description, position: { target: 'mouse', adjust: { x: 5, y: 5}} });
+      },
+      eventLimit: true,
+      editable: true,
+      eventDrop: function(event, delta, revertFunc) {
+        if(!confirm("<%= (translate 'save_question') %>")) {
+          revertFunc();
+        } else {
+          var event_begin = event.start.format();
+          var event_end = (event.end !== null ? event.end.format() : null);
+          var allDay = event.allDay;
+          $.get('/calendar/change_' + event.controller_name, { id: event.id, event_begin: event_begin, event_end: event_end, allDay: allDay });
+        }
+      },
+      eventResize: function(event, delta, revertFunc) {
+        if(!confirm("<%= (translate 'save_question') %>")) {
+          revertFunc();
+        } else {
+          $.get('/calendar/change_' + event.controller_name, { id: event.id, event_begin: event.start.format(), event_end: event.end.format() });
+        }
       }
     });
   });
