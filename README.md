@@ -15,7 +15,7 @@ Within a issue you are able to set a time as start and end, to get a better cale
 
 ## Screenshots
 
-A quick overview about this plugin, you'll get on http://berti92.github.io/mega_calendar/
+A quick overview about this plugin, you'll get on https://berti92.github.io/mega_calendar/
 
 ## History
 
