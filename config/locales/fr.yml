@@ -1,0 +1,31 @@
+fr:
+  calendar: "Calendrier"
+  holidays: "Vacances"
+  holiday:  "Vacances"
+  my_issues: "Mes demandes"
+  all_issues: "Toutes les demandes"
+  user: "Utilisateur"
+  start: "Début"
+  end: "Fin"
+  action: "Action"
+  show: "Afficher"
+  edit: "Modifier"
+  new: "Nouveau"
+  destroy: "Détruire"
+  prev: "Précédent"
+  next: "Suivant"
+  save: "Sauvegarder"
+  list: "Lister"
+  def_holiday_color: "Couleur par défaut pour les vacances"
+  def_color: "Couleur par défaut"
+  project: "Projet"
+  status: "Statut"
+  save_question: "Voulez vous vraiment sauvegarder ?"
+  select_default: "Sélectionner ..."
+  activerecord:
+    errors:
+      models:
+        holiday:
+          attributes:
+            end:
+              greater_than_start: "doit être supérieure à la date de début"
