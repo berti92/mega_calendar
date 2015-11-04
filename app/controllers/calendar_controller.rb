@@ -3,6 +3,16 @@ class CalendarController < ApplicationController
 
   def index
     #DO NOTHING
+    @js_user_query = session[:mega_calendar_js_user_query]
+    @js_default_date = session[:mega_calendar_js_default_date]
+    if @js_user_query.nil?
+      @js_user_query = true
+      session[:mega_calendar_js_user_query] = @js_user_query
+    end
+    if @js_default_date.nil?
+      @js_default_date = Date.today.to_s
+      session[:mega_calendar_js_default_date] = @js_default_date
+    end
   end
 
   def form_holiday(holiday)
@@ -54,6 +64,12 @@ class CalendarController < ApplicationController
     fbegin = params[:start].to_date rescue nil
     fend = params[:end].to_date rescue nil
     fuser = params[:user].to_s == 'true'
+    session[:mega_calendar_js_user_query] = fuser
+    if fbegin.to_date == fbegin.to_date.beginning_of_month
+      session[:mega_calendar_js_default_date] = fbegin.to_date.to_s
+    else
+      session[:mega_calendar_js_default_date] = (fbegin.to_date.beginning_of_month + 1.month).to_s
+    end
     fbegin = (Date.today - 1.month) if(fbegin.blank?)
     fend = (Date.today + 1.month) if(fend.blank?)
     holidays = Holiday.where(['holidays.start >= ? AND holidays.end <= ?' + (fuser.blank? ? '' : ' AND holidays.user_id = ' + User.current.id.to_s),fbegin.to_s, fend.to_s]) rescue []

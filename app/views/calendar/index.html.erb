@@ -27,7 +27,18 @@
 %>
 
 <script type="text/javascript">
-  var user_query;
+  var user_query = <%= @js_user_query.to_s %>;
+  function set_active_button(user) {
+    var btn_mytickets = $('.fc-myTickets-button');
+    var btn_alltickets = $('.fc-allTickets-button');
+    if(user === true) {
+      btn_mytickets.addClass('fc-state-active');
+      btn_alltickets.removeClass('fc-state-active');
+    } else {
+      btn_mytickets.removeClass('fc-state-active');
+      btn_alltickets.addClass('fc-state-active');
+    }
+  }
   $(document).ready(function() {
     $('#calendar').fullCalendar({
         lang: '<%= js_locale %>',
@@ -36,6 +47,7 @@
                         text: '<%= translate 'my_issues' %>',
                         click: function() {
                           user_query = true;
+                          set_active_button(user_query);
                           $('#calendar').fullCalendar( 'refetchEvents' );
                         }
                 },
@@ -43,6 +55,7 @@
                         text: '<%= translate 'all_issues' %>',
                         click: function() {
                           user_query = false;
+                          set_active_button(user_query);
                           $('#calendar').fullCalendar( 'refetchEvents' );
                         }
                 }
@@ -54,6 +67,7 @@
                         right: 'month,agendaWeek,agendaDay'
                 },
         displayEventEnd: true,
+        defaultDate: '<%= @js_default_date %>',
         events: function(start, end, timezone, callback) {
           $.ajax({
             url: '/calendar/get_events',
@@ -93,5 +107,6 @@
         }
       }
     });
+    set_active_button(user_query);
   });
 </script>
