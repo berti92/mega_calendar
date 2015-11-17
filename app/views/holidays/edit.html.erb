@@ -5,7 +5,8 @@
 
 <%= error_messages_for 'holiday' %>
 
-<form action="/holidays/create">
+<form action="/holidays/update">
+  <input type="hidden" name="holiday[id]" value="<%= params[:id] %>" />
   <table>
     <tr>
       <td><label><%= translate 'user' %></label></td>

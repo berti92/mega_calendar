@@ -39,15 +39,15 @@ class HolidaysController < ApplicationController
   end
 
   def edit
-    @holiday = Holiday.where(:id => params[:id]).first rescue nil
+    @holiday = Holiday.find(params[:id]) rescue nil
     if @holiday.blank?
       redirect_to(:controller => 'holidays', :action => 'index')
     end
   end
 
   def update
-    @holiday = Holiday.where(:id => params[:id]).first rescue nil
-    @holiday.attributes(params[:holiday])
+    @holiday = Holiday.find(params[:holiday][:id]) rescue nil
+    @holiday.assign_attributes(params[:holiday])
     if @holiday.save
       redirect_to(:controller => 'holidays', :action => 'show', :id => @holiday.id)
     else
