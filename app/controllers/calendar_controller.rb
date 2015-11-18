@@ -3,16 +3,6 @@ class CalendarController < ApplicationController
 
   def index
     #DO NOTHING
-    @js_user_query = session[:mega_calendar_js_user_query]
-    @js_default_date = session[:mega_calendar_js_default_date]
-    if @js_user_query.nil?
-      @js_user_query = true
-      session[:mega_calendar_js_user_query] = @js_user_query
-    end
-    if @js_default_date.nil?
-      @js_default_date = Date.today.to_s
-      session[:mega_calendar_js_default_date] = @js_default_date
-    end
   end
 
   def form_holiday(holiday)
@@ -64,11 +54,13 @@ class CalendarController < ApplicationController
     fbegin = params[:start].to_date rescue nil
     fend = params[:end].to_date rescue nil
     fuser = params[:user].to_s == 'true'
-    session[:mega_calendar_js_user_query] = fuser
-    if fbegin.to_date == fbegin.to_date.beginning_of_month
-      session[:mega_calendar_js_default_date] = fbegin.to_date.to_s
-    else
-      session[:mega_calendar_js_default_date] = (fbegin.to_date.beginning_of_month + 1.month).to_s
+    if params[:save_values].to_s == 'true'
+      session[:mega_calendar_js_user_query] = fuser
+      if fbegin.to_date == fbegin.to_date.beginning_of_month
+        session[:mega_calendar_js_default_date] = fbegin.to_date.to_s
+      else
+        session[:mega_calendar_js_default_date] = (fbegin.to_date.beginning_of_month + 1.month).to_s
+      end
     end
     fbegin = (Date.today - 1.month) if(fbegin.blank?)
     fend = (Date.today + 1.month) if(fend.blank?)
@@ -77,7 +69,7 @@ class CalendarController < ApplicationController
     @events = []
     def_holiday = '#' + Setting.plugin_mega_calendar['default_holiday_color']
     def_color = '#' + Setting.plugin_mega_calendar['default_event_color']
-    @events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.login + ' - ') + (translate 'holiday'), :start => h.start.to_date.to_s, :end => h.end.to_date.to_s, :allDay => true, :color => def_holiday, :url => '/holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }}
+    @events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.login + ' - ') + (translate 'holiday'), :start => h.start.to_date.to_s, :end => (h.end + 1.day).to_date.to_s, :allDay => true, :color => def_holiday, :url => '/holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }}
     issues.each do |i|
       ticket_time = TicketTime.where({:issue_id => i.id}).first rescue nil
       tbegin = ticket_time.time_begin.strftime(" %H:%M") rescue ''
@@ -87,7 +79,14 @@ class CalendarController < ApplicationController
         css_classes << 'calendar_event_closed'
       end
       color = '#' + UserColor.where({:user_id => i.assigned_to_id}).first.color_code rescue def_color
-      @events << {:id => i.id.to_s, :controller_name => 'issue', :title => i.id.to_s + ' - ' + i.subject, :start => i.start_date.to_date.to_s + tbegin, :end => i.due_date.to_date.to_s + tend, :color => color, :url => '/issues/' + i.id.to_s, :className => css_classes, :description => form_issue(i) }
+      i_event = {:id => i.id.to_s, :controller_name => 'issue', :title => i.id.to_s + ' - ' + i.subject, :start => i.start_date.to_date.to_s + tbegin, :end => i.due_date.to_date.to_s + tend, :color => color, :url => '/issues/' + i.id.to_s, :className => css_classes, :description => form_issue(i) }
+      if tbegin.blank? || tend.blank?
+        i_event[:allDay] = true
+        if !i.due_date.blank? && tend.blank?
+          i_event[:end] = (i.due_date + 1.day).to_date.to_s
+        end
+      end
+      @events << i_event
     end
     render(:text => @events.to_json.html_safe)
   end
