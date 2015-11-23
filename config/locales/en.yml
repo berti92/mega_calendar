@@ -21,6 +21,8 @@ en:
   project: "Project"
   status: "Status"
   save_question: "Do you really want to save?"
+  field_start: "Start"
+  field_end: "End"
   select_default: "Select..."
   activerecord:
     errors:
