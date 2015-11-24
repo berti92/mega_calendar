@@ -5,7 +5,7 @@ Redmine::Plugin.register :mega_calendar do
   name 'Mega Calendar plugin'
   author 'Andreas Treubert'
   description 'Better calendar for redmine'
-  version '1.1.0'
+  version '1.2.0'
   url 'https://github.com/berti92/mega_calendar'
   author_url 'https://github.com/berti92'
   requires_redmine :version_or_higher => '3.0.1'
@@ -15,5 +15,5 @@ Redmine::Plugin.register :mega_calendar do
     IssuesController.send(:include, IssuesControllerPatch)
     UsersController.send(:include, UsersControllerPatch)
   end
-  settings :default => {'default_holiday_color' => 'D59235', 'default_event_color' => '4F90FF' }, :partial => 'settings/mega_calendar_settings'
+  settings :default => {'default_holiday_color' => 'D59235', 'default_event_color' => '4F90FF', 'sub_path' => '/' }, :partial => 'settings/mega_calendar_settings'
 end

@@ -1,4 +1,4 @@
-<script src='/plugin_assets/mega_calendar/javascripts/jscolor/jscolor.js'></script>
+<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/jscolor/jscolor.js'></script>
 <table>
   <tbody>
     <tr>
@@ -11,6 +11,12 @@
       <th><%= translate 'def_color' %></th>
       <td>
         <input type="text" id="settings_default_event_color" value="<%= settings['default_event_color'] %>" name="settings[default_event_color]" class="color" />
+      </td>
+    </tr>
+    <tr>
+      <th><%= translate 'sub_path' %></th>
+      <td>
+        <input type="text" id="settings_sub_path" value="<%= settings['sub_path'] %>" name="settings[sub_path]" />
       </td>
     </tr>
   </tbody>

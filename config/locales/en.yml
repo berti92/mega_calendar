@@ -24,6 +24,7 @@ en:
   field_start: "Start"
   field_end: "End"
   select_default: "Select..."
+  sub_path: "Sub path URL"
   activerecord:
     errors:
       models:

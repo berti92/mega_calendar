@@ -16,13 +16,13 @@
   end
 %>
 
-<link rel='stylesheet' href='/plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.css' />
-<link rel='stylesheet' href='/plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.css' />
-<script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/lib/jquery.min.js'></script>
-<script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/lib/moment.min.js'></script>
-<script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.js'></script>
-<script src='/plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.js'></script>
-<script src='/plugin_assets/mega_calendar/javascripts/fullcalendar/lang-all.js'></script>
+<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.css' />
+<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.css' />
+<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/lib/jquery.min.js'></script>
+<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/lib/moment.min.js'></script>
+<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.js'></script>
+<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.js'></script>
+<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/lang-all.js'></script>
 <style>
 .calendar_event {
   pointer:cursor !important;
@@ -90,7 +90,7 @@
         defaultDate: '<%= js_default_date %>',
         events: function(start, end, timezone, callback) {
           $.ajax({
-            url: '/calendar/get_events',
+            url: '<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/get_events',
             dataType: 'json',
             data: {
               start: start.format("YYYY-MM-DD HH:MM"),
@@ -117,14 +117,14 @@
           var event_begin = event.start.format();
           var event_end = (event.end !== null ? event.end.format() : null);
           var allDay = event.allDay;
-          $.get('/calendar/change_' + event.controller_name, { id: event.id, event_begin: event_begin, event_end: event_end, allDay: allDay });
+          $.get('<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/change_' + event.controller_name, { id: event.id, event_begin: event_begin, event_end: event_end, allDay: allDay });
         }
       },
       eventResize: function(event, delta, revertFunc) {
         if(!confirm("<%= (translate 'save_question') %>")) {
           revertFunc();
         } else {
-          $.get('/calendar/change_' + event.controller_name, { id: event.id, event_begin: event.start.format(), event_end: event.end.format() });
+          $.get('<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/change_' + event.controller_name, { id: event.id, event_begin: event.start.format(), event_end: event.end.format() });
         }
       }
     });

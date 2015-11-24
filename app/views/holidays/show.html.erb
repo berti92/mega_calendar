@@ -16,6 +16,6 @@
       <td><%= @holiday.end.blank? ? '' : @holiday.end.to_date.to_s %></td>
     </tr>
   </table>
-<a href="/holidays/edit?id=<%= @holiday.id.to_s %>"><%= translate 'edit' %></a>
-<a href="/holidays/destroy?id=<%= @holiday.id.to_s %>"><%= translate 'destroy' %></a>
-<a href="/holidays/index"><%= translate 'list' %></a>
+<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/edit?id=<%= @holiday.id.to_s %>"><%= translate 'edit' %></a>
+<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/destroy?id=<%= @holiday.id.to_s %>"><%= translate 'destroy' %></a>
+<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index"><%= translate 'list' %></a>

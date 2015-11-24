@@ -24,6 +24,7 @@ fr:
   field_start: "Lancer"
   field_end: "Fin"
   select_default: "Sélectionner ..."
+  sub_path: "Sub path URL"
   activerecord:
     errors:
       models:

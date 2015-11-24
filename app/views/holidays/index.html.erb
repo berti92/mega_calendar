@@ -11,7 +11,7 @@
       <td><%= row.user.blank? ? '' : row.user.login.to_s %></td>
       <td><%= row.start.blank? ? '' : row.start.to_date.to_s %></td>
       <td><%= row.end.blank? ? '' : row.end.to_date.to_s %></td>
-      <td><a href="/holidays/show?id=<%= row.id.to_s %>"><%= translate 'show' %></a>&nbsp;<a href="/holidays/destroy?id=<%= row.id.to_s %>"><%= translate 'destroy' %></a></td>
+      <td><a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/show?id=<%= row.id.to_s %>"><%= translate 'show' %></a>&nbsp;<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/destroy?id=<%= row.id.to_s %>"><%= translate 'destroy' %></a></td>
     </tr>
   <% end %>
   <% if @pagination == true %>
@@ -20,8 +20,8 @@
     <td></td>
     <td></td>
     <td></td>
-    <td><a href="/holidays/index?page=<%= @last_page.to_s %>"><%= translate 'prev' %></a>&nbsp;<a href="/holidays/index?page=<%= @new_page.to_s %>"><%= translate 'next' %></a></td>
+    <td><a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index?page=<%= @last_page.to_s %>"><%= translate 'prev' %></a>&nbsp;<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index?page=<%= @new_page.to_s %>"><%= translate 'next' %></a></td>
   </tr>
   <% end %>
 </table>
-<a href="/holidays/new"><%= translate 'new' %></a>
+<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/new"><%= translate 'new' %></a>

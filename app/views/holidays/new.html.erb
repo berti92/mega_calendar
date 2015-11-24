@@ -1,11 +1,11 @@
-<link rel='stylesheet' href='/plugin_assets/mega_calendar/javascripts/datetimepicker/jquery.datetimepicker.css' />
-<script src='/plugin_assets/mega_calendar/javascripts/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
+<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/jquery.datetimepicker.css' />
+<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
 
 <h1><%= translate 'holiday' %></h1>
 
 <%= error_messages_for 'holiday' %>
 
-<form action="/holidays/create">
+<form action="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/create">
   <table>
     <tr>
       <td><label><%= translate 'user' %></label></td>

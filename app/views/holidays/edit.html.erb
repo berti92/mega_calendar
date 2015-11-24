@@ -1,11 +1,11 @@
-<link rel='stylesheet' href='/plugin_assets/mega_calendar/javascripts/datetimepicker/jquery.datetimepicker.css' />
-<script src='/plugin_assets/mega_calendar/javascripts/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
+<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/jquery.datetimepicker.css' />
+<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
 
 <h1><%= translate 'holiday' %></h1>
 
 <%= error_messages_for 'holiday' %>
 
-<form action="/holidays/update">
+<form action="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/update">
   <input type="hidden" name="holiday[id]" value="<%= params[:id] %>" />
   <table>
     <tr>
@@ -30,9 +30,9 @@
   </table>
 <input type="submit" value="<%= translate 'save' %>" />
 </form><br/><br/>
-<a href="/holidays/show?id=<%= @holiday.id.to_s %>"><%= translate 'show' %></a>
-<a href="/holidays/destroy?id=<%= @holiday.id.to_s %>"><%= translate 'destroy' %></a>
-<a href="/holidays/index"><%= translate 'list' %></a>
+<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/show?id=<%= @holiday.id.to_s %>"><%= translate 'show' %></a>
+<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/destroy?id=<%= @holiday.id.to_s %>"><%= translate 'destroy' %></a>
+<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index"><%= translate 'list' %></a>
 
 <%
   js_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first rescue nil
