@@ -6,6 +6,6 @@ class CreateUserColors < ActiveRecord::Migration
     end
   end
   def down
-    drop_table(:user_color)
+    drop_table(:user_colors)
   end
 end
