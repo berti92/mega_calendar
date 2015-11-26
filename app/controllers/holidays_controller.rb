@@ -1,5 +1,15 @@
 class HolidaysController < ApplicationController
   unloadable
+  
+  before_filter(:check_plugin_right)
+  
+  def check_plugin_right
+    right = (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) ? true : false)
+    if !right
+      flash[:error] = translate 'no_right'
+      redirect_to({:controller => :welcome})
+    end
+  end
 
   def index
     limit = 20

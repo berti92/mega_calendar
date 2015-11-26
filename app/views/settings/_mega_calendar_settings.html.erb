@@ -19,5 +19,15 @@
         <input type="text" id="settings_sub_path" value="<%= settings['sub_path'] %>" name="settings[sub_path]" />
       </td>
     </tr>
+    <tr>
+      <th><%= translate 'allowed_users' %></th>
+      <td>
+        <select id="settings_allowed_users" value="<%= settings['allowed_users'] %>" name="settings[allowed_users][]" multiple>
+          <% User.where(["users.login IS NOT NULL AND users.login <> ''"]).each do |u| %>
+            <option value="<%= u.id.to_s %>" <%= (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(u.id.to_s) ? 'selected' : '') %>><%= u.login.to_s %></option>
+          <% end %>
+        </select>
+      </td>
+    </tr>
   </tbody>
 </table>

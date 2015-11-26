@@ -25,6 +25,7 @@ en:
   field_end: "End"
   select_default: "Select..."
   sub_path: "Sub path URL"
+  no_right: "You do not have the necessary rights to view this section!"
   activerecord:
     errors:
       models:

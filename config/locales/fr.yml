@@ -25,6 +25,7 @@ fr:
   field_end: "Fin"
   select_default: "Sélectionner ..."
   sub_path: "Sub path URL"
+  no_right: "Vous ne disposez pas des droits nécessaires pour visualiser cette section"
   activerecord:
     errors:
       models:

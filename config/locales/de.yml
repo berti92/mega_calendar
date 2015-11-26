@@ -25,6 +25,7 @@ de:
   field_end: "Ende"
   select_default: "Bitte auswählen..."
   sub_path: "Sub-Path URL"
+  no_right: "Sie haben nicht die notwendigen Rechte für diese Aktion!"
   activerecord:
     errors:
       models:
