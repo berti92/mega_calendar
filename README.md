@@ -19,9 +19,13 @@ A quick overview about this plugin, you'll get on https://berti92.github.io/mega
 
 ## History
 
-First release in master: You can use it, but i would tweak something in the next time.
+1.3.0: Added right for this plugin
+
+1.2.0: Added support for sub paths
 
 1.1.0: Fixed a few bugs, added widget to MyPage
+
+1.0.0: First release
 
 ## License
 
