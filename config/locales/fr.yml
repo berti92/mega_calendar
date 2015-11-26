@@ -26,6 +26,7 @@ fr:
   select_default: "Sélectionner ..."
   sub_path: "Sub path URL"
   no_right: "Vous ne disposez pas des droits nécessaires pour visualiser cette section"
+  allowed_users: "Les utilisateurs autorisés"
   activerecord:
     errors:
       models:

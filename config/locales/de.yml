@@ -26,6 +26,7 @@ de:
   select_default: "Bitte auswählen..."
   sub_path: "Sub-Path URL"
   no_right: "Sie haben nicht die notwendigen Rechte für diese Aktion!"
+  allowed_users: "Erlaubte Benutzer"
   activerecord:
     errors:
       models:
