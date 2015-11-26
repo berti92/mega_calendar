@@ -13,6 +13,9 @@ Standard redmine plugin installation: Copy it into plugins/ and configure the pl
 
 Within a issue you are able to set a time as start and end, to get a better calendar view. On top of the page you can reach the calendar and holiday section.
 
+Please make sure that you set your users, that will be allowed to use this plugin at the plugin settings.
+Please make sure that you set in your plugin-settings the sub-path to "/" without quotes.
+
 ## Screenshots
 
 A quick overview about this plugin, you'll get on https://berti92.github.io/mega_calendar/
