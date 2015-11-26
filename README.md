@@ -13,8 +13,7 @@ Standard redmine plugin installation: Copy it into plugins/ and configure the pl
 
 Within a issue you are able to set a time as start and end, to get a better calendar view. On top of the page you can reach the calendar and holiday section.
 
-Please make sure that you set your users, that will be allowed to use this plugin at the plugin settings.
-Please make sure that you set in your plugin-settings the sub-path to "/" without quotes.
+Please make sure that you set your users, that will be allowed to use this plugin and that the sub-path is set to "/" without quotes at the plugin settings.
 
 ## Screenshots
 
