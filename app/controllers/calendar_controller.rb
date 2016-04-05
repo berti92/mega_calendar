@@ -74,8 +74,8 @@ class CalendarController < ApplicationController
     end
     fbegin = (Date.today - 1.month) if(fbegin.blank?)
     fend = (Date.today + 1.month) if(fend.blank?)
-    holidays = Holiday.where(['holidays.start >= ? AND holidays.end <= ?' + (fuser.blank? ? '' : ' AND holidays.user_id = ' + User.current.id.to_s),fbegin.to_s,fend.to_s]) rescue []
-    issues = Issue.where(['issues.start_date >= ? AND issues.due_date <= ?' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),fbegin.to_s,fend.to_s]) rescue []
+    holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))' + (fuser.blank? ? '' : ' AND holidays.user_id = ' + User.current.id.to_s),fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
+    issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?))' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
     issues2 = Issue.where(['issues.start_date >= ? AND issues.due_date IS NULL' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),fbegin.to_s]) rescue []
     issues3 = Issue.where(['issues.start_date IS NULL AND issues.due_date <= ?' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),fend.to_s]) rescue []
     @events = []
