@@ -21,6 +21,8 @@ A quick overview about this plugin, you'll get on https://berti92.github.io/mega
 
 ## History
 
+1.3.1: Bugfix
+
 1.3.0: Added right for this plugin
 
 1.2.0: Added support for sub paths
