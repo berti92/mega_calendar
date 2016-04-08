@@ -31,6 +31,11 @@ A quick overview about this plugin, you'll get on https://berti92.github.io/mega
 
 1.0.0: First release
 
+## You like my work?
+
+If you like my work, you can buy me a coffe (Donate-Button on my [website](https://berti92.github.io/mega_calendar/)) or try my new app/game for android:
+[Circle commander](https://play.google.com/store/apps/details?id=de.devbert.circlecommander)
+
 ## License
 
 MIT License
