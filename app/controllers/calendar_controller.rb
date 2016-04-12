@@ -1,7 +1,15 @@
 class CalendarController < ApplicationController
   unloadable
   
-  before_filter :authorize, :except => [:index, :get_events]
+  before_filter :check_plugin_right
+
+  def check_plugin_right		
+    right = (User.current.allowed_to?(:view_mega_calendar, nil, :global => true) || User.current.admin)	
+    if !right
+      flash[:error] = translate 'no_right'		
+      redirect_to({:controller => :welcome})		
+    end		
+  end
 
   def index
     #DO NOTHING
