@@ -1,0 +1,38 @@
+it:
+  permission_view_mega_calendar: "Visualizza calendario"
+  permission_manage_mega_calendar_holidays: "Gestire le vacanze di tutti"
+  calendar: "Calendario"
+  holidays: "Vacanze"
+  holiday:  "Vacanza"
+  my_issues: "Mie segnalazioni"
+  all_issues: "Tutte le segnalazione"
+  user: "Utente"
+  start: "Inizio"
+  end: "Fine"
+  action: "Azione"
+  show: "Vedi"
+  edit: "Modifica"
+  new: "Nuovo"
+  destroy: "Distruggi"
+  prev: "Prec"
+  next: "Succ"
+  save: "Salva"
+  list: "Lista"
+  def_holiday_color: "Colore di base per le vacanze"
+  def_color: "Color di base"
+  project: "Progetto"
+  status: "Stato"
+  save_question: "Vuoi veramante salvare?"
+  field_start: "Inizio"
+  field_end: "Fine"
+  select_default: "Scegli..."
+  sub_path: "Sub path URL"
+  no_right: "Non hai i privilegi necessari per accedere a questa sezione!"
+  enabled_trackers: "Tracker compresi"
+  activerecord:
+    errors:
+      models:
+        holiday:
+          attributes:
+            end:
+              greater_than_start: "deve essere maggiore della data di inizio"

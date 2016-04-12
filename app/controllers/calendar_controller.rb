@@ -1,15 +1,7 @@
 class CalendarController < ApplicationController
   unloadable
   
-  before_filter(:check_plugin_right)
-  
-  def check_plugin_right
-    right = (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) ? true : false)
-    if !right
-      flash[:error] = translate 'no_right'
-      redirect_to({:controller => :welcome})
-    end
-  end
+  before_filter :authorize, :except => [:index, :get_events]
 
   def index
     #DO NOTHING
@@ -74,10 +66,12 @@ class CalendarController < ApplicationController
     end
     fbegin = (Date.today - 1.month) if(fbegin.blank?)
     fend = (Date.today + 1.month) if(fend.blank?)
-    holidays = Holiday.where(['holidays.start >= ? AND holidays.end <= ?' + (fuser.blank? ? '' : ' AND holidays.user_id = ' + User.current.id.to_s),fbegin.to_s,fend.to_s]) rescue []
-    issues = Issue.where(['issues.start_date >= ? AND issues.due_date <= ?' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),fbegin.to_s,fend.to_s]) rescue []
-    issues2 = Issue.where(['issues.start_date >= ? AND issues.due_date IS NULL' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),fbegin.to_s]) rescue []
-    issues3 = Issue.where(['issues.start_date IS NULL AND issues.due_date <= ?' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),fend.to_s]) rescue []
+    tracker_ids = Setting.plugin_mega_calendar['tracker_ids']
+    
+    holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))' + (fuser.blank? ? '' : ' AND holidays.user_id = ' + User.current.id.to_s),fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
+    issues = Issue.where(['issues.tracker_id IN (?) AND ((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?))' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),tracker_ids,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
+    issues2 = Issue.where(['issues.tracker_id IN (?) AND issues.start_date >= ? AND issues.due_date IS NULL' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),tracker_ids,fbegin.to_s]) rescue []
+    issues3 = Issue.where(['issues.tracker_id IN (?) AND issues.start_date IS NULL AND issues.due_date <= ?' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),tracker_ids,fend.to_s]) rescue []
     @events = []
     def_holiday = '#' + Setting.plugin_mega_calendar['default_holiday_color']
     def_color = '#' + Setting.plugin_mega_calendar['default_event_color']

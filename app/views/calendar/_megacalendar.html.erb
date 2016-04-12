@@ -18,6 +18,7 @@
 
 <link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.css' />
 <link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.css' />
+<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/stylesheets/custom.css' />
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/lib/jquery.min.js'></script>
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/lib/moment.min.js'></script>
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.js'></script>
@@ -35,7 +36,7 @@
 }
 </style>
 <h2><%= translate 'calendar' %></h2>
-<center><div id='calendar'" style="<%= calendar_style %>"></div></center>
+<div id='calendar'" class="<%= calendar_class %>"></div>
 
 <%
   js_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first rescue nil

@@ -1,33 +1,22 @@
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/jscolor/jscolor.js'></script>
-<table>
-  <tbody>
-    <tr>
-      <th><%= translate 'def_holiday_color' %></th>
-      <td>
-        <input type="text" id="settings_default_holiday_color" value="<%= settings['default_holiday_color'] %>" name="settings[default_holiday_color]" class="color" />
-      </td>
-    </tr>
-    <tr>
-      <th><%= translate 'def_color' %></th>
-      <td>
-        <input type="text" id="settings_default_event_color" value="<%= settings['default_event_color'] %>" name="settings[default_event_color]" class="color" />
-      </td>
-    </tr>
-    <tr>
-      <th><%= translate 'sub_path' %></th>
-      <td>
-        <input type="text" id="settings_sub_path" value="<%= settings['sub_path'] %>" name="settings[sub_path]" />
-      </td>
-    </tr>
-    <tr>
-      <th><%= translate 'allowed_users' %></th>
-      <td>
-        <select id="settings_allowed_users" value="<%= settings['allowed_users'] %>" name="settings[allowed_users][]" multiple>
-          <% User.where(["users.login IS NOT NULL AND users.login <> ''"]).each do |u| %>
-            <option value="<%= u.id.to_s %>" <%= (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(u.id.to_s) ? 'selected' : '') %>><%= u.login.to_s %></option>
-          <% end %>
-        </select>
-      </td>
-    </tr>
-  </tbody>
-</table>
+
+<p>
+  <label><%= translate 'def_holiday_color' %></label>
+  <%= text_field_tag 'settings[default_holiday_color]', @settings['default_holiday_color'], :class => "color" %>
+</p>
+<p>
+  <label><%= translate 'def_color' %></label>
+  <input type="text" id="settings_default_event_color" value="<%= settings['default_event_color'] %>" name="settings[default_event_color]" class="color" />
+</p>
+<p>
+  <label><%= translate 'sub_path' %></label>
+  <input type="text" id="settings_sub_path" value="<%= settings['sub_path'] %>" name="settings[sub_path]" />
+</p>
+<p>
+  <label><%= translate 'enabled_trackers' %></label>
+  <select id="settings_tracker_ids" value="<%= settings['tracker_ids'] %>" name="settings[tracker_ids][]" multiple size="10">
+    <% Tracker.all.each do |t| %>
+      <option value="<%= t.id.to_s %>" <%= (!Setting.plugin_mega_calendar['tracker_ids'].blank? && Setting.plugin_mega_calendar['tracker_ids'].include?(t.id.to_s) ? 'selected' : '') %>><%= t.name.to_s %></option>
+    <% end %>
+  </select>
+</p>

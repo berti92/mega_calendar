@@ -1,4 +1,6 @@
 en:
+  permission_view_mega_calendar: "Show calendar"
+  permission_manage_mega_calendar_holidays: "Manage all holidays"
   calendar: "Calendar"
   holidays: "Holiday"
   holiday:  "Holiday"
@@ -26,7 +28,7 @@ en:
   select_default: "Select..."
   sub_path: "Sub path URL"
   no_right: "You do not have the necessary rights to view this section!"
-  allowed_users: "Allowed users"
+  enabled_trackers: "Enabled trackers"
   activerecord:
     errors:
       models:

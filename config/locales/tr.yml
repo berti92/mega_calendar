@@ -26,7 +26,6 @@ tr:
   select_default: "Seçiniz..."
   sub_path: "Alt yol URL"
   no_right: "Bu bölüm için gereken yetki sizde yok!"
-  allowed_users: "İzin Verilen Kullanıcılar"
   activerecord:
     errors:
       models:
