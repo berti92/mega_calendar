@@ -1,25 +1,28 @@
-# mega_calendar
+[![Twitter Follow](https://img.shields.io/badge/follow-twitter-blue.svg)](https://twitter.com/AppDevbert)
+[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000?style=flat-square)](https://twitter.com/intent/tweet?button_hashtag=MegaCalendar)
+
+<h1>mega_calendar</h1>
 
 Plugin for redmine: Brings a better calendar and more oppurtunities to set holidays.
 Only compatible with redmine 3.0.1
 Only tested with redmine 3.0.1, Ruby 2.2.1, Rails 4.2
 Maybe compatible with other versions <-- NO GUARANTEE
 
-## Installation
+<h2>Installation</h2>
 
 Standard redmine plugin installation: Copy it into plugins/ and configure the plugin in Administration / Plugins. 
 
-## Usage
+<h2>Usage</h2>
 
 Within a issue you are able to set a time as start and end, to get a better calendar view. On top of the page you can reach the calendar and holiday section.
 
 Please make sure that you set your users, that will be allowed to use this plugin and that the sub-path is set to "/" without quotes at the plugin settings.
 
-## Screenshots
+<h2>Screenshots</h2>
 
-A quick overview about this plugin, you'll get on http://mega-calendar.devbert.de/
+A quick overview about this plugin, you'll get on <a href="http://mega-calendar.devbert.de/">http://mega-calendar.devbert.de/</a>
 
-## History
+<h2>History</h2>
 
 1.3.1: Bugfix
 
@@ -31,11 +34,11 @@ A quick overview about this plugin, you'll get on http://mega-calendar.devbert.d
 
 1.0.0: First release
 
-## You like my work?
+<h2>You like my work?</h2>
 
-If you like my work, you can buy me a coffee (Donate-Button on my [website](https://berti92.github.io/mega_calendar/)) or try my new app/game for android:
-[Circle commander](http://circle_commander.devbert.de/)
+If you like my work, you can buy me a coffee (Donate-Button on my <a href="https://berti92.github.io/mega_calendar/">website<a>) or try my new app/game for android:
+<a href="http://circle_commander.devbert.de/">Circle commander</a>
 
-## License
+<h2>License</h2>
 
 MIT License
