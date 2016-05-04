@@ -1,1 +1,1 @@
-<%= render :partial => 'calendar/megacalendar', :locals => {:show_view_buttons => true, :default_view => 'month', :use_values_from_session => true, :calendar_height => '700', :calendar_class => 'mega_calendar'} %>
+<%= render :partial => 'calendar/megacalendar', :locals => {:show_view_buttons => true, :default_view => @default_calendar_view, :use_values_from_session => true, :calendar_height => 'auto', :calendar_class => 'mega_calendar', :hidden_days_of_week => @hidden_days_of_week, :start_time => @start_time, :end_time => @end_time} %>

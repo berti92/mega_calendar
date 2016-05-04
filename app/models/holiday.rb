@@ -4,8 +4,8 @@ class Holiday < ActiveRecord::Base
   attr_accessible :start
   attr_accessible :end
   belongs_to(:user)
-  validates :start, :date => true
-  validates :end, :date => true
+  #validates :start, :date => true
+  #validates :end, :date => true
   validates_presence_of :start, :end
   validate :validate_holiday
   

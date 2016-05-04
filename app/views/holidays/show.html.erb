@@ -1,21 +1,25 @@
-<h1><%= translate 'holiday' %></h1>
+<div class="contextual">
+  <a class="icon icon-edit" href="<%= @base_url %>/holidays/edit?id=<%= @holiday.id.to_s %>"><%= translate 'edit' %></a>
+  <a class="icon icon-del" href="<%= @base_url %>/holidays/destroy?id=<%= @holiday.id.to_s %>"><%= translate 'destroy' %></a>
+  <a class="icon icon-cancel" href="<%= @base_url %>/holidays/index"><%= translate 'list' %></a>
+</div>
+
+<h2><%= translate 'holiday' %></h2>
 <%
-  user = @holiday.user.login rescue ''
+  user = @holiday.user rescue ''
 %>
-  <table>
-    <tr>
-      <td><label><%= translate 'user' %></label></td>
-      <td><%= user %></td>
-    </tr>
-    <tr>
-      <td><label><%= translate 'start' %></label></td>
-      <td><%= @holiday.start.blank? ? '' : @holiday.start.to_date.to_s %></td>
-    </tr>
-    <tr>
-      <td><label><%= translate 'end' %></label></td>
-      <td><%= @holiday.end.blank? ? '' : @holiday.end.to_date.to_s %></td>
-    </tr>
-  </table>
-<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/edit?id=<%= @holiday.id.to_s %>"><%= translate 'edit' %></a>
-<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/destroy?id=<%= @holiday.id.to_s %>"><%= translate 'destroy' %></a>
-<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index"><%= translate 'list' %></a>
+
+<div class="box tabular">
+<p>
+  <label><%= translate 'user' %></label>
+  <%= user %>
+</p>
+<p>
+  <label><%= translate 'start' %></label>
+  <%= @holiday.start.blank? ? '' : format_time(@holiday.start) %>
+</p>
+<p>
+  <label><%= translate 'end' %></label>
+  <%= @holiday.end.blank? ? '' : format_time(@holiday.end) %>
+</p>
+</div>

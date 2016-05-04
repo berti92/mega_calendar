@@ -1,7 +1,4 @@
-<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/jscolor/jscolor.js'></script>
-<%
-  user_color = UserColor.where({:user_id => @user.id}).first.color_code rescue ''
-%>
+<%= javascript_include_tag 'jscolor/jscolor.js',:plugin => 'mega_calendar'%>
 <%= error_messages_for 'user' %>
 
 <div id="user_form">
@@ -13,7 +10,6 @@
   <p><%= f.text_field :firstname, :required => true %></p>
   <p><%= f.text_field :lastname, :required => true %></p>
   <p><%= f.text_field :mail, :required => true %></p>
-  <p><label>Color:</label><input name="user[color]" class="color" type="text" value="<%= user_color %>" /></p>
   <% unless @user.force_default_language? %>
   <p><%= f.select :language, lang_options_for_select %></p>
   <% end %>
@@ -24,6 +20,9 @@
   <% @user.custom_field_values.each do |value| %>
     <p><%= custom_field_tag_with_label :user, value %></p>
   <% end %>
+  <script>
+  $('#user_custom_field_values_21').addClass('color');
+  </script>
 
   <p><%= f.check_box :admin, :disabled => (@user == User.current) %></p>
   <%= call_hook(:view_users_form, :user => @user, :form => f) %>

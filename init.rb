@@ -1,8 +1,5 @@
 require 'redmine'
 
-require 'users_controller_patch'
-require 'issues_controller_patch'
-
 Redmine::Plugin.register :mega_calendar do
   name 'Mega Calendar plugin'
   author 'Andreas Treubert'
@@ -17,19 +14,25 @@ Redmine::Plugin.register :mega_calendar do
     permission :manage_mega_calendar_holidays, { :holidays => [:index, :new, :show, :create, :edit, :update, :destroy] }
   end
 
-  menu :top_menu, :calendar, { :controller => 'calendar', :action => 'index' }, :caption => :calendar, :if => Proc.new {
+  menu :top_menu, :calendar, { :controller => 'calendar', :action => 'index' }, :caption => :label_calendar, :if => Proc.new {
     User.current.allowed_to?(:view_mega_calendar, nil, :global => true) ||
     User.current.admin
   }
-  menu :top_menu, :holidays, { :controller => 'holidays', :action => 'index' }, :caption => :holidays, :if => Proc.new {
+  menu :top_menu, :holidays, { :controller => 'holidays', :action => 'index' }, :caption => :label_holidays, :if => Proc.new {
     User.current.allowed_to?(:manage_mega_calendar_holidays, nil, :global => true) ||
     User.current.admin
   }
 
-  Rails.configuration.to_prepare do 
-    IssuesController.send(:include, IssuesControllerPatch)
-    UsersController.send(:include, UsersControllerPatch)
-  end
-
-  settings :default => { 'default_holiday_color' => 'D59235', 'default_event_color' => '4F90FF', 'sub_path' => '/' }, :partial => 'settings/mega_calendar_settings'
+  settings :default => {
+      'default_holiday_color' => 'D59235',
+      'default_event_color' => '4F90FF',
+      'tracker_ids' => [],
+      'custom_field_id_color' => '0',
+      'custom_field_id_start' => '0',
+      'custom_field_id_end' => '0',
+      'default_calendar_view' => 'agendaWeek',
+      'hidden_days_of_week' => [],
+      'start_time' => '7:00',
+      'end_time' => '20:00'
+    }, :partial => 'settings/mega_calendar_settings'
 end

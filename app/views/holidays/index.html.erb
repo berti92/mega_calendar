@@ -1,27 +1,30 @@
-<h1><%= translate 'holidays' %></h1>
+<div class="contextual">
+  <a class="icon icon-add" href="<%= @base_url %>/holidays/new"><%= translate 'new' %></a>
+</div>
 
-<table width="100%" height="80%">
+<h2><%= translate 'holidays' %></h2>
+<div class="autoscroll">
+<table class="list issues sort-by-id sort-desc">
   <tr>
-    <td><%= translate 'user'%></td>
-    <td><%= translate 'start' %></td>
-    <td><%= translate 'end' %></td>
-    <td><%= translate 'action' %></td>
+    <th><%= translate 'user'%></th>
+    <th><%= translate 'start' %></th>
+    <th><%= translate 'end' %></th>
+    <th><%= translate 'action' %></th>
   </tr>
   <% @res.each do |row| %>
-      <td><%= row.user.blank? ? '' : row.user.login.to_s %></td>
-      <td><%= row.start.blank? ? '' : row.start.to_date.to_s %></td>
-      <td><%= row.end.blank? ? '' : row.end.to_date.to_s %></td>
-      <td><a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/show?id=<%= row.id.to_s %>"><%= translate 'show' %></a>&nbsp;<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/destroy?id=<%= row.id.to_s %>"><%= translate 'destroy' %></a></td>
+      <td><%= row.user.blank? ? '' : row.user.to_s %></td>
+      <td><%= row.start.blank? ? '' : format_time(row.start) %></td>
+      <td><%= row.end.blank? ? '' : format_time(row.end) %></td>
+      <td>
+        <a class="icon icon-summary" href="<%= @base_url %>/holidays/show?id=<%= row.id.to_s %>"><%= translate 'show' %></a>
+        <a class="icon icon-edit" href="<%= @base_url %>/holidays/edit?id=<%= row.id.to_s %>"><%= translate 'edit' %></a>
+        <a class="icon icon-del" href="<%= @base_url %>/holidays/destroy?id=<%= row.id.to_s %>"><%= translate 'destroy' %></a>
+      </td>
     </tr>
   <% end %>
-  <% if @pagination == true %>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td><a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index?page=<%= @last_page.to_s %>"><%= translate 'prev' %></a>&nbsp;<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/index?page=<%= @new_page.to_s %>"><%= translate 'next' %></a></td>
-  </tr>
-  <% end %>
 </table>
-<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/new"><%= translate 'new' %></a>
+</div>
+<% if @pagination == true %>
+  <a href="<%= @base_url %>/holidays/index?page=<%= @last_page.to_s %>"><%= translate 'prev' %></a>
+  <a href="<%= @base_url %>/holidays/index?page=<%= @new_page.to_s %>"><%= translate 'next' %></a>
+<% end %>

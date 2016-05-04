@@ -1,45 +1,40 @@
-<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/jquery.datetimepicker.css' />
-<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
+<%= stylesheet_link_tag 'datetimepicker/jquery.datetimepicker.css',:plugin => 'mega_calendar' %>
+<%= javascript_include_tag 'datetimepicker/build/jquery.datetimepicker.full.min.js',:plugin => 'mega_calendar'%>
 
-<h1><%= translate 'holiday' %></h1>
+<div class="contextual">
+  <a class="icon icon-cancel" href="<%= @base_url %>/holidays/index"><%= translate 'list' %></a>
+</div>
+
+<h2><%= translate 'holiday' %></h2>
 
 <%= error_messages_for 'holiday' %>
 
-<form action="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/create">
-  <table>
-    <tr>
-      <td><label><%= translate 'user' %></label></td>
-      <td>
-        <select name="holiday[user_id]">
-            <option value=""><%= translate 'select_default' %></option>
+<form action="<%= @base_url %>/holidays/create">
+  <div class="box tabular">
+    <p>
+      <label><%= translate 'user' %></label>
+      <select name="holiday[user_id]">
+          <option value=""><%= translate 'select_default' %></option>
           <% User.where(["users.login IS NOT NULL AND users.login <> ''"]).each do |u| %>
-            <option value="<%= u.id.to_s %>"><%= u.login.to_s %></option>
+            <option value="<%= u.id.to_s %>"><%= u.to_s %></option>
           <% end %>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td><label><%= translate 'start' %></label></td>
-      <td><input type="text" id="holiday_start" name="holiday[start]" /></td>
-    </tr>
-    <tr>
-      <td><label><%= translate 'end' %></label></td>
-      <td><input type="text" id="holiday_end" name="holiday[end]" /></td>
-    </tr>
-  </table>
-<input type="submit" value="<%= translate 'save' %>" />
+      </select>
+    </p>
+    <p>
+      <label><%= translate 'start' %></label>
+      <input type="text" id="holiday_start" name="holiday[start]" />
+    </p>
+    <p>
+      <label><%= translate 'end' %></label>
+      <input type="text" id="holiday_end" name="holiday[end]" />
+    </p>
+  </div>
+  <input type="submit" value="<%= translate 'save' %>" />
 </form>
-
-<%
-  js_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first rescue nil
-  if js_locale.blank? || (js_locale != 'en' && js_locale != 'de' && js_locale != 'fr')
-    js_locale = 'en'
-  end
-%>
 
 <script type="text/javascript">
  $(document).ready(function() {
- $.datetimepicker.setLocale('<%= js_locale %>');
+ $.datetimepicker.setLocale('<%= I18n.locale %>');
  var options = {
    i18n: {
     de: {
@@ -47,9 +42,9 @@
      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
     }
    },
-   timepicker: false,
+   timepicker: true,
    datepicker: true,
-   format: 'Y-m-d'
+   format: 'Y-m-d H:i',
  };
  $("#holiday_start").datetimepicker(options);
  $("#holiday_end").datetimepicker(options);

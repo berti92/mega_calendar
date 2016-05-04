@@ -10,6 +10,16 @@ class HolidaysController < ApplicationController
       redirect_to({:controller => :welcome})		
     end		
   end
+  
+  def initialize
+    super()
+
+    if Rails::VERSION::MAJOR < 3
+      @base_url = Redmine::Utils::relative_url_root.to_s
+    else
+      @base_url = config.relative_url_root.to_s
+    end
+  end
 
   def index
     limit = 20
@@ -38,6 +48,10 @@ class HolidaysController < ApplicationController
 
   def create
     @holiday = Holiday.new(params[:holiday])
+    time_start = Time.parse(params[:holiday][:start])
+    time_end = Time.parse(params[:holiday][:end])
+    @holiday.start = time_start
+    @holiday.end = time_end
     if @holiday.save
       redirect_to(:controller => 'holidays', :action => 'show', :id => @holiday.id)
     else
@@ -58,6 +72,10 @@ class HolidaysController < ApplicationController
   def update
     @holiday = Holiday.find(params[:holiday][:id]) rescue nil
     @holiday.assign_attributes(params[:holiday])
+    time_start = Time.parse(params[:holiday][:start])
+    time_end = Time.parse(params[:holiday][:end])
+    @holiday.start = time_start
+    @holiday.end = time_end
     if @holiday.save
       redirect_to(:controller => 'holidays', :action => 'show', :id => @holiday.id)
     else

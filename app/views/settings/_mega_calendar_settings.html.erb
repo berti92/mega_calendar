@@ -1,20 +1,60 @@
-<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/jscolor/jscolor.js'></script>
+<%= javascript_include_tag 'jscolor/jscolor.js',:plugin => 'mega_calendar'%>
+
+<%- if Rails::VERSION::MAJOR >= 4 %>
+  <%- custom_fields_users = CustomField.where(type: 'UserCustomField') %>
+  <%- custom_fields_issues = CustomField.where(type: 'IssueCustomField') %>
+<%- else %>
+  <%- custom_fields_users = CustomField.find(:all, :conditions => "type = 'UserCustomField'") %>
+  <%- custom_fields_issues = CustomField.find(:all, :conditions => "type = 'IssueCustomField'") %>
+<%- end %>
 
 <p>
-  <label><%= translate 'def_holiday_color' %></label>
+  <%= label_tag('settings[default_holiday_color]', l(:label_setting_holiday_color)) %>
   <%= text_field_tag 'settings[default_holiday_color]', @settings['default_holiday_color'], :class => "color" %>
 </p>
 <p>
-  <label><%= translate 'def_color' %></label>
+  <%= label_tag('settings[default_event_color]', l(:label_setting_event_color)) %>
   <input type="text" id="settings_default_event_color" value="<%= settings['default_event_color'] %>" name="settings[default_event_color]" class="color" />
 </p>
 <p>
-  <label><%= translate 'sub_path' %></label>
-  <input type="text" id="settings_sub_path" value="<%= settings['sub_path'] %>" name="settings[sub_path]" />
+  <%= label_tag('settings[custom_field_id_color]', l(:label_setting_custom_field_id_color)) %>
+  <%= select_tag('settings[custom_field_id_color]', options_for_select([['', 0]] + custom_fields_users.collect{|c| [c.name, c.id]}, (@settings['custom_field_id_color'] || 0))) %>
 </p>
 <p>
-  <label><%= translate 'enabled_trackers' %></label>
-  <select id="settings_tracker_ids" value="<%= settings['tracker_ids'] %>" name="settings[tracker_ids][]" multiple size="10">
+  <%= label_tag('settings[custom_field_id_start]', l(:label_setting_custom_field_id_start)) %>
+  <%= select_tag('settings[custom_field_id_start]', options_for_select([['', 0]] + custom_fields_issues.collect{|c| [c.name, c.id]}, (@settings['custom_field_id_start'] || 0))) %>
+</p>
+<p>
+  <%= label_tag('settings[custom_field_id_end]', l(:label_setting_custom_field_id_end)) %>
+  <%= select_tag('settings[custom_field_id_end]', options_for_select([['', 0]] + custom_fields_issues.collect{|c| [c.name, c.id]}, (@settings['custom_field_id_end'] || 0))) %>
+</p>
+<p>
+  <%= label_tag('settings[default_calendar_view]', l(:label_setting_default_calendar_view)) %>
+  <select id="settings_default_calendar_view" name="settings[default_calendar_view]">
+      <option value="month" <%= (Setting.plugin_mega_calendar['default_calendar_view'] == 'month' ? 'selected' : '') %>><%= l(:label_month) %></option>
+      <option value="agendaWeek" <%= (Setting.plugin_mega_calendar['default_calendar_view'] == 'agendaWeek' ? 'selected' : '') %>><%= l(:label_week) %></option>
+      <option value="agendaDay" <%= (Setting.plugin_mega_calendar['default_calendar_view'] == 'agendaDay' ? 'selected' : '') %>><%= l(:label_day) %></option>
+  </select>
+</p>
+<p>
+  <%= label_tag('settings[hidden_days_of_week]', l(:label_setting_hidden_days_of_week)) %>
+  <select id="settings_hidden_days_of_week" name="settings[hidden_days_of_week][]" multiple size="7">
+    <% (0..6).to_a.each do |w| %>
+      <option value="<%= w %>" <%= (!Setting.plugin_mega_calendar['hidden_days_of_week'].blank? && Setting.plugin_mega_calendar['hidden_days_of_week'].include?(w.to_s) ? 'selected' : '') %>><%= l('date.day_names')[w] %></option>
+    <% end %>
+  </select>
+</p>
+<p>
+  <%= label_tag('settings[start_time]', l(:label_setting_start_time)) %>
+  <input type="text" id="settings_start_time" value="<%= settings['start_time'] %>" name="settings[start_time]" placeholder="hh:mm" />
+</p>
+<p>
+  <%= label_tag('settings[end_time]', l(:label_setting_end_time)) %>
+  <input type="text" id="settings_end_time" value="<%= settings['end_time'] %>" name="settings[end_time]" placeholder="hh:mm" />
+</p>
+<p>
+  <%= label_tag('settings[custom_field_id_start]', l(:label_setting_enabled_trackers)) %>
+  <select id="settings_tracker_ids" name="settings[tracker_ids][]" multiple size="<%= Tracker.count %>">
     <% Tracker.all.each do |t| %>
       <option value="<%= t.id.to_s %>" <%= (!Setting.plugin_mega_calendar['tracker_ids'].blank? && Setting.plugin_mega_calendar['tracker_ids'].include?(t.id.to_s) ? 'selected' : '') %>><%= t.name.to_s %></option>
     <% end %>
