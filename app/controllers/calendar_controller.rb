@@ -28,28 +28,29 @@ class CalendarController < ApplicationController
   def index
   end
 
-  def form_holiday(holiday)
+  def form_calendar_event(calendar_event)
     ret_var = '<table>'
     ret_var << '<tr>'
+    ret_var << '<td>' + (translate 'field_title') + '</td>'
+    ret_var << '<td>' + (calendar_event.title.blank? ? ' - ' : calendar_event.title.to_s) + '</td>' rescue '<td></td>'
+    ret_var << '</tr>'
+    ret_var << '<tr>'
     ret_var << '<td>' + (translate 'field_user') + '</td>'
-    ret_var << '<td>' + holiday.user.to_s + '</td>' rescue '<td></td>'
+    ret_var << '<td>' + (calendar_event.user.blank? ? ' - ' : calendar_event.user.to_s) + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'field_start_date') + '</td>'
-    ret_var << '<td>' + format_time(holiday.start) + '</td>' rescue '<td></td>'
+    ret_var << '<td>' + format_time(calendar_event.start) + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'field_end_date') + '</td>'
-    ret_var << '<td>' + format_time(holiday.end) + '</td>' rescue '<td></td>'
+    ret_var << '<td>' + format_time(calendar_event.end) + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '</table>'
     return ret_var
   end
+
   def form_issue(issue)
-    custom_field_id_start = Setting.plugin_mega_calendar['custom_field_id_start']
-    custom_field_id_end = Setting.plugin_mega_calendar['custom_field_id_end']
-    tbegin = issue.custom_field_value(custom_field_id_start).to_s
-    tend = issue.custom_field_value(custom_field_id_end).to_s
     ret_var = '<table>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'field_project') + '</td>'
@@ -61,19 +62,20 @@ class CalendarController < ApplicationController
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'field_assigned_to') + '</td>'
-    ret_var << '<td>' + issue.assigned_to.to_s + '</td>' rescue '<td></td>'
+    ret_var << '<td>' + issue.user.to_s + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'field_start_date') + '</td>'
-    ret_var << '<td>' + format_date(issue.start_date.to_date).to_s + ' ' + tbegin + ' </td>' rescue '<td></td>'
+    ret_var << '<td>' + format_time(issue.start_calendar) + ' </td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'field_end_date') + '</td>'
-    ret_var << '<td>' + format_date(issue.due_date.to_date).to_s + ' ' + tend + ' </td>' rescue '<td></td>'
+    ret_var << '<td>' + format_time(issue.end_calendar) + ' </td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '</table>'
     return ret_var
   end
+
   def get_events
     fbegin = params[:start].to_date rescue nil
     fend = params[:end].to_date rescue nil
@@ -95,58 +97,52 @@ class CalendarController < ApplicationController
     custom_field_id_end = Setting.plugin_mega_calendar['custom_field_id_end']
     tracker_ids = Setting.plugin_mega_calendar['tracker_ids']
 
-    holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))' + (fuser.blank? ? '' : ' AND holidays.user_id = ' + User.current.id.to_s),fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
-    issues = Issue.where(['issues.tracker_id IN (?) AND ((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?))' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),tracker_ids,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
+    calendar_events = CalendarEvent.where(['((calendar_events.start <= ? AND calendar_events.end >= ?) OR (calendar_events.start BETWEEN ? AND ?) OR (calendar_events.end BETWEEN ? AND ?))' + (fuser.blank? ? '' : ' AND calendar_events.user_id = ' + User.current.id.to_s),fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
+    issues = Issue.where(['issues.tracker_id IN (?) AND ((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?) OR (issues.due_date BETWEEN ? AND ?))' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),tracker_ids,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
     issues2 = Issue.where(['issues.tracker_id IN (?) AND issues.start_date >= ? AND issues.due_date IS NULL' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),tracker_ids,fbegin.to_s]) rescue []
     issues3 = Issue.where(['issues.tracker_id IN (?) AND issues.start_date IS NULL AND issues.due_date <= ?' + (fuser.blank? ? '' : ' AND issues.assigned_to_id = ' + User.current.id.to_s),tracker_ids,fend.to_s]) rescue []
     @events = []
-    def_holiday = '#' + Setting.plugin_mega_calendar['default_holiday_color']
-    def_color = '#' + Setting.plugin_mega_calendar['default_event_color']
+    def_event_color = '#' + Setting.plugin_mega_calendar['default_event_color'].to_s
+    def_issue_color = '#' + Setting.plugin_mega_calendar['default_issue_color'].to_s
 
-    @events = @events + holidays.collect {|h| {
+    @events = @events + calendar_events.collect {|h| {
         :id => h.id.to_s,
-        :controller_name => 'holiday',
-        :title => (h.user.blank? ? '' : h.user.to_s + ' - ') + (translate 'label_holiday'),
+        :controller_name => 'calendar_event',
+        :title => h.title.to_s + ' - ' + h.user.to_s,
         :start => h.start.localtime.strftime('%Y-%m-%d %H:%M'),
         :end => h.end.localtime.strftime('%Y-%m-%d %H:%M'),
         :allDay => false,
-        :borderColor => def_holiday,
-        :color => '#' + h.user.custom_field_value(custom_field_id_color).to_s,
-        :url => @base_url + '/holidays/show?id=' + h.id.to_s,
+        :borderColor => def_event_color,
+        :color => (h.user.blank? ? def_event_color : '#' + h.user.custom_field_value(custom_field_id_color).to_s),
+        :url => @base_url + '/calendar_event/show?id=' + h.id.to_s,
         :className => 'calendar_event',
-        :description => form_holiday(h)
+        :description => form_calendar_event(h)
     }}
     issues = issues + issues2 + issues3
     issues = issues.compact.uniq
     issues.each do |i|
-      tbegin = i.custom_field_value(custom_field_id_start).to_s
-      tend = i.custom_field_value(custom_field_id_end).to_s
       css_classes = ['calendar_event']
       if !i.status.blank? && i.status.is_closed == true
         css_classes << 'calendar_event_closed'
       end
-      if i.start_date.blank?
-        i.start_date = i.due_date
-      end
-      if i.due_date.blank?
-        i.due_date = i.start_date
-      end
 
-      color = '#' + i.assigned_to.custom_field_value(custom_field_id_color).to_s rescue def_color
+      color = '#' + i.assigned_to.custom_field_value(custom_field_id_color).to_s rescue def_issue_color
       i_event = {
         :id => i.id.to_s,
         :controller_name => 'issue',
         :title => i.id.to_s + ' - ' + i.subject,
-        :start => i.start_date.to_date.to_s + (tbegin ? ' ' + tbegin : ''),
-        :end => i.due_date.to_date.to_s + (tend ? ' ' + tend : ''),
+        #:start => i.start_date.to_date.to_s + (tbegin ? ' ' + tbegin.rjust(5, '0') : ''),
+        #:end => i.due_date.to_date.to_s + (tend ? ' ' + tend.rjust(5, '0') : ''),
+        :start => i.start_calendar.strftime('%FT%T%:z'),
+        :end => i.end_calendar.strftime('%FT%T%:z'),
         :color => color,
         :url => @base_url + '/issues/' + i.id.to_s,
         :className => css_classes,
         :description => form_issue(i)
       }
-      if tbegin.blank? || tend.blank?
+      if i.start_time.blank? || i.end_time.blank?
         i_event[:allDay] = true
-        if !i.due_date.blank? && tend.blank?
+        if i.end_time.blank?
           i_event[:end] = (i.due_date + 1.day).to_date.to_s
         end
       end
@@ -154,45 +150,45 @@ class CalendarController < ApplicationController
     end
     render(:text => @events.to_json.html_safe)
   end
-  def change_holiday
-    h = Holiday.find(params[:id])
+
+  def change_calendar_event
+    h = CalendarEvent.find(params[:id])
     if !params[:event_end].blank?
-      h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => (params[:event_end].to_date - 1.day).to_date.to_s}) rescue nil
+      h.update_attributes({ :start => Time.parse(params[:event_begin]), :end => Time.parse(params[:event_end]) }) rescue nil
     else
-      h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => params[:event_begin].to_date.to_s}) rescue nil
+      h.update_attributes({ :start => Time.parse(params[:event_begin]), :end => Time.parse(params[:event_begin]) }) rescue nil
     end
     render(:text => "")
   end
+
   def change_issue
     i = Issue.find(params[:id])
+    event_begin = params[:event_begin]
     if params[:event_end].blank?
       event_end = params[:event_begin]
     else
       event_end = params[:event_end]
     end
-    if !params[:event_end].include?(':')
-      event_end = event_end.to_date - 1.day
-    end
-    i.update_attributes({:start_date => params[:event_begin].to_date.to_s, :due_date => event_end.to_date.to_s}) rescue nil
+    
     if params[:allDay] != 'true'
-      tt = TicketTime.where(:issue_id => params[:id]).first 
-      if tt.blank?
-        tt = TicketTime.new(:issue_id => params[:id])
-      end
-      tt.time_begin = params[:event_begin].to_datetime.to_s
+      custom_field_id_start = Setting.plugin_mega_calendar['custom_field_id_start']
+      custom_field_id_end = Setting.plugin_mega_calendar['custom_field_id_end']
+
+      time_begin = params[:event_begin].to_datetime.strftime('%H:%M')
       if !params[:event_end].blank?
-        tt.time_end = params[:event_end].to_datetime.to_s rescue nil
+        time_end = params[:event_end].to_datetime.strftime('%H:%M') rescue nil
       else
-        i.update_attributes({:due_date => (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s})
-        tt.time_end = (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s
-      end
-      tt.save
-    else
-      tt = TicketTime.where(:issue_id => params[:id]).first rescue nil
-      if !tt.blank?
-        tt.destroy()
+        time_end = params[:event_begin].to_datetime.strftime('%H:%M') rescue nil
       end
     end
+    i.start_date = event_begin.to_date.to_s
+    i.due_date = event_end.to_date.to_s
+    i.custom_field_values = {
+      custom_field_id_start => time_begin,
+      custom_field_id_end => time_end
+    }
+    i.save!
+    
     render(:text => "")
   end
 end

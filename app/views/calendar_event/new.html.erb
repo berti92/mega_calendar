@@ -1,0 +1,53 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'datetimepicker/jquery.datetimepicker.css',:plugin => 'mega_calendar' %>
+  <%= javascript_include_tag 'datetimepicker/build/jquery.datetimepicker.full.min.js',:plugin => 'mega_calendar' %>
+<% end %>
+
+<div class="contextual">
+  <%= link_to l(:list), { :controller => 'calendar_event', :action => 'index' }, :class => 'icon icon-cancel' %>
+</div>
+
+<h2><%= translate 'label_calendar_event' %></h2>
+
+<%= error_messages_for 'calendar_event' %>
+<%= labelled_form_for :contact, @calendar_event,
+                             :url => {:action => 'create'},
+                             :html => { :method => :post, :id => "calendar_event_form" } do |f| %>
+  <div class="box tabular">
+    <p>
+      <%= label_tag('calendar_event[user_id]', l(:user)) %>
+      <select name="calendar_event[user_id]">
+          <option value=""><%= translate 'select_default' %></option>
+          <% @calendar_event.assignable_users.each do |u| %>
+            <option value="<%= u.id.to_s %>"><%= u.to_s %></option>
+          <% end %>
+      </select>
+    </p>
+    <p>
+      <%= label_tag('calendar_event[start]', l(:start)) %>
+      <input type="text" id="calendar_event_start" name="calendar_event[start]" />
+    </p>
+    <p>
+      <%= label_tag('calendar_event[end]', l(:end)) %>
+      <input type="text" id="calendar_event_end" name="calendar_event[end]" />
+    </p>
+    <p>
+      <%= label_tag('calendar_event[title]', l(:field_title)) %>
+      <input type="text" id="calendar_event_title" name="calendar_event[title]" />
+    </p>
+  </div>
+  <%= submit_tag l(:button_save) -%>
+<% end -%>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+ $.datetimepicker.setLocale('<%= I18n.locale %>');
+ var options = {
+   timepicker: true,
+   datepicker: true,
+   format: 'Y-m-d H:i',
+ };
+ $("#calendar_event_start").datetimepicker(options);
+ $("#calendar_event_end").datetimepicker(options);
+ });
+</script>

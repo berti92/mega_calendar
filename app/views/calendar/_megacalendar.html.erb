@@ -15,26 +15,27 @@
     session[:mega_calendar_js_default_date] = js_default_date
   end
 %>
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'fullcalendar/fullcalendar.css',:plugin => 'mega_calendar' %>
+  <%= stylesheet_link_tag 'qtip2/jquery.qtip.min.css',:plugin => 'mega_calendar' %>
+  <%= stylesheet_link_tag 'custom.css',:plugin => 'mega_calendar' %>
+  <%= javascript_include_tag 'fullcalendar/lib/moment.min.js',:plugin => 'mega_calendar' %>
+  <%= javascript_include_tag 'fullcalendar/fullcalendar.js',:plugin => 'mega_calendar' %>
+  <%= javascript_include_tag 'qtip2/jquery.qtip.min.js',:plugin => 'mega_calendar' %>
+  <%= javascript_include_tag 'fullcalendar/lang-all.js',:plugin => 'mega_calendar' %>
+  <style>
+  .calendar_event {
+    pointer:cursor !important;
+    color:#000000 !important;
+  }
 
-<%= stylesheet_link_tag 'fullcalendar/fullcalendar.css',:plugin => 'mega_calendar' %>
-<%= stylesheet_link_tag 'qtip2/jquery.qtip.min.css',:plugin => 'mega_calendar' %>
-<%= stylesheet_link_tag 'custom.css',:plugin => 'mega_calendar' %>
-<%= javascript_include_tag 'fullcalendar/lib/moment.min.js',:plugin => 'mega_calendar'%>
-<%= javascript_include_tag 'fullcalendar/fullcalendar.js',:plugin => 'mega_calendar'%>
-<%= javascript_include_tag 'qtip2/jquery.qtip.min.js',:plugin => 'mega_calendar'%>
-<%= javascript_include_tag 'fullcalendar/lang-all.js',:plugin => 'mega_calendar'%>
-<style>
-.calendar_event {
-  pointer:cursor !important;
-  color:#000000 !important;
-}
-
-.calendar_event_closed {
-  text-decoration: line-through !important;
-  opacity: 0.6 !important;
-}
-</style>
-<h2><%= translate 'calendar' %></h2>
+  .calendar_event_closed {
+    text-decoration: line-through !important;
+    opacity: 0.6 !important;
+  }
+  </style>
+<% end %>
+<h2><%= translate 'label_calendar' %></h2>
 <div id='calendar'" class="<%= calendar_class %>"></div>
 
 <%= @days_of_week %>
@@ -129,6 +130,6 @@
     set_active_button(user_query);
     setInterval(function(){
         $('#calendar').fullCalendar( 'refetchEvents' );
-    }, 15000);
+    }, 30000);
   });
 </script>

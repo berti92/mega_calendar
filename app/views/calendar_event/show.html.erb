@@ -1,0 +1,29 @@
+<div class="contextual">
+  <%= link_to l(:edit), { :controller => 'calendar_event', :action => 'edit', :id => @calendar_event.id.to_s }, :class => 'icon icon-edit' %>
+  <%= link_to l(:destroy), { :controller => 'calendar_event', :action => 'destroy', :id => @calendar_event.id.to_s }, :class => 'icon icon-del' %>
+  <%= link_to l(:list), { :controller => 'calendar_event', :action => 'index' }, :class => 'icon icon-cancel' %>
+</div>
+
+<h2><%= translate 'label_calendar_event' %></h2>
+<%
+  user = @calendar_event.user rescue ''
+%>
+
+<div class="box tabular">
+<p>
+  <label><%= translate 'user' %></label>
+  <%= @calendar_event.user.blank? ? '-' : @calendar_event.user.to_s %>
+</p>
+<p>
+  <label><%= translate 'start' %></label>
+  <%= @calendar_event.start.blank? ? '' : format_time(@calendar_event.start) %>
+</p>
+<p>
+  <label><%= translate 'end' %></label>
+  <%= @calendar_event.end.blank? ? '' : format_time(@calendar_event.end) %>
+</p>
+<p>
+  <label><%= translate 'field_title' %></label>
+  <%= @calendar_event.title %>
+</p>
+</div>
