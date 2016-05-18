@@ -1,0 +1,7 @@
+<% content_for :header_tags do %>
+<%= javascript_include_tag 'jscolor/jscolor.js',:plugin => 'mega_calendar'%>
+<% end %>
+
+<script>
+$('#user_custom_field_values_<%= Setting['plugin_mega_calendar']['custom_field_id_color'] %>').addClass('color');
+</script>

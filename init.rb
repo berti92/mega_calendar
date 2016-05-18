@@ -1,6 +1,8 @@
 require 'redmine'
 
 require_dependency 'issues_patch_mega_calendar'
+require_dependency 'issues_hook_mega_calendar'
+require_dependency 'users_hook_mega_calendar'
 
 ActionDispatch::Callbacks.to_prepare do
   require_dependency 'issue'

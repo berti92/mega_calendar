@@ -1,0 +1,17 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'datetimepicker/jquery.datetimepicker.css',:plugin => 'mega_calendar' %>
+  <%= javascript_include_tag 'datetimepicker/build/jquery.datetimepicker.full.min.js',:plugin => 'mega_calendar' %>
+<% end %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $.datetimepicker.setLocale('<%= I18n.locale %>');
+    var options = {
+        timepicker: true,
+        datepicker: false,
+        format: 'H:i'
+    };
+    $('#issue_custom_field_values_<%= Setting['plugin_mega_calendar']['custom_field_id_start'] %>').datetimepicker(options);
+    $('#issue_custom_field_values_<%= Setting['plugin_mega_calendar']['custom_field_id_end'] %>').datetimepicker(options);
+});
+</script>
