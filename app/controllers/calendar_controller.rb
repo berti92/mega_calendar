@@ -62,7 +62,7 @@ class CalendarController < ApplicationController
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'field_assigned_to') + '</td>'
-    ret_var << '<td>' + issue.user.to_s + '</td>' rescue '<td></td>'
+    ret_var << '<td>' + (issue.assigned_to.blank? ? ' - ' : issue.assigned_to.to_s) + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'field_start_date') + '</td>'

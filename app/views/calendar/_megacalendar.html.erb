@@ -63,7 +63,7 @@
       hiddenDays: <%= raw(@hidden_days_of_week.map(&:to_i)) %>,
       customButtons: {
                 myTickets: {
-                        text: '<%= translate 'my_issues' %>',
+                        text: '<%= translate 'label_assigned_to_me_issues' %>',
                         click: function() {
                           user_query = true;
                           set_active_button(user_query);
@@ -71,7 +71,7 @@
                         }
                 },
                 allTickets: {
-                        text: '<%= translate 'all_issues' %>',
+                        text: '<%= translate 'label_issues_visibility_all' %>',
                         click: function() {
                           user_query = false;
                           set_active_button(user_query);
