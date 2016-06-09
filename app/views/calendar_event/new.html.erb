@@ -4,7 +4,7 @@
 <% end %>
 
 <div class="contextual">
-  <%= link_to l(:list), { :controller => 'calendar_event', :action => 'index' }, :class => 'icon icon-cancel' %>
+  <%= link_to l(:label_list), { :controller => 'calendar_event', :action => 'index' }, :class => 'icon icon-cancel' %>
 </div>
 
 <h2><%= translate 'label_calendar_event' %></h2>
@@ -15,7 +15,7 @@
                              :html => { :method => :post, :id => "calendar_event_form" } do |f| %>
   <div class="box tabular">
     <p>
-      <%= label_tag('calendar_event[user_id]', l(:user)) %>
+      <%= label_tag('calendar_event[user_id]', l(:field_user)) %>
       <select name="calendar_event[user_id]">
           <option value=""><%= translate 'select_default' %></option>
           <% @calendar_event.assignable_users.each do |u| %>
@@ -24,11 +24,11 @@
       </select>
     </p>
     <p>
-      <%= label_tag('calendar_event[start]', l(:start)) %>
+      <%= label_tag('calendar_event[start]', l(:field_start_date)) %>
       <input type="text" id="calendar_event_start" name="calendar_event[start]" />
     </p>
     <p>
-      <%= label_tag('calendar_event[end]', l(:end)) %>
+      <%= label_tag('calendar_event[end]', l(:field_end_date)) %>
       <input type="text" id="calendar_event_end" name="calendar_event[end]" />
     </p>
     <p>

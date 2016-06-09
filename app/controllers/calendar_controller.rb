@@ -115,7 +115,7 @@ class CalendarController < ApplicationController
         :borderColor => def_event_color,
         :color => (h.user.blank? ? def_event_color : '#' + h.user.custom_field_value(custom_field_id_color).to_s),
         :url => @base_url + '/calendar_event/show?id=' + h.id.to_s,
-        :className => 'calendar_event',
+        :className => 'calendar_event calendar_event_closed',
         :description => form_calendar_event(h)
     }}
     issues = issues + issues2 + issues3

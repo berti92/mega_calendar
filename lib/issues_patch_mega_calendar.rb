@@ -36,8 +36,10 @@ module IssuePatchMegaCalendar
     end
 
     def save_due_date
-      if self.due_date.blank?
-        self.due_date = self.start_date
+      if self.respect_filters_mega_calendar
+        if self.due_date.blank?
+          self.due_date = self.start_date
+        end
       end
     end
   end

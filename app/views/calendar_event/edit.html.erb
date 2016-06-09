@@ -4,9 +4,9 @@
 <% end %>
 
 <div class="contextual">
-  <%= link_to l(:show), { :controller => 'calendar_event', :action => 'show', :id => @calendar_event.id.to_s }, :class => 'icon icon-summary' %>
-  <%= link_to l(:destroy), { :controller => 'calendar_event', :action => 'destroy', :id => @calendar_event.id.to_s }, :class => 'icon icon-del' %>
-  <%= link_to l(:list), { :controller => 'calendar_event', :action => 'index' }, :class => 'icon icon-cancel' %>
+  <%= link_to l(:button_show), { :controller => 'calendar_event', :action => 'show', :id => @calendar_event.id.to_s }, :class => 'icon icon-summary' %>
+  <%= link_to l(:button_delete), { :controller => 'calendar_event', :action => 'destroy', :id => @calendar_event.id.to_s }, :class => 'icon icon-del' %>
+  <%= link_to l(:label_list), { :controller => 'calendar_event', :action => 'index' }, :class => 'icon icon-cancel' %>
 </div>
 
 <h2><%= translate 'label_calendar_event' %></h2>
@@ -18,7 +18,7 @@
                              :html => { :method => :put, :id => "calendar_event_form" } do |f| %>
   <div class="box tabular">
     <p>
-      <%= label_tag('calendar_event[user_id]', l(:user)) %>
+      <%= label_tag('calendar_event[user_id]', l(:field_user)) %>
       <select name="calendar_event[user_id]" id="calendar_event_user_id">
         <option value=""><%= translate 'select_default' %></option>
         <% @calendar_event.assignable_users.each do |u| %>
@@ -27,11 +27,11 @@
       </select>
     </p>
     <p>
-      <%= label_tag('calendar_event[start]', l(:start)) %>
+      <%= label_tag('calendar_event[start]', l(:field_start_date)) %>
       <input type="text" id="calendar_event_start" name="calendar_event[start]" value="<%= @calendar_event.start.blank? ? '' : @calendar_event.start.localtime.strftime('%Y-%m-%d %H:%M') %>" />
     </p>
     <p>
-      <%= label_tag('calendar_event[end]', l(:end)) %>
+      <%= label_tag('calendar_event[end]', l(:field_end_date)) %>
       <input type="text" id="calendar_event_end" name="calendar_event[end]" value="<%= @calendar_event.end.blank? ? '' : @calendar_event.end.localtime.strftime('%Y-%m-%d %H:%M') %>" />
     </p>
     <p>

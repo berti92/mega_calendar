@@ -1,14 +1,14 @@
 <div class="contextual">
-  <%= link_to l(:new), { :controller => 'calendar_event', :action => 'new' }, :class => 'icon icon-add' %>
+  <%= link_to l(:label_new), { :controller => 'calendar_event', :action => 'new' }, :class => 'icon icon-add' %>
 </div>
 
 <h2><%= translate 'label_calendar_events' %></h2>
 <div class="autoscroll">
 <table class="list issues sort-by-id sort-desc">
   <tr>
-    <th><%= translate 'user'%></th>
-    <th><%= translate 'start' %></th>
-    <th><%= translate 'end' %></th>
+    <th><%= translate 'field_user' %></th>
+    <th><%= translate 'field_start_date' %></th>
+    <th><%= translate 'field_end_date' %></th>
     <th><%= translate 'field_title' %></th>
     <th><%= translate 'action' %></th>
   </tr>
@@ -18,9 +18,9 @@
       <td><%= row.end.blank? ? '' : format_time(row.end) %></td>
       <td><%= row.title %></td>
       <td>
-        <%= link_to l(:show), { :controller => 'calendar_event', :action => 'show', :id => row.id.to_s }, :class => 'icon icon-summary' %>
-        <%= link_to l(:edit), { :controller => 'calendar_event', :action => 'edit', :id => row.id.to_s }, :class => 'icon icon-edit' %>
-        <%= link_to l(:destroy), { :controller => 'calendar_event', :action => 'destroy', :id => row.id.to_s }, :class => 'icon icon-del' %>
+        <%= link_to l(:button_show), { :controller => 'calendar_event', :action => 'show', :id => row.id.to_s }, :class => 'icon icon-summary' %>
+        <%= link_to l(:button_edit), { :controller => 'calendar_event', :action => 'edit', :id => row.id.to_s }, :class => 'icon icon-edit' %>
+        <%= link_to l(:button_delete), { :controller => 'calendar_event', :action => 'destroy', :id => row.id.to_s }, :class => 'icon icon-del' %>
       </td>
     </tr>
   <% end %>
