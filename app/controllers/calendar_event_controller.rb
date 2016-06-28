@@ -22,17 +22,20 @@ class CalendarEventController < ApplicationController
   end
 
   def index
-    limit = 20
-    offset = 0
-    @new_page = 1
-    @last_page = 0
-    if !params[:page].blank? && params[:page].to_i >= 1
-      offset = params[:page].to_i * limit
-      @new_page = params[:page].to_i + 1
-      @last_page = params[:page].to_i - 1
+    @limit = 20
+    @offset = 0
+
+    @res_count = CalendarEvent.count
+
+    if Redmine::VERSION.to_s > '2.5'
+      @res_pages = Paginator.new(@res_count, @limit, params[:page])
+      @offset = @res_pages.offset
+    else
+      @res_pages = Paginator.new(self, @res_count, @limit, params[:page])
+      @offset = @res_pages.current.offset
     end
-    @res = CalendarEvent.limit(limit).offset(offset)
-    @pagination = (CalendarEvent.count.to_f / 20.to_f) > 1.to_f
+
+    @res = CalendarEvent.order(end: :desc).limit(@limit).offset(@offset)
   end
 
   def new

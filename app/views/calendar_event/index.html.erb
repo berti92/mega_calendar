@@ -26,7 +26,7 @@
   <% end %>
 </table>
 </div>
-<% if @pagination == true %>
-  <%= link_to l(:prev), { :controller => 'calendar_event', :action => 'index', :page => @last_page.to_s } %>
-  <%= link_to l(:next), { :controller => 'calendar_event', :action => 'index', :page => @new_page.to_s } %>
+<% if @res_count %>
+    <span class="pagination"><%= pagination_links_full @res_pages, @res_count %></span>
 <% end %>
+
