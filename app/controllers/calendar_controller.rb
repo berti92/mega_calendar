@@ -1,6 +1,6 @@
 class CalendarController < ApplicationController
   unloadable
-  
+
   before_filter :check_plugin_right
 
   def check_plugin_right		
@@ -163,13 +163,15 @@ class CalendarController < ApplicationController
 
   def change_issue
     i = Issue.find(params[:id])
+    i.init_journal(User.current, 'From Calendar')
+
     event_begin = params[:event_begin]
     if params[:event_end].blank?
       event_end = params[:event_begin]
     else
       event_end = params[:event_end]
     end
-    
+
     if params[:allDay] != 'true'
       custom_field_id_start = Setting.plugin_mega_calendar['custom_field_id_start']
       custom_field_id_end = Setting.plugin_mega_calendar['custom_field_id_end']
@@ -188,7 +190,7 @@ class CalendarController < ApplicationController
       custom_field_id_end => time_end
     }
     i.save!
-    
+
     render(:text => "")
   end
 end
