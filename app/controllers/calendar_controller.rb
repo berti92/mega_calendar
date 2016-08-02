@@ -18,6 +18,9 @@ class CalendarController < ApplicationController
     @hidden_days_of_week = Setting['plugin_mega_calendar']['hidden_days_of_week']
     @start_time = Setting['plugin_mega_calendar']['start_time']
     @end_time = Setting['plugin_mega_calendar']['end_time']
+    if @end_time.blank?
+        @end_time = '24:00'
+    end
     if Rails::VERSION::MAJOR < 3
       @base_url = Redmine::Utils::relative_url_root.to_s
     else

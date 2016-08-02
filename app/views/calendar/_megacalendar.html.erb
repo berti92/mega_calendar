@@ -60,7 +60,7 @@
       height: '<%= calendar_height %>',
       minTime: '<%= @start_time %>:00',
       maxTime: '<%= @end_time %>:00',
-      hiddenDays: <%= raw(@hidden_days_of_week.map(&:to_i)) %>,
+      hiddenDays: <%= raw(@hidden_days_of_week.map(&:to_i)) rescue '[]' %>,
       customButtons: {
                 myTickets: {
                         text: '<%= translate 'label_assigned_to_me_issues' %>',

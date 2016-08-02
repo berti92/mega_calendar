@@ -1,8 +1,8 @@
 # mega_calendar
 
 Plugin for redmine: Brings a better calendar and more oppurtunities to set holidays.
-Only compatible with redmine 3.0.1
-Only tested with redmine 3.0.1, Ruby 2.2.1, Rails 4.2
+Only compatible with redmine > 3.0.1
+Only tested with redmine 3.0.1, 3.2.2 and 3.3.0, Ruby 2.1.10 and 2.2.1, Rails 4.2 and 4.2.6
 Maybe compatible with other versions <-- NO GUARANTEE
 
 ## Installation
