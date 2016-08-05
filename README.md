@@ -23,6 +23,8 @@ A quick overview about this plugin, you'll get on <a href="http://mega-calendar.
 
 <h2>History</h2>
 
+1.3.4: Added ability to create issues from the calendar, just click on a free space on the calendar
+
 1.3.3: Added support for Redmine 3.3.X
 
 1.3.2: Added support for Redmine 3.2.X
