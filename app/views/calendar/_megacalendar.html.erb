@@ -62,6 +62,7 @@
         lang: '<%= js_locale %>',
         defaultView: '<%= default_view %>',
         height: <%= calendar_height %>,
+        selectable: true,
         customButtons: {
                 myTickets: {
                         text: '<%= translate 'my_issues' %>',
@@ -126,7 +127,11 @@
         } else {
           $.get('<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/change_' + event.controller_name, { id: event.id, event_begin: event.start.format(), event_end: event.end.format() });
         }
-      }
+      },
+      select: function(start, end) {
+        $('#calendar').fullCalendar('unselect');
+        window.open('/issues/new?issue[start_date]='+start.format("YYYY-MM-DD")+'&issue[due_date]='+end.format("YYYY-MM-DD")+'&issue[time_begin]='+start.format("HH:mm")+'&issue[time_end]='+end.format("HH:mm"), '_blank');
+      },
     });
     set_active_button(user_query);
   });
