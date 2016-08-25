@@ -1,0 +1,36 @@
+zh:
+  calendar: "日历"
+  holidays: "假日"
+  holiday:  "假日"
+  my_issues: "我的问题"
+  all_issues: "所有问题"
+  user: "用户"
+  start: "起始于"
+  end: "截止于"
+  action: "操作"
+  show: "显示"
+  edit: "编辑"
+  new: "新建"
+  destroy: "删除"
+  prev: "<<<"
+  next: ">>>"
+  save: "保存"
+  list: "列表"
+  def_holiday_color: "假日默认颜色"
+  def_color: "默认颜色"
+  project: "项目"
+  status: "状态"
+  save_question: "确认保存？"
+  field_start: "起始于"
+  field_end: "截止于"
+  select_default: "选择 …"
+  sub_path: "子路径URL"
+  no_right: "您未获得授权，不能查阅该信息！"
+  allowed_users: "授权用户"
+  activerecord:
+    errors:
+      models:
+        holiday:
+          attributes:
+            end:
+              greater_than_start: "必须晚于起始日期"
