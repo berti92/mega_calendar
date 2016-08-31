@@ -9,7 +9,25 @@ Please test this plugin for other redmine versions and let me know if there are 
 
 <h2>Installation</h2>
 
-Standard redmine plugin installation: Copy it into plugins/ and configure the plugin in Administration / Plugins. 
+Standard redmine plugin installation: You can read the generic plugin installation guide <a href="http://www.redmine.org/projects/redmine/wiki/Plugins" target="_blank">here</a> or you can use the following guide (Debian 7, Apache2/Passenger).
+
+Go to your redmine plugins-folder<br>
+<code>cd /srv/redmine/plugins</code><br>
+Download the latest plugin-Version:<br>
+<code>wget https://github.com/berti92/mega_calendar/archive/master.zip</code><br>
+Unzip the downloaded zip-File<br>
+<code>unzip master.zip</code><br>
+Rename the folder:<br>
+<code>mv mega_calendar-master mega_calendar</code><br>
+Give the folder the right privileges in this case apache (to execute the command you must be root)<br>
+<code>chown -R www-data.www-data mega_calendar</code><br>
+Go back to your redmine folder<br>
+<code>cd /srv/redmine</code><br>
+Migrate the database<br>
+<code>bundle exec rake redmine:plugins:migrate RAILS_ENV=production</code><br>
+Now restart your redmine and you can configure the plugin in the admin settings in redmine.<br>
+To start redmine under apache2/passenger, please execute the following command <br>
+<code>touch tmp/restart.txt</code>
 
 <h2>Usage</h2>
 
