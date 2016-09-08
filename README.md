@@ -59,8 +59,8 @@ A quick overview about this plugin, you'll get on <a href="http://mega-calendar.
 
 <h2>You like my work?</h2>
 
-If you like my work, you can buy me a coffee (Donate-Button on my <a href="https://berti92.github.io/mega_calendar/">website<a>) or try my new app/game for android:
-<a href="http://circle_commander.devbert.de/">Circle commander</a>
+If you like my work, you can buy me a coffee (Donate-Button on my <a href="https://berti92.github.io/mega_calendar/">website<a>) or try my new browser game:
+<a href="http://sketcharama.com/">Sketcharama (currently only german)</a> 
 
 <h2>License</h2>
 
