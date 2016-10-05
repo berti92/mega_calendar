@@ -2,6 +2,8 @@
 [![Twitter Follow](https://img.shields.io/badge/follow-twitter-blue.svg)](https://twitter.com/AppDevbert)
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000?style=flat-square)](https://twitter.com/intent/tweet?button_hashtag=MegaCalendar)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1e9f23bef62d487bb634bd26f05a7d7e)](https://www.codacy.com/app/simplyanamedude/mega_calendar?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=berti92/mega_calendar&amp;utm_campaign=Badge_Grade)
+
 <h1>mega_calendar</h1>
 
 Plugin for redmine: Brings a better calendar and more oppurtunities to set holidays.<br/>
