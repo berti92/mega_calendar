@@ -20,6 +20,16 @@
       </td>
     </tr>
     <tr>
+      <th><%= translate 'week_start' %></th>
+      <td>
+	<select id="settings_week_start" name="settings[week_start]">
+          <% (0..6).each do |d| %>
+            <option value="<%= d.to_s %>" <%= (!Setting.plugin_mega_calendar['week_start'].blank? && Setting.plugin_mega_calendar['week_start'] == d.to_s ? 'selected' : '') %>><%= translate 'day'+d.to_s %></option>
+          <% end %>
+	</select>
+      </td>
+    </tr>
+    <tr>
       <th><%= translate 'allowed_users' %></th>
       <td>
         <select id="settings_allowed_users" value="<%= settings['allowed_users'] %>" name="settings[allowed_users][]" multiple>

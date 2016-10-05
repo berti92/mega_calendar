@@ -89,6 +89,7 @@
                 },
         displayEventEnd: true,
         defaultDate: '<%= js_default_date %>',
+	firstDay: <%= (Setting.plugin_mega_calendar['week_start'].blank? ? '1' : Setting.plugin_mega_calendar['week_start'].to_s ) %>,
         events: function(start, end, timezone, callback) {
           $.ajax({
             url: '<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/get_events',
