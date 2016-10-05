@@ -27,6 +27,13 @@ en:
   sub_path: "Sub path URL"
   no_right: "You do not have the necessary rights to view this section!"
   allowed_users: "Allowed users"
+  day0: "Sunday"
+  day1: "Monday"
+  day2: "Tuesday"
+  day3: "Wednesday"
+  day4: "Thursday"
+  day5: "Friday"
+  day6: "Saturday"
   activerecord:
     errors:
       models:

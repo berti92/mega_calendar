@@ -27,6 +27,13 @@ de:
   sub_path: "Sub-Path URL"
   no_right: "Sie haben nicht die notwendigen Rechte für diese Aktion!"
   allowed_users: "Erlaubte Benutzer"
+  day0: "Sonntag"
+  day1: "Montag"
+  day2: "Dienstag"
+  day3: "Mittwoch"
+  day4: "Donnerstag"
+  day5: "Freitag"
+  day6: "Samstag"
   activerecord:
     errors:
       models:
