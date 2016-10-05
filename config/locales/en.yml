@@ -34,6 +34,7 @@ en:
   day4: "Thursday"
   day5: "Friday"
   day6: "Saturday"
+  week_start: "Start of the week"
   activerecord:
     errors:
       models:
