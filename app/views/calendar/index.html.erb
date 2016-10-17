@@ -1,1 +1,3 @@
 <%= render :partial => 'calendar/megacalendar', :locals => {:show_view_buttons => true, :default_view => 'month', :use_values_from_session => true, :calendar_height => '700', :calendar_style => 'padding: 0px 100px;'} %>
+
+<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/export">Export</a>

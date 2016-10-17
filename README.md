@@ -2,8 +2,6 @@
 [![Twitter Follow](https://img.shields.io/badge/follow-twitter-blue.svg)](https://twitter.com/AppDevbert)
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000?style=flat-square)](https://twitter.com/intent/tweet?button_hashtag=MegaCalendar)
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1e9f23bef62d487bb634bd26f05a7d7e)](https://www.codacy.com/app/simplyanamedude/mega_calendar?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=berti92/mega_calendar&amp;utm_campaign=Badge_Grade)
-
 <h1>mega_calendar</h1>
 
 Plugin for redmine: Brings a better calendar and more oppurtunities to set holidays.<br/>
@@ -43,14 +41,6 @@ Please make sure that you set your users, that will be allowed to use this plugi
 A quick overview about this plugin, you'll get on <a href="http://mega-calendar.devbert.de/">http://mega-calendar.devbert.de/</a>
 
 <h2>History</h2>
-
-1.3.8: Now you are able to set the start of the week within the plugin settings
-
-1.3.7: Bugfix
-
-1.3.6: Bugfix
-
-1.3.5: Bugfix
 
 1.3.4: Added ability to create issues from the calendar, just click on a free space on the calendar
 

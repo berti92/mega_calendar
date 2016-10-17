@@ -11,6 +11,48 @@ class CalendarController < ApplicationController
     end
   end
 
+  def export
+    ical = Vpim::Icalendar.create({ 'METHOD' => 'REQUEST', 'CHARSET' => 'UTF-8' })
+    Issue.where(["issues.start_date IS NOT NULL OR issues.due_date IS NOT NULL"]).each do |issue|
+      ical.add_event do |e|
+        ticket_time = TicketTime.where({:issue_id => issue.id}).first rescue nil
+        tbegin = ticket_time.time_begin.strftime(" %H:%M") rescue ''
+        tend = ticket_time.time_end.strftime(" %H:%M") rescue ''
+        if issue.start_date.blank?
+          issue.start_date = issue.due_date
+        end
+        if issue.due_date.blank?
+          issue.due_date = issue.start_date
+        end
+        time_start = issue.start_date.to_date.to_s + tbegin
+        time_end = issue.due_date.to_date.to_s + tend
+        if tbegin.blank? || tend.blank?
+          if !issue.due_date.blank? && tend.blank?
+            time_end = (issue.due_date + 1.day).to_date.to_s
+          end
+        end
+        time_start = Time.parse(time_start)
+        time_end = Time.parse(time_end)
+        e.summary(issue.id.to_s + ' - ' + (issue.assigned_to.blank? ? '' : issue.assigned_to.firstname + " " + issue.assigned_to.lastname + ' - ') + issue.subject)
+        e.dtstart(time_start)
+        e.dtend(time_end)
+        e.dtstamp(issue.updated_on)
+        e.lastmod(issue.updated_on)
+        e.created(issue.created_on)
+        e.uid("RedmineMegaCalendarIssueID:"+issue.id.to_s)
+        #e.sequence(seq.to_i)
+        e.description(issue.description.gsub("\n\n",""))
+        #if !issue.assigned_to.blank?
+        #  e.organizer do |o|
+        #    o.cn = issue.assigned_to.firstname + " " + issue.assigned_to.lastname
+        #    o.uri = "mailto:#{issue.assigned_to.email_address.address}" rescue nil
+        #  end
+        #end
+      end
+    end
+    send_data ical.encode(), filename: 'Redmine_calendar.ics'
+  end
+
   def index
     #DO NOTHING
   end
@@ -72,8 +114,8 @@ class CalendarController < ApplicationController
         session[:mega_calendar_js_default_date] = (fbegin.to_date.beginning_of_month + 1.month).to_s
       end
     end
-    fbegin = (Time.zone.today - 1.month) if(fbegin.blank?)
-    fend = (Time.zone.today + 1.month) if(fend.blank?)
+    fbegin = (Date.today - 1.month) if(fbegin.blank?)
+    fend = (Date.today + 1.month) if(fend.blank?)
     if fuser.blank?
       holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
       issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
