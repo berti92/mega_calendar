@@ -77,7 +77,7 @@ A quick overview about this plugin, you'll get on <a href="http://mega-calendar.
 <h2>You like my work?</h2>
 
 If you like my work, you can buy me a coffee [![Paypal Donate](https://img.shields.io/badge/Paypal-donate-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=simplyanamedude@gmail.com&lc=GB&item_name=Andreas%20Treubert&no_note=0&currency_code=EUR&bn=PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest) or try my new browser game:
-<a href="http://sketcharama.com/">Sketcharama (currently only german)</a> 
+<a href="http://sketcharama.com/">Sketcharama</a> 
 
 <h2>License</h2>
 
