@@ -116,8 +116,8 @@ class CalendarController < ApplicationController
         session[:mega_calendar_js_default_date] = (fbegin.to_date.beginning_of_month + 1.month).to_s
       end
     end
-    fbegin = (Date.today - 1.month) if(fbegin.blank?)
-    fend = (Date.today + 1.month) if(fend.blank?)
+    fbegin = (Time.zone.today - 1.month) if(fbegin.blank?)
+    fend = (Time.zone.today + 1.month) if(fend.blank?)
     if fuser.blank?
       holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
       issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
