@@ -28,6 +28,10 @@ Go back to your redmine folder<br>
 <code>cd /srv/redmine</code><br>
 Migrate the database<br>
 <code>bundle exec rake redmine:plugins:migrate RAILS_ENV=production</code><br>
+Go to the plugin folder<br>
+<code>cd /srv/redmine/plugins/mega_calendar</code><br>
+Install the gems<br>
+<code>bundle</code><br>
 Now restart your redmine and you can configure the plugin in the admin settings in redmine.<br>
 To start redmine under apache2/passenger, please execute the following command <br>
 <code>touch tmp/restart.txt</code>
@@ -43,6 +47,8 @@ Please make sure that you set your users, that will be allowed to use this plugi
 A quick overview about this plugin, you'll get on <a href="http://mega-calendar.devbert.de/">http://mega-calendar.devbert.de/</a>
 
 <h2>History</h2>
+
+1.4.0: Added export functionality
 
 1.3.8: Now you are able to set the start of the week within the plugin settings
 
