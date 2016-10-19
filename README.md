@@ -33,7 +33,8 @@ Go to the plugin folder<br>
 Install the gems<br>
 <code>bundle</code><br>
 Now restart your redmine and you can configure the plugin in the admin settings in redmine.<br>
-To start redmine under apache2/passenger, please execute the following command <br>
+To start redmine under apache2/passenger, please execute the following commands <br>
+<code>cd /srv/redmine</code><br>
 <code>touch tmp/restart.txt</code>
 
 <h2>Usage</h2>
