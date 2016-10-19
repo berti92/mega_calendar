@@ -6,7 +6,7 @@ Redmine::Plugin.register :mega_calendar do
   name 'Mega Calendar plugin'
   author 'Andreas Treubert'
   description 'Better calendar for redmine'
-  version '1.3.6'
+  version '1.4.0'
   url 'https://github.com/berti92/mega_calendar'
   author_url 'https://github.com/berti92'
   requires_redmine :version_or_higher => '3.0.1'
