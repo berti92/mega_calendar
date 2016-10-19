@@ -35,6 +35,11 @@ en:
   day5: "Friday"
   day6: "Saturday"
   week_start: "Start of the week"
+  export_to_ics: "Export als .ics"
+  export: "Export"
+  select_time_range_for_export: "Bitte wählen Sie einen Zeitraum aus"
+  cancel: "Abbrechen"
+  please_select_time_range: "Es muss ein Zeitraum angegeben werden!"
   activerecord:
     errors:
       models:

@@ -13,7 +13,9 @@ class CalendarController < ApplicationController
 
   def export
     ical = Vpim::Icalendar.create({ 'METHOD' => 'REQUEST', 'CHARSET' => 'UTF-8' })
-    Issue.where(["issues.start_date IS NOT NULL OR issues.due_date IS NOT NULL"]).each do |issue|
+    time_start = params['time_start']
+    time_end = params['time_end']
+    Issue.where(["(issues.start_date IS NOT NULL OR issues.due_date IS NOT NULL) AND ((issues.start_date >= ? AND issues.start_date <= ?) OR (issues.due_date >= ? AND issues.due_date <= ?))", time_start, time_end, time_start, time_end]).each do |issue|
       ical.add_event do |e|
         ticket_time = TicketTime.where({:issue_id => issue.id}).first rescue nil
         tbegin = ticket_time.time_begin.strftime(" %H:%M") rescue ''
