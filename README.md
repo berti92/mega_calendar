@@ -24,14 +24,14 @@ Rename the folder:<br>
 <code>mv mega_calendar-master mega_calendar</code><br>
 Give the folder the right privileges in this case apache (to execute the command you must be root)<br>
 <code>chown -R www-data.www-data mega_calendar</code><br>
-Go back to your redmine folder<br>
-<code>cd /srv/redmine</code><br>
-Migrate the database<br>
-<code>bundle exec rake redmine:plugins:migrate RAILS_ENV=production</code><br>
 Go to the plugin folder<br>
 <code>cd /srv/redmine/plugins/mega_calendar</code><br>
 Install the gems<br>
 <code>bundle</code><br>
+Go back to your redmine folder<br>
+<code>cd /srv/redmine</code><br>
+Migrate the database<br>
+<code>bundle exec rake redmine:plugins:migrate RAILS_ENV=production</code><br>
 Now restart your redmine and you can configure the plugin in the admin settings in redmine.<br>
 To start redmine under apache2/passenger, please execute the following commands <br>
 <code>cd /srv/redmine</code><br>
