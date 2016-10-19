@@ -49,7 +49,7 @@ A quick overview about this plugin, you'll get on <a href="http://mega-calendar.
 
 <h2>History</h2>
 
-1.4.0: Added export functionality (ics)
+1.4.0: Added export functionality (ics) - Please make sure, that you have installed the gems -> <a href="https://github.com/berti92/mega_calendar/wiki/FAQ#i-get-an-error-if-i-want-to-export-the-issues-within-the-calendar-view">WIKI</a>
 
 1.3.8: Now you are able to set the start of the week within the plugin settings
 
