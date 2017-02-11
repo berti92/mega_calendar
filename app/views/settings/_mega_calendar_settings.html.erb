@@ -39,5 +39,50 @@
         </select>
       </td>
     </tr>
+    <tr>
+      <th><%= translate 'displayed_within_calendar' %></th>
+      <td>
+        <input onclick="show_user_group_select('users');" type="radio" name="settings[displayed_type]" value="users" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'users' ? 'checked' : '') %>> <%= translate 'user' %><br>
+        <input onclick="show_user_group_select('groups');" type="radio" name="settings[displayed_type]" value="groups" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'groups' ? 'checked' : '') %>> <%= translate 'group' %><br>
+      </td>
+    </tr>
+    <tr>
+      <th>&nbsp;</th>
+      <td>
+        <select id="settings_displayed_users" value="<%= settings['displayed_users'] %>" name="settings[displayed_users][]" multiple>
+          <% User.where(["users.login IS NOT NULL AND users.login <> ''"]).each do |u| %>
+            <option value="<%= u.id.to_s %>" <%= (!Setting.plugin_mega_calendar['displayed_users'].blank? && Setting.plugin_mega_calendar['displayed_users'].include?(u.id.to_s) ? 'selected' : '') %>><%= u.login.to_s %></option>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th>&nbsp;</th>
+      <td>
+        <select id="settings_displayed_groups" value="<%= settings['displayed_users'] %>" name="settings[displayed_users][]" multiple>
+          <% Group.where(["users.lastname IS NOT NULL AND users.lastname <> ''"]).each do |g| %>
+            <option value="<%= g.id.to_s %>" <%= (!Setting.plugin_mega_calendar['displayed_users'].blank? && Setting.plugin_mega_calendar['displayed_users'].include?(g.id.to_s) ? 'selected' : '') %>><%= g.lastname.to_s %></option>
+          <% end %>
+        </select>
+      </td>
+    </tr>
   </tbody>
 </table>
+<script type="text/javascript">
+  function show_user_group_select(type) {
+    if(type === 'users') {
+      $('#settings_displayed_users').prop('disabled', false);
+      $('#settings_displayed_users').fadeIn();
+      $('#settings_displayed_groups').fadeOut();
+      $('#settings_displayed_groups').prop('disabled', true);
+    } else {
+      $('#settings_displayed_groups').prop('disabled', false);
+      $('#settings_displayed_groups').fadeIn();
+      $('#settings_displayed_users').fadeOut();
+      $('#settings_displayed_users').prop('disabled', true);
+    }
+  }
+  $(function() {
+    show_user_group_select('<%= Setting.plugin_mega_calendar['displayed_type'] %>');
+  });
+</script>

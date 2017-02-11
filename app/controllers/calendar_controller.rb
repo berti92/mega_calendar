@@ -1,14 +1,59 @@
 class CalendarController < ApplicationController
   unloadable
-  
+
   before_filter(:check_plugin_right)
-  
+
   def check_plugin_right
     right = (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) ? true : false)
     if !right
       flash[:error] = translate 'no_right'
       redirect_to({:controller => :welcome})
     end
+  end
+
+  def query_filter(model, filters)
+    condition = [""]
+    if Setting.plugin_mega_calendar['displayed_type'] == 'users'
+      condition[0] << (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (?)'
+      condition << Setting.plugin_mega_calendar['displayed_users']
+    else
+      condition[0] << (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (SELECT user_id FROM groups_users WHERE group_id IN (?))'
+      condition << Setting.plugin_mega_calendar['displayed_users']
+    end
+    filters.keys.each do |x|
+      filter_param = filters[x]
+      filter = $mc_filters[x]
+      if((filter_param[:enabled] != 'true') || ((model == 'Holiday' && filter[:db_field_holiday].blank?) || (model == 'Issue' && filter[:db_field].blank?)))
+        next
+      end
+      condition[0] << ' AND '
+      if (filter[:condition].blank? && model == 'Issue') || (filter[:condition_holiday].blank? && model == 'Holiday')
+        condition[0] << (model == 'Issue' ? filter[:db_field] : filter[:db_field_holiday]) + ' '
+        if filter_param[:operator] == 'contains'
+          condition[0] << 'IN '
+        elsif filter_param[:operator] == 'not_contains'
+          condition[0] << 'NOT IN '
+        end
+        condition[0] << '(?)'
+        condition << filter_param[:value]
+      else
+        tmpcondition = (model == 'Issue' ? filter[:condition].gsub('##FIELD_ID##',filter[:db_field]) : filter[:condition_holiday].gsub('##FIELD_ID##',filter[:db_field_holiday])) + ' '
+        count_values = tmpcondition.scan(/(?=\?)/).count
+        if filter_param[:operator] == 'contains'
+          tmpcondition = tmpcondition.gsub('##OPERATOR##','IN')
+        elsif filter_param[:operator] == 'not_contains'
+          tmpcondition = tmpcondition.gsub('##OPERATOR##','NOT IN')
+        end
+        condition[0] << tmpcondition
+        (1..count_values).each do |x|
+          condition << filter_param[:value]
+        end
+      end
+    end
+    f = File.open('/tmp/test.txt', 'a')
+    f.write(condition.inspect)
+    f.close()
+    return condition
   end
 
   def export
@@ -118,16 +163,18 @@ class CalendarController < ApplicationController
     end
     fbegin = (Time.zone.today - 1.month) if(fbegin.blank?)
     fend = (Time.zone.today + 1.month) if(fend.blank?)
+    issues_condition = query_filter('Issue', params[:filter])
+    holidays_condition = query_filter('Holiday', params[:filter])
     if fuser.blank?
-      holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
-      issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
-      issues2 = Issue.where(['issues.start_date >= ? AND issues.due_date IS NULL',fbegin.to_s]) rescue []
-      issues3 = Issue.where(['issues.start_date IS NULL AND issues.due_date <= ?',fend.to_s]) rescue []
+      holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(holidays_condition) rescue []
+      issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(issues_condition) rescue []
+      issues2 = Issue.where(['issues.start_date >= ? AND issues.due_date IS NULL',fbegin.to_s]).where(issues_condition) rescue []
+      issues3 = Issue.where(['issues.start_date IS NULL AND issues.due_date <= ?',fend.to_s]).where(issues_condition) rescue []
     else
-      holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?)) AND holidays.user_id = ?',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]) rescue []
-      issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?)) AND issues.assigned_to_id = ?',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]) rescue []
-      issues2 = Issue.where(['issues.start_date >= ? AND issues.due_date IS NULL AND issues.assigned_to_id = ?',fbegin.to_s,User.current.id.to_s]) rescue []
-      issues3 = Issue.where(['issues.start_date IS NULL AND issues.due_date <= ? AND issues.assigned_to_id = ?',fend.to_s,User.current.id.to_s]) rescue []
+      holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?)) AND holidays.user_id = ?',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]).where(holidays_condition) rescue []
+      issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?)) AND issues.assigned_to_id = ?',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]).where(issues_condition) rescue []
+      issues2 = Issue.where(['issues.start_date >= ? AND issues.due_date IS NULL AND issues.assigned_to_id = ?',fbegin.to_s,User.current.id.to_s]).where(issues_condition) rescue []
+      issues3 = Issue.where(['issues.start_date IS NULL AND issues.due_date <= ? AND issues.assigned_to_id = ?',fend.to_s,User.current.id.to_s]).where(issues_condition) rescue []
     end
     @events = []
     def_holiday = '#' + Setting.plugin_mega_calendar['default_holiday_color']
@@ -182,7 +229,7 @@ class CalendarController < ApplicationController
     end
     i.update_attributes({:start_date => params[:event_begin].to_date.to_s, :due_date => event_end.to_date.to_s}) rescue nil
     if params[:allDay] != 'true'
-      tt = TicketTime.where(:issue_id => params[:id]).first 
+      tt = TicketTime.where(:issue_id => params[:id]).first
       if tt.blank?
         tt = TicketTime.new(:issue_id => params[:id])
       end

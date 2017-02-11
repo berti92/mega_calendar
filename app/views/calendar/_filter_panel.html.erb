@@ -1,0 +1,46 @@
+<form id="calendar_filter">
+<fieldset id="filters" class="collapsible  collapsed" style="padding-bottom: 20px;">
+  <legend onclick="toggleFieldset(this);"><%= translate 'description_filter' %></legend>
+  <div style="display: none;">
+    <table>
+    <% $mc_filters.keys.each do |filter_name|%>
+    <% filter = $mc_filters[filter_name] %>
+      <tr>
+        <td style="padding-left: 10px;">
+          <input type="checkbox" name="filter[<%= filter_name %>][enabled]" />
+        </td>
+        <td style="padding-left: 10px;">
+          <%= translate filter[:label] %>
+        </td>
+        <td style="padding-left: 10px;">
+          <select style="width: 100px;" name="filter[<%= filter_name %>][operator]" data-sel="filter_operator">
+            <% filter[:operators].each do |op| %>
+              <option value="<%= op.to_s %>"><%= translate 'label_'+op.to_s %></option>
+            <% end %>
+          </select>
+        </td>
+        <td style="padding-left: 10px;">
+          <% if filter[:type] == 'lookup' %>
+            <% lookup_items = eval(filter[:lookup_query]+".collect {|x| [x."+filter[:lookup_id]+",x."+filter[:lookup_value]+"]}") %>
+            <select style="width: 200px;" name="filter[<%= filter_name %>][value][]" data-sel="filter_value_select" multiple>
+              <% lookup_items.each do |item| %>
+                <option value="<%= item[0] %>"><%= item[1] %></option>
+              <% end %>
+            </select>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+    <a href="#" onclick="$('#calendar').fullCalendar( 'refetchEvents' );"><%= translate 'button_apply' %></a> &nbsp; <a href="#" onclick="reset_and_reload_filters();"><%= translate 'button_reset' %></a>
+  </div>
+</fieldset>
+</form>
+<script type="text/javascript">
+  function reset_and_reload_filters() {
+    $('#calendar_filter input[type="checkbox"]').prop( "checked", false );
+    $('#calendar_filter select[data-sel="filter_operator"] option:first-child').attr("selected", "selected");
+    $('#calendar_filter select[data-sel="filter_value_select"] option:selected').removeAttr("selected");
+    $('#calendar').fullCalendar( 'refetchEvents' );
+  }
+</script>
