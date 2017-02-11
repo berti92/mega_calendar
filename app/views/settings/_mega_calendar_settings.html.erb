@@ -42,8 +42,8 @@
     <tr>
       <th><%= translate 'displayed_within_calendar' %></th>
       <td>
-        <input onclick="show_user_group_select('users');" type="radio" name="settings[displayed_type]" value="users" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'users' ? 'checked' : '') %>> <%= translate 'user' %><br>
-        <input onclick="show_user_group_select('groups');" type="radio" name="settings[displayed_type]" value="groups" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'groups' ? 'checked' : '') %>> <%= translate 'group' %><br>
+        <input onclick="show_user_group_select('users');" type="radio" name="settings[displayed_type]" value="users" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'users' ? 'checked' : '') %>> <%= translate 'field_user' %><br>
+        <input onclick="show_user_group_select('groups');" type="radio" name="settings[displayed_type]" value="groups" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'groups' ? 'checked' : '') %>> <%= translate 'label_group' %><br>
       </td>
     </tr>
     <tr>
