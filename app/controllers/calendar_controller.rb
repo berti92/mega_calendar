@@ -14,10 +14,10 @@ class CalendarController < ApplicationController
   def query_filter(model, filters)
     condition = [""]
     if Setting.plugin_mega_calendar['displayed_type'] == 'users'
-      condition[0] << (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (?)'
+      condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (?) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id') + " IS NULL)"
       condition << Setting.plugin_mega_calendar['displayed_users']
     else
-      condition[0] << (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (SELECT user_id FROM groups_users WHERE group_id IN (?))'
+      condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (SELECT user_id FROM groups_users WHERE group_id IN (?)) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+ " IS NULL)"
       condition << Setting.plugin_mega_calendar['displayed_users']
     end
     filters.keys.each do |x|
