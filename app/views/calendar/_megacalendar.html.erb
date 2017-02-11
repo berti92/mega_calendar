@@ -23,6 +23,7 @@
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.js'></script>
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.js'></script>
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/lang-all.js'></script>
+<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/jquery-serialize-object.min.js'></script>
 <style>
 .calendar_event {
   pointer:cursor !important;
@@ -33,8 +34,15 @@
   text-decoration: line-through !important;
   opacity: 0.6 !important;
 }
+@media screen and (max-width: 900px) {
+  #calendar {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+}
 </style>
 <h2><%= translate 'calendar' %></h2>
+<%= render :partial => 'calendar/filter_panel', :locals => {} %>
 <center><div id='calendar'" style="<%= calendar_style %>"></div></center>
 
 <%
@@ -98,7 +106,8 @@
               start: start.format("YYYY-MM-DD HH:MM"),
               end: end.format("YYYY-MM-DD HH:MM"),
               user: user_query,
-              save_values: <%= use_values_from_session %>
+              save_values: <%= use_values_from_session %>,
+              filter: $('#calendar_filter').serializeObject()["filter"]
             },
             success: function(doc) {
               var events = [];

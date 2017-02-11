@@ -16,6 +16,7 @@ de:
   next: "Nächste Seite"
   save: "Speichern"
   list: "Liste"
+  displayed_within_calendar: "Im Kalender angezeigt"
   def_holiday_color: "Standard Farbe für Urlaubseinträge"
   def_color: "Standard Farbe"
   project: "Projekt"
