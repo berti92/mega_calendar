@@ -49,6 +49,8 @@ A quick overview about this plugin, you'll get on <a href="http://mega-calendar.
 
 <h2>History</h2>
 
+1.5.0: Added filters. Added functionality to include users to the calendar within the plugin settings. Mobile optimization 
+
 1.4.0: Added export functionality (ics) - Please make sure, that you have installed the gems -> <a href="https://github.com/berti92/mega_calendar/wiki/Installation">WIKI</a>
 
 1.3.8: Now you are able to set the start of the week within the plugin settings
