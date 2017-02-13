@@ -66,6 +66,7 @@ class CalendarController < ApplicationController
         e.lastmod(issue.updated_on)
         e.created(issue.created_on)
         e.uid("RedmineMegaCalendarIssueID:"+issue.id.to_s)
+	e.url(url_for(issue))
         #e.sequence(seq.to_i)
         if (issue.description)
            e.description(issue.description.gsub("\n\n",""))
