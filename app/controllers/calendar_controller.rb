@@ -26,7 +26,8 @@ class CalendarController < ApplicationController
     ical = Vpim::Icalendar.create({ 'METHOD' => 'REQUEST', 'CHARSET' => 'UTF-8' })
     time_start = params['time_start']
     time_end = params['time_end']
-    issues = Issue.where("(issues.start_date IS NOT NULL OR issues.due_date IS NOT NULL)")
+    issues = Issue.includes(:status).where("(issues.start_date IS NOT NULL OR issues.due_date IS NOT NULL)")
+    issues = issues.where(:issue_statuses => {:is_closed => false})
     if time_start and time_end
         issues = issues.where(["(issues.start_date <= ? AND issues.due_date >= ?)", time_end, time_start])
     elsif time_start and not time_end
@@ -58,7 +59,7 @@ class CalendarController < ApplicationController
         end
         time_start = Time.parse(time_start)
         time_end = Time.parse(time_end)
-        e.summary(issue.id.to_s + ' - ' + (issue.assigned_to.blank? ? '' : issue.assigned_to.firstname + " " + issue.assigned_to.lastname + ' - ') + issue.subject)
+        e.summary(issue.id.to_s + ' - ' + issue.subject + ' - ' + (issue.assigned_to.blank? ? '' : issue.assigned_to.firstname + " " + issue.assigned_to.lastname))
         e.dtstart(time_start)
         e.dtend(time_end)
         e.dtstamp(issue.updated_on)
