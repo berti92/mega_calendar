@@ -24,6 +24,7 @@ de:
   save_question: "Möchten Sie das Objekt speichern?"
   field_start: "Start"
   field_end: "Ende"
+  field_onlyassigned: "Nur meine Tickets"
   select_default: "Bitte auswählen..."
   sub_path: "Sub-Path URL"
   no_right: "Sie haben nicht die notwendigen Rechte für diese Aktion!"

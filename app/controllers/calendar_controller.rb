@@ -1,5 +1,16 @@
 class CalendarController < ApplicationController
+
   unloadable
+  skip_before_filter :check_if_login_required
+  skip_before_filter :verify_authenticity_token
+  
+# Redmine 1.3 and prior use accept_key_auth to enforce auth 
+  # via the key we hand to the applet.
+  if Redmine::VERSION::MAJOR == 1 and Redmine::VERSION::MINOR <= 3 then
+    accept_key_auth :check_plugin_right, :export
+  else
+    accept_api_auth :check_plugin_right, :export
+  end
   
   before_filter(:check_plugin_right)
   
@@ -15,7 +26,19 @@ class CalendarController < ApplicationController
     ical = Vpim::Icalendar.create({ 'METHOD' => 'REQUEST', 'CHARSET' => 'UTF-8' })
     time_start = params['time_start']
     time_end = params['time_end']
-    Issue.where(["(issues.start_date IS NOT NULL OR issues.due_date IS NOT NULL) AND ((issues.start_date >= ? AND issues.start_date <= ?) OR (issues.due_date >= ? AND issues.due_date <= ?))", time_start, time_end, time_start, time_end]).each do |issue|
+    issues = Issue.where("(issues.start_date IS NOT NULL OR issues.due_date IS NOT NULL)")
+    if time_start and time_end
+        issues = issues.where(["(issues.start_date <= ? AND issues.due_date >= ?)", time_end, time_start])
+    elsif time_start and not time_end
+	issues = issues.where(["(issues.due_date >= ?)", time_start])
+    elsif not time_start and time_end
+	issues = issues.where(["(issues.start_date <= ?)", time_end])
+    end
+    if params['onlyassigned'] and params['onlyassigned'] == 'true'
+	issues = issues.where(:assigned_to_id => User.current.id)
+    end
+
+      issues.each do |issue|
       ical.add_event do |e|
         ticket_time = TicketTime.where({:issue_id => issue.id}).first rescue nil
         tbegin = ticket_time.time_begin.strftime(" %H:%M") rescue ''
