@@ -57,8 +57,8 @@ class CalendarController < ApplicationController
             time_end = (issue.due_date + 1.day).to_date.to_s
           end
         end
-        time_start = Time.parse(time_start)
-        time_end = Time.parse(time_end)
+        time_start = Date.parse(time_start)
+        time_end = Date.parse(time_end)
         e.summary(issue.id.to_s + ' - ' + issue.subject + ' - ' + (issue.assigned_to.blank? ? '' : issue.assigned_to.firstname + " " + issue.assigned_to.lastname))
         e.dtstart(time_start)
         e.dtend(time_end)
