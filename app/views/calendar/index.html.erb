@@ -24,6 +24,10 @@
       <div style="display: table-cell;"><%= translate 'field_end' %>:</div>
       <div style="display: table-cell;"><input id="inp_export_end" type="text" name="time_end" /></div>
     </div>
+    <div style="display: table-row;">
+      <div style="display: table-cell;"><%= translate 'field_onlyassigned' %>:</div>
+      <div style="display: table-cell;"><input type="checkbox" id="inp_export_onlyassigned" name="only_assigned" /></div>
+    </div>
   </div>
   <br/>
   <div style="background-color: #E6E6E6; cursor: pointer; display: inline; padding: 3px;" onclick="remove_time_range();"><%= translate 'cancel' %></div>&nbsp;<div style="background-color: #E6E6E6; cursor: pointer; display: inline; padding: 3px;" onclick="submit_time_range();"><%= translate 'export' %></div>
@@ -56,9 +60,10 @@
  function submit_time_range() {
    var time_start = $("#inp_export_start").val();
    var time_end = $("#inp_export_end").val();
+   var onlyassigned = $("#inp_export_onlyassigned").is(":checked");
    if(time_start !== "" && time_end !== "") {
      remove_time_range();
-     window.open("<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/export?time_start="+time_start+"&time_end="+time_end,"_blank");
+     window.open("<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/export?time_start="+time_start+"&time_end="+time_end+"&onlyassigned="+onlyassigned,"_blank");
    } else {
      alert("<%= translate 'please_select_time_range' %>");
    }
