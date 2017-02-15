@@ -23,6 +23,7 @@ en:
   save_question: "Do you really want to save?"
   field_start: "Start"
   field_end: "End"
+  field_onlyassigned: "Only my issues"
   select_default: "Select..."
   sub_path: "Sub path URL"
   no_right: "You do not have the necessary rights to view this section!"
