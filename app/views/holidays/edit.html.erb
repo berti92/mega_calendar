@@ -13,7 +13,7 @@
       <td>
         <select name="holiday[user_id]" id="holiday_user_id">
             <option value=""><%= translate 'select_default' %></option>
-          <% User.where(["users.login IS NOT NULL AND users.login <> ''"]).each do |u| %>
+          <% Holiday.get_activated_users.each do |u| %>
             <option value="<%= u.id.to_s %>"><%= u.login.to_s %></option>
           <% end %>
         </select>

@@ -6,8 +6,8 @@ $mc_filters['assignee'] = {
   :db_field_holiday => 'holidays.user_id',
   :lookup_id => 'id',
   :operators => [:contains, :not_contains],
-  :lookup_value => 'lastname',
-  :lookup_query => 'User.where(["users.login IS NOT NULL AND users.login <> \'\'"]).order("users.lastname ASC")',
+  :lookup_value => 'login',
+  :lookup_query => 'Holiday.get_activated_users',
   :condition => nil,
   :condition_holiday => nil
 }
@@ -19,7 +19,7 @@ $mc_filters['assignee_group'] = {
   :lookup_id => 'id',
   :operators => [:contains, :not_contains],
   :lookup_value => 'lastname',
-  :lookup_query => 'Group.where(["users.lastname IS NOT NULL AND users.lastname <> \'\'"]).order("users.lastname ASC")',
+  :lookup_query => 'Holiday.get_activated_groups',
   :condition => '##FIELD_ID## IN (SELECT user_id FROM groups_users WHERE group_id ##OPERATOR## (?))',
   :condition_holiday => '##FIELD_ID## IN (SELECT user_id FROM groups_users WHERE group_id ##OPERATOR## (?))'
 }
