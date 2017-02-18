@@ -199,7 +199,7 @@ class CalendarController < ApplicationController
         issues4 = []
       end
     else
-      holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?)) AND holidays.user_id = ?',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]).where(holidays_condition) rescue []
+      holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?)) AND (holidays.user_id = ? OR holidays.user_id IS NULL)',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]).where(holidays_condition) rescue []
       issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?)) AND issues.assigned_to_id = ?',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]).where(issues_condition) rescue []
       issues2 = Issue.where(['issues.start_date >= ? AND issues.due_date IS NULL AND issues.assigned_to_id = ?',fbegin.to_s,User.current.id.to_s]).where(issues_condition) rescue []
       issues3 = Issue.where(['issues.start_date IS NULL AND issues.due_date <= ? AND issues.assigned_to_id = ?',fend.to_s,User.current.id.to_s]).where(issues_condition) rescue []
