@@ -16,6 +16,7 @@ fr:
   next: "Suivant"
   save: "Sauvegarder"
   list: "Lister"
+  week_start: "Début de la semaine"
   def_holiday_color: "Couleur par défaut pour les vacances"
   def_color: "Couleur par défaut"
   project: "Projet"

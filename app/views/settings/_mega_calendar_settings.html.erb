@@ -20,6 +20,15 @@
       </td>
     </tr>
     <tr>
+      <th><%= translate 'display_empty_dates' %></th>
+      <td>
+        <select name="settings[display_empty_dates]">
+          <option value="0" <%= (Setting.plugin_mega_calendar['display_empty_dates'].to_i == 0 ? 'selected' : '') %>><%= translate 'general_text_No' %></option>
+          <option value="1" <%= (Setting.plugin_mega_calendar['display_empty_dates'].to_i == 1 ? 'selected' : '') %>><%= translate 'general_text_Yes' %></option>
+        </select>
+      </td>
+    </tr>
+    <tr>
       <th><%= translate 'week_start' %></th>
       <td>
 	<select id="settings_week_start" name="settings[week_start]">
