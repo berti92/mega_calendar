@@ -73,9 +73,6 @@ class CalendarController < ApplicationController
         end
       end
     end
-    f = File.open('/tmp/test.txt', 'a')
-    f.write(condition.inspect)
-    f.close()
     return condition
   end
 
