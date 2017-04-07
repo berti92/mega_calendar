@@ -45,7 +45,7 @@ Please make sure that you set your users, that will be allowed to use this plugi
 
 <h2>Screenshots</h2>
 
-A quick overview about this plugin, you'll get on <a href="http://mega-calendar.devbert.de/">http://mega-calendar.devbert.de/</a>
+A quick overview about this plugin, you'll get on <a href="http://www.devbert.de/index.php/en/project/megacalendar/">http://www.devbert.de/index.php/en/project/megacalendar/</a>
 
 <h2>Newsletter</h2>
 
