@@ -37,6 +37,8 @@ To start redmine under apache2/passenger, please execute the following commands 
 <code>cd /srv/redmine</code><br>
 <code>touch tmp/restart.txt</code>
 
+If you got installation problems, then please have a look at the [wiki](https://github.com/berti92/mega_calendar/wiki/FAQ).
+
 <h2>Usage</h2>
 
 Within a issue you are able to set a time as start and end, to get a better calendar view. On top of the page you can reach the calendar and holiday section.
