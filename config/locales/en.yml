@@ -20,7 +20,7 @@ en:
   save_filter: "Save filter"
   global_filter: "Display to all users"
   use_saved_filter: "Use filter"
-  display_empty_dates: "Tickets ohne Abgabedatum anzeigen"
+  display_empty_dates: "Show tasks without date"
   def_holiday_color: "Default color for holiday"
   def_color: "Default color"
   project: "Project"
