@@ -31,9 +31,9 @@
 </form>
 
 <%
-  js_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first rescue nil
-  if js_locale.blank? || (js_locale != 'en' && js_locale != 'de' && js_locale != 'fr')
-    js_locale = 'en'
+  js_locale = User.current.language  rescue nil
+  if js_locale.blank?
+    js_locale = Setting.default_language
   end
 %>
 
