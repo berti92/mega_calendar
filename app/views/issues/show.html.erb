@@ -1,4 +1,4 @@
-<% if Redmine::VERSION.to_s.starts_with?('3.2') || Redmine::VERSION.to_s.starts_with?('3.3') %>
+<% if Redmine::VERSION.to_s.starts_with?('3.2') || Redmine::VERSION.to_s.starts_with?('3.3') || Redmine::VERSION.to_s.starts_with?('3.4') %>
 
 <%= render :partial => 'action_menu' %>
 
@@ -65,7 +65,7 @@
       rows.right l(:field_due_date), format_date(@issue.due_date), :class => 'due-date'
     end
   end
-  
+
   unless @issue.disabled_core_fields.include?('done_ratio')
     rows.right l(:field_done_ratio), progress_bar(@issue.done_ratio, :legend => "#{@issue.done_ratio}%"), :class => 'progress'
   end
@@ -80,7 +80,11 @@
     end
   end
 end %>
-<%= render_custom_fields_rows(@issue) %>
+<% if Redmine::VERSION.to_s.starts_with?('3.4') %>
+  <%= render_half_width_custom_fields_rows(@issue) %>
+<% else %>
+  <%= render_custom_fields_rows(@issue) %>
+<% end %>
 <%= call_hook(:view_issues_show_details_bottom, :issue => @issue) %>
 </div>
 
@@ -171,7 +175,11 @@ end %>
     <%= auto_discovery_link_tag(:atom, {:format => 'atom', :key => User.current.rss_key}, :title => "#{@issue.project} - #{@issue.tracker} ##{@issue.id}: #{@issue.subject}") %>
 <% end %>
 
-<%= context_menu issues_context_menu_path %>
+<% if Redmine::VERSION.to_s.starts_with?('3.4') %>
+  <%= context_menu %>
+<% else %>
+  <%= context_menu issues_context_menu_path %>
+<% end %>
 
 
 <% else %>
@@ -252,7 +260,11 @@ end %>
     rows.right l(:label_spent_time), (@issue.total_spent_hours > 0 ? link_to(l_hours(@issue.total_spent_hours), issue_time_entries_path(@issue)) : "-"), :class => 'spent-time'
   end
 end %>
-<%= render_custom_fields_rows(@issue) %>
+<% if Redmine::VERSION.to_s.starts_with?('3.4') %>
+  <%= render_half_width_custom_fields_rows(@issue) %>
+<% else %>
+  <%= render_custom_fields_rows(@issue) %>
+<% end %>
 <%= call_hook(:view_issues_show_details_bottom, :issue => @issue) %>
 </table>
 
@@ -343,6 +355,10 @@ end %>
     <%= auto_discovery_link_tag(:atom, {:format => 'atom', :key => User.current.rss_key}, :title => "#{@issue.project} - #{@issue.tracker} ##{@issue.id}: #{@issue.subject}") %>
 <% end %>
 
-<%= context_menu issues_context_menu_path %>
+<% if Redmine::VERSION.to_s.starts_with?('3.4') %>
+  <%= context_menu %>
+<% else %>
+  <%= context_menu issues_context_menu_path %>
+<% end %>
 
 <% end %>
