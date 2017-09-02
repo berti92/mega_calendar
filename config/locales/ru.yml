@@ -1,7 +1,7 @@
 ru:
   calendar: "Календарь"
-  holidays: "Дни роджения"
-  holiday:  "День рождения"
+  holidays: "Выходные"
+  holiday:  "Выходной"
   my_issues: "Мои задачи"
   all_issues: "Все задачи"
   user: "Пользователь"
@@ -51,4 +51,4 @@ ru:
         holiday:
           attributes:
             end:
-              greater_than_start: "Конечная дата должны быть больше начальной!"
+              greater_than_start: "Конечная дата должна быть больше начальной!"
