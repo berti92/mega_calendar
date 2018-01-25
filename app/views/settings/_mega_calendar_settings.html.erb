@@ -42,7 +42,7 @@
       <th><%= translate 'allowed_users' %></th>
       <td>
         <select id="settings_allowed_users" value="<%= settings['allowed_users'] %>" name="settings[allowed_users][]" multiple>
-          <% User.where(["users.login IS NOT NULL AND users.login <> ''"]).order("users.login ASC").each do |u| %>
+          <% User.where(["users.login IS NOT NULL AND users.login <> '' AND users.status = 1"]).order("users.login ASC").each do |u| %>
             <option value="<%= u.id.to_s %>" <%= (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(u.id.to_s) ? 'selected' : '') %>><%= u.login.to_s %></option>
           <% end %>
         </select>
@@ -59,7 +59,7 @@
       <th>&nbsp;</th>
       <td>
         <select id="settings_displayed_users" value="<%= settings['displayed_users'] %>" name="settings[displayed_users][]" multiple>
-          <% User.where(["users.login IS NOT NULL AND users.login <> ''"]).order("users.login ASC").each do |u| %>
+          <% User.where(["users.login IS NOT NULL AND users.login <> '' AND users.status = 1"]).order("users.login ASC").each do |u| %>
             <option value="<%= u.id.to_s %>" <%= (!Setting.plugin_mega_calendar['displayed_users'].blank? && Setting.plugin_mega_calendar['displayed_users'].include?(u.id.to_s) ? 'selected' : '') %>><%= u.login.to_s %></option>
           <% end %>
         </select>
