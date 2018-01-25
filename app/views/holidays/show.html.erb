@@ -5,7 +5,7 @@
   <table>
     <tr>
       <td><label><%= translate 'user' %></label></td>
-      <td><%= user %></td>
+      <td><%= @holiday.user.lastname + ' ' + @holiday.user.firstname %></td>
     </tr>
     <tr>
       <td><label><%= translate 'start' %></label></td>
