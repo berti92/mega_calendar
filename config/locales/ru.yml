@@ -45,6 +45,7 @@ ru:
   select_time_range_for_export: "Выберите период:"
   cancel: "Отмена"
   please_select_time_range: "Вы должны указать период!"
+  reason: "Причина"
   activerecord:
     errors:
       models:

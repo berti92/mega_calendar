@@ -15,6 +15,10 @@
       <td><label><%= translate 'end' %></label></td>
       <td><%= @holiday.end.blank? ? '' : @holiday.end.to_date.to_s %></td>
     </tr>
+    <tr>
+      <td><label><%= translate 'reason' %></label></td>
+      <td><%= @holiday.reason==1 ? 'Отпуск' : @holiday.reason==2 ? 'Больничный' : @holiday.reason==3 ? 'Командировка' : '' %></td>
+    </tr>
   </table>
 <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/edit?id=<%= @holiday.id.to_s %>"><%= translate 'edit' %></a>
 <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/destroy?id=<%= @holiday.id.to_s %>"><%= translate 'destroy' %></a>

@@ -4,6 +4,7 @@ class CreateHolidays < ActiveRecord::Migration
       t.datetime :start
       t.datetime :end
       t.integer :user_id
+      t.integer :reason, default: 1
     end
   end
   def down

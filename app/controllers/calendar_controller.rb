@@ -139,6 +139,10 @@ class CalendarController < ApplicationController
     ret_var << '<td>' + (translate 'end') + '</td>'
     ret_var << '<td>' + holiday.end.to_date.to_s + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
+    ret_var << '<tr>'
+    ret_var << '<td>' + (translate 'reason') + '</td>'
+    ret_var << '<td>' + (holiday.reason==1 ? 'Отпуск' : holiday.reason==2 ? 'Больничный' : holiday.reason==3 ? 'Командировка' : '') + '</td>' rescue '<td></td>'
+    ret_var << '</tr>'
     ret_var << '</table>'
     return ret_var
   end
@@ -198,23 +202,30 @@ class CalendarController < ApplicationController
         issues4 = []
       end
     else
-      holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?)) AND (holidays.user_id = ? OR holidays.user_id IS NULL)',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]).where(holidays_condition) rescue []
+      #holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?)) AND (holidays.user_id = ? OR holidays.user_id IS NULL)',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]).where(holidays_condition) rescue []
+      holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(holidays_condition) rescue []
       issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?)) AND issues.assigned_to_id = ?',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]).where(issues_condition) rescue []
       issues2 = Issue.where(['issues.start_date >= ? AND issues.due_date IS NULL AND issues.assigned_to_id = ?',fbegin.to_s,User.current.id.to_s]).where(issues_condition) rescue []
       issues3 = Issue.where(['issues.start_date IS NULL AND issues.due_date <= ? AND issues.assigned_to_id = ?',fend.to_s,User.current.id.to_s]).where(issues_condition) rescue []
       issues4 = Issue.where(['issues.start_date IS NULL AND issues.due_date IS NULL AND issues.assigned_to_id = ?',User.current.id.to_s]).where(issues_condition) rescue []
-    end
-    if Setting.plugin_mega_calendar['display_empty_dates'].to_i == 1
-      issues4 = Issue.where(['issues.start_date IS NULL AND issues.due_date IS NULL AND issues.assigned_to_id = ? AND (issues.created_on BETWEEN ? AND ?)',User.current.id.to_s,fbegin.to_s,fend.to_s]).where(issues_condition) rescue []
-    else
-      issues4 = []
+      if Setting.plugin_mega_calendar['display_empty_dates'].to_i == 1
+        issues4 = Issue.where(['issues.start_date IS NULL AND issues.due_date IS NULL AND issues.assigned_to_id = ? AND (issues.created_on BETWEEN ? AND ?)',User.current.id.to_s,fbegin.to_s,fend.to_s]).where(issues_condition) rescue []
+      else
+	issues4 = []
+      end
     end
     @events = []
     def_holiday = '#' + Setting.plugin_mega_calendar['default_holiday_color']
+    #def_ill = '#' + Setting.plugin_mega_calendar['default_ill_color']
     def_color = '#' + Setting.plugin_mega_calendar['default_event_color']
-    @events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.lastname + " " + h.user.firstname + ' - ') + (translate 'holiday'), :start => h.start.to_date.to_s, :end => (h.end + 1.day).to_date.to_s, :allDay => true, :color => def_holiday, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }}
+    #@events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.lastname + " " + h.user.firstname + ' - ') + (translate 'holiday'), :start => h.start.to_date.to_s, :end => (h.end + 1.day).to_date.to_s, :allDay => true, :color => def_holiday, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }} 
+    @events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.lastname + " " + h.user.firstname + ' - ') + (h.reason.to_s=='1' ? "Отпуск" : h.reason.to_s=='2' ? "Больничный" : h.reason.to_s=='3' ? "Командировка" : ''), :start => h.start.to_date.to_s, :end => (h.end + 1.day).to_date.to_s, :allDay => true, :color => def_holiday, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }} 
+
     issues = issues + issues2 + issues3 + issues4
     issues = issues.compact.uniq
+    if Setting.plugin_mega_calendar['display_issues'].to_i == 1
+	issues = []
+    end
     issues.each do |i|
       ticket_time = TicketTime.where({:issue_id => i.id}).first rescue nil
       tbegin = ticket_time.time_begin.strftime(" %H:%M") rescue ''

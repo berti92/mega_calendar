@@ -3,6 +3,7 @@ class Holiday < ActiveRecord::Base
   attr_accessible :user_id
   attr_accessible :start
   attr_accessible :end
+  attr_accessible :reason
   belongs_to(:user)
   validates :start, :date => true
   validates :end, :date => true
@@ -17,9 +18,9 @@ class Holiday < ActiveRecord::Base
 
   def self.get_activated_users
     if Setting.plugin_mega_calendar['displayed_type'] == 'users'
-      return User.where(["users.id IN (?) AND users.login IS NOT NULL AND users.login <> ''",Setting.plugin_mega_calendar['displayed_users']]).order("users.login ASC")
+      return User.where(["users.id IN (?) AND users.login IS NOT NULL AND users.login <> ''",Setting.plugin_mega_calendar['displayed_users']]).order("users.lastname ASC")
     else
-      return User.where(["users.id IN (SELECT user_id FROM groups_users WHERE group_id IN (?)) AND users.login IS NOT NULL AND users.login <> ''",Setting.plugin_mega_calendar['displayed_users']]).order("users.login ASC")
+      return User.where(["users.id IN (SELECT user_id FROM groups_users WHERE group_id IN (?)) AND users.login IS NOT NULL AND users.login <> ''",Setting.plugin_mega_calendar['displayed_users']]).order("users.lastname ASC")
     end
   end
 

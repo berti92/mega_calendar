@@ -26,6 +26,17 @@
       <td><label><%= translate 'end' %></label></td>
       <td><input type="text" id="holiday_end" name="holiday[end]" /></td>
     </tr>
+    <tr>
+	<td><label><%= translate 'reason' %></label></td>
+        <td>
+            <select name="holiday[reason]" id="holiday_reason">
+                <option value=""><%= translate 'select_default' %></option>
+                <option value="1">Отпуск</option>
+                <option value="2">Больничный</option>
+                <option value="3">Командировка</option>
+            </select>
+        </td>
+    </tr>
   </table>
 <input type="submit" value="<%= translate 'save' %>" />
 </form>

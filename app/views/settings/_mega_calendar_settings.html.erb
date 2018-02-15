@@ -8,6 +8,12 @@
       </td>
     </tr>
     <tr>
+      <th><%= translate 'def_ill_color' %></th>
+      <td>
+        <input type="text" id="settings_default_ill_color" value="<%= settings['default_ill_color'] %>" name="settings[default_ill_color]" class="color" />
+      </td>
+    </tr>
+    <tr>
       <th><%= translate 'def_color' %></th>
       <td>
         <input type="text" id="settings_default_event_color" value="<%= settings['default_event_color'] %>" name="settings[default_event_color]" class="color" />
@@ -29,6 +35,15 @@
       </td>
     </tr>
     <tr>
+      <th><%= translate 'display_issues' %></th>
+      <td>
+        <select name="settings[display_issues]">
+	    <option value="0" <%= (Setting.plugin_mega_calendar['display_issues'].to_i == 0 ? 'selected' : '') %>><%= translate 'general_text_Yes' %></option>
+            <option value="1" <%= (Setting.plugin_mega_calendar['display_issues'].to_i == 1 ? 'selected' : '') %>><%= translate 'general_text_No' %></option>
+        </select>
+      </td>
+    </tr>
+    <tr>
       <th><%= translate 'week_start' %></th>
       <td>
 	<select id="settings_week_start" name="settings[week_start]">
@@ -42,8 +57,18 @@
       <th><%= translate 'allowed_users' %></th>
       <td>
         <select id="settings_allowed_users" value="<%= settings['allowed_users'] %>" name="settings[allowed_users][]" multiple>
-          <% User.where(["users.login IS NOT NULL AND users.login <> '' AND users.status = 1"]).order("users.login ASC").each do |u| %>
+          <% User.where(["users.login IS NOT NULL AND users.login <> '' AND users.status = 1"]).order("users.lastname ASC").each do |u| %>
             <option value="<%= u.id.to_s %>" <%= (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(u.id.to_s) ? 'selected' : '') %>><%= u.lastname.to_s + ' ' + u.firstname.to_s %></option>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th><%= translate 'allowed_users_edit' %></th>
+      <td>
+        <select id="settings_allowed_users_edit" value="<%= settings['allowed_users_edit'] %>" name="settings[allowed_users_edit][]" multiple>
+          <% User.where(["users.login IS NOT NULL AND users.login <> '' AND users.status = 1"]).order("users.lastname ASC").each do |u| %>
+            <option value="<%= u.id.to_s %>" <%= (!Setting.plugin_mega_calendar['allowed_users_edit'].blank? && Setting.plugin_mega_calendar['allowed_users_edit'].include?(u.id.to_s) ? 'selected' : '') %>><%= u.lastname.to_s + ' ' + u.firstname.to_s %></option>
           <% end %>
         </select>
       </td>
