@@ -38,6 +38,8 @@ class CalendarController < ApplicationController
 
   def query_filter(model, filters)
     condition = [""]
+    if Setting.plugin_mega_calendar['display_issues'].to_i == 0
+
     if Setting.plugin_mega_calendar['displayed_type'] == 'users'
       condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (?) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id') + " IS NULL)"
       condition << Setting.plugin_mega_calendar['displayed_users']
@@ -76,6 +78,7 @@ class CalendarController < ApplicationController
       end
     end
     return condition
+    end
   end
 
   def export
@@ -192,11 +195,10 @@ class CalendarController < ApplicationController
     fbegin = (Time.zone.today - 1.month) if(fbegin.blank?)
     fend = (Time.zone.today + 1.month) if(fend.blank?)
     issues_condition = query_filter('Issue', params[:filter])
-    holidays_condition = query_filter('Holiday', params[:filter])
     if fuser.blank?
-      holidays = Holiday.where(['holidays.reason = 1 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(holidays_condition) rescue []
-      illdays = Holiday.where(['holidays.reason = 2 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(holidays_condition) rescue []
-      buisnesstripdays = Holiday.where(['holidays.reason = 3 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(holidays_condition) rescue []
+      holidays = Holiday.where(['holidays.reason = 1 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
+      illdays = Holiday.where(['holidays.reason = 2 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
+      buisnesstripdays = Holiday.where(['holidays.reason = 3 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
       issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(issues_condition) rescue []
       issues2 = Issue.where(['issues.start_date >= ? AND issues.due_date IS NULL',fbegin.to_s]).where(issues_condition) rescue []
       issues3 = Issue.where(['issues.start_date IS NULL AND issues.due_date <= ?',fend.to_s]).where(issues_condition) rescue []
@@ -206,10 +208,9 @@ class CalendarController < ApplicationController
         issues4 = []
       end
     else
-      #holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?)) AND (holidays.user_id = ? OR holidays.user_id IS NULL)',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]).where(holidays_condition) rescue []
-      holidays = Holiday.where(['holidays.reason = 1 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(holidays_condition) rescue []
-      illdays = Holiday.where(['holidays.reason = 2 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(holidays_condition) rescue []
-      buisnesstripdays = Holiday.where(['holidays.reason = 3 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(holidays_condition) rescue []
+      holidays = Holiday.where(['holidays.reason = 1 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
+      illdays = Holiday.where(['holidays.reason = 2 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
+      buisnesstripdays = Holiday.where(['holidays.reason = 3 AND ((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]) rescue []
       issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?)) AND issues.assigned_to_id = ?',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,User.current.id.to_s]).where(issues_condition) rescue []
       issues2 = Issue.where(['issues.start_date >= ? AND issues.due_date IS NULL AND issues.assigned_to_id = ?',fbegin.to_s,User.current.id.to_s]).where(issues_condition) rescue []
       issues3 = Issue.where(['issues.start_date IS NULL AND issues.due_date <= ? AND issues.assigned_to_id = ?',fend.to_s,User.current.id.to_s]).where(issues_condition) rescue []
