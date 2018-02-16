@@ -71,7 +71,8 @@
         defaultView: '<%= default_view %>',
         height: <%= calendar_height %>,
         selectable: true,
-    /*    customButtons: {
+    <% if Setting.plugin_mega_calendar['display_issues'].to_i == 0 %>
+          customButtons: {
                 myTickets: {
                         text: '<%= translate 'my_issues' %>',
                         click: function() {
@@ -90,7 +91,7 @@
                 }
 
         },
-        */
+	<% end %>
         header: {
                         left: '<%= (show_view_buttons == false ? '' : 'prev,next today ') %>allTickets,myTickets',
                         center: 'title',
