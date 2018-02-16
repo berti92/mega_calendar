@@ -71,7 +71,7 @@
         defaultView: '<%= default_view %>',
         height: <%= calendar_height %>,
         selectable: true,
-        customButtons: {
+    /*    customButtons: {
                 myTickets: {
                         text: '<%= translate 'my_issues' %>',
                         click: function() {
@@ -90,6 +90,7 @@
                 }
 
         },
+        */
         header: {
                         left: '<%= (show_view_buttons == false ? '' : 'prev,next today ') %>allTickets,myTickets',
                         center: 'title',
@@ -140,7 +141,8 @@
       },
       select: function(start, end) {
         $('#calendar').fullCalendar('unselect');
-        window.open('<%= Setting.plugin_mega_calendar['sub_path'] %>issues/new?issue[start_date]='+start.format("YYYY-MM-DD")+'&issue[due_date]='+end.format("YYYY-MM-DD")+'&issue[time_begin]='+start.format("HH:mm")+'&issue[time_end]='+end.format("HH:mm"), '_blank');
+        //window.open('<%= Setting.plugin_mega_calendar['sub_path'] %>issues/new?issue[start_date]='+start.format("YYYY-MM-DD")+'&issue[due_date]='+end.format("YYYY-MM-DD")+'&issue[time_begin]='+start.format("HH:mm")+'&issue[time_end]='+end.format("HH:mm"), '_blank');
+        window.open('<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/new?start='+start.format("YYYY-MM-DD")+'&end='+end.format("YYYY-MM-DD"), '_blank');
       },
     });
     set_active_button(user_query);

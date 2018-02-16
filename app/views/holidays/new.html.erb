@@ -51,18 +51,41 @@
 <script type="text/javascript">
  $(document).ready(function() {
  $.datetimepicker.setLocale('<%= js_locale %>');
- var options = {
+
+ function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+ };
+
+ var options_start = {
    i18n: {
     de: {
-     months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
-     dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
+      months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
     }
    },
    timepicker: false,
    datepicker: true,
-   format: 'Y-m-d'
+   format: 'Y-m-d',
+   value: getUrlParameter('start')
  };
- $("#holiday_start").datetimepicker(options);
- $("#holiday_end").datetimepicker(options);
+ 
+ var options_end = {
+   i18n: {
+    de: {
+      months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
+    }
+   },
+   timepicker: false,
+   datepicker: true,
+   format: 'Y-m-d',
+   value: getUrlParameter('end')
+ };
+ 
+ $("#holiday_start").datetimepicker(options_start);
+ $("#holiday_end").datetimepicker(options_end);
  });
 </script>
