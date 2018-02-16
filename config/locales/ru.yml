@@ -46,6 +46,14 @@ ru:
   cancel: "Отмена"
   please_select_time_range: "Вы должны указать период!"
   reason: "Причина"
+  def_illday_color: "Цвет по умолчанию для больничных"
+  def_buitrip_color: "Цвет по умолчанию для командировок"
+  display_issues: "Отоборажать задачи в календаре"
+  allowed_users_edit: "Доступно пользователям для редактирования:"
+  displayed_within_calendar: "Пользователи отображаемые на календаре:"
+  on_vacation: "Отпуск"
+  ill_days: "Больничный"
+  buisness_trip: "Командировка"
   activerecord:
     errors:
       models:
