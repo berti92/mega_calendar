@@ -40,44 +40,44 @@ class CalendarController < ApplicationController
     condition = [""]
     if Setting.plugin_mega_calendar['display_issues'].to_i == 0
 
-    if Setting.plugin_mega_calendar['displayed_type'] == 'users'
-      condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (?) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id') + " IS NULL)"
-      condition << Setting.plugin_mega_calendar['displayed_users']
-    else
-      condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (SELECT user_id FROM groups_users WHERE group_id IN (?)) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+ " IS NULL)"
-      condition << Setting.plugin_mega_calendar['displayed_users']
-    end
-    filters.keys.each do |x|
-      filter_param = filters[x]
-      filter = $mc_filters[x]
-      if((filter_param[:enabled] != 'true') || ((model == 'Holiday' && filter[:db_field_holiday].blank?) || (model == 'Issue' && filter[:db_field].blank?)))
-        next
-      end
-      condition[0] << ' AND '
-      if (filter[:condition].blank? && model == 'Issue') || (filter[:condition_holiday].blank? && model == 'Holiday')
-        condition[0] << (model == 'Issue' ? filter[:db_field] : filter[:db_field_holiday]) + ' '
-        if filter_param[:operator] == 'contains'
-          condition[0] << 'IN '
-        elsif filter_param[:operator] == 'not_contains'
-          condition[0] << 'NOT IN '
-        end
-        condition[0] << '(?)'
-        condition << filter_param[:value]
+      if Setting.plugin_mega_calendar['displayed_type'] == 'users'
+        condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (?) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id') + " IS NULL)"
+        condition << Setting.plugin_mega_calendar['displayed_users']
       else
-        tmpcondition = (model == 'Issue' ? filter[:condition].gsub('##FIELD_ID##',filter[:db_field]) : filter[:condition_holiday].gsub('##FIELD_ID##',filter[:db_field_holiday])) + ' '
-        count_values = tmpcondition.scan(/(?=\?)/).count
-        if filter_param[:operator] == 'contains'
-          tmpcondition = tmpcondition.gsub('##OPERATOR##','IN')
-        elsif filter_param[:operator] == 'not_contains'
-          tmpcondition = tmpcondition.gsub('##OPERATOR##','NOT IN')
+        condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (SELECT user_id FROM groups_users WHERE group_id IN (?)) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+ " IS NULL)"
+        condition << Setting.plugin_mega_calendar['displayed_users']
+      end
+      filters.keys.each do |x|
+        filter_param = filters[x]
+        filter = $mc_filters[x]
+        if((filter_param[:enabled] != 'true') || ((model == 'Holiday' && filter[:db_field_holiday].blank?) || (model == 'Issue' && filter[:db_field].blank?)))
+          next
         end
-        condition[0] << tmpcondition
-        (1..count_values).each do |x|
+        condition[0] << ' AND '
+        if (filter[:condition].blank? && model == 'Issue') || (filter[:condition_holiday].blank? && model == 'Holiday')
+          condition[0] << (model == 'Issue' ? filter[:db_field] : filter[:db_field_holiday]) + ' '
+          if filter_param[:operator] == 'contains'
+            condition[0] << 'IN '
+          elsif filter_param[:operator] == 'not_contains'
+            condition[0] << 'NOT IN '
+          end
+          condition[0] << '(?)'
           condition << filter_param[:value]
+        else
+          tmpcondition = (model == 'Issue' ? filter[:condition].gsub('##FIELD_ID##',filter[:db_field]) : filter[:condition_holiday].gsub('##FIELD_ID##',filter[:db_field_holiday])) + ' '
+          count_values = tmpcondition.scan(/(?=\?)/).count
+          if filter_param[:operator] == 'contains'
+            tmpcondition = tmpcondition.gsub('##OPERATOR##','IN')
+          elsif filter_param[:operator] == 'not_contains'
+            tmpcondition = tmpcondition.gsub('##OPERATOR##','NOT IN')
+          end
+          condition[0] << tmpcondition
+          (1..count_values).each do |x|
+            condition << filter_param[:value]
+          end
         end
       end
-    end
-    return condition
+      return condition
     end
   end
 
