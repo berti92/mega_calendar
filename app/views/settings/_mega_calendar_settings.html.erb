@@ -21,6 +21,12 @@
       </td>
     </tr>
     <tr>
+      <th><%= translate 'def_remote_work_color' %></th>
+      <td>
+        <input type="text" id="settings_default_remote_work_color" value="<%= settings['default_remote_work_color'] %>" name="settings[default_remote_work_color]" class="color" />
+      </td>
+    </tr>
+    <tr>
       <th><%= translate 'def_color' %></th>
       <td>
         <input type="text" id="settings_default_event_color" value="<%= settings['default_event_color'] %>" name="settings[default_event_color]" class="color" />
@@ -82,7 +88,7 @@
       <td>
         <select id="settings_allowed_users_groups" value="<%= settings['allowed_users'] %>" name="settings[allowed_users][]" multiple>
           <% Group.where(["users.lastname IS NOT NULL AND users.lastname <> ''"]).order("users.lastname ASC").each do |g| %>
-            <option value="<%= g.id.to_s %>" <%= (!Setting.plugin_mega_calendar['displayed_users'].blank? && Setting.plugin_mega_calendar['displayed_users'].include?(g.id.to_s) ? 'selected' : '') %>><%= g.lastname.to_s %></option>
+            <option value="<%= g.id.to_s %>" <%= (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(g.id.to_s) ? 'selected' : '') %>><%= g.lastname.to_s %></option>
           <% end %>
         </select>
       </td>
