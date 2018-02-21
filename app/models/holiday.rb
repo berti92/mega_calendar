@@ -6,15 +6,8 @@ class Holiday < ActiveRecord::Base
   attr_accessible :reason
   belongs_to(:user)
   validates :user_id, presence: true, allow_blank: false
-  #validates :start, presence: true, allow_blank: false
-  #validates :end, presence: true, allow_blank: false
   validates :reason, presence: true, allow_blank: false
-# => true
-  validates_datetime :start
-#, :datetime 
-#=> true
-#  validates :end, :date => true
-  #validates_presence_of :start, :end
+  validates_presence_of :start, :end
   validate :validate_holiday
 
   def validate_holiday

@@ -5,4 +5,3 @@ if Gem::Version.new(Bundler::VERSION) < Gem::Version.new('1.5.0')
 end
 
 gem "vpim", "13.11.11"
-gem "validates_timeliness", '~> 4.0'
