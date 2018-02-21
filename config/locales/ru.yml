@@ -56,6 +56,8 @@ ru:
   buisness_trip: "Командировка"
   remote_work: "Удаленно"
   meeting: "Встреча"
+  def_remote_work_color: "Цвет для удаленной работы"
+  def_meeting_color: "Цвет для встреч"
   activerecord:
     errors:
       models:
