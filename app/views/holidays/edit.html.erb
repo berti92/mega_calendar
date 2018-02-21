@@ -36,6 +36,7 @@
             <option value="2"><%= translate 'ill_days' %></option>
             <option value="3"><%= translate 'buisness_trip' %></option>
 	    <option value="4"><%= translate 'remote_work' %></option>
+    	    <option value="5"><%= translate 'meeting' %></option>
         </select>
       </td>
     </tr>
@@ -63,10 +64,10 @@
      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
     }
    },
-   timepicker: false,
+   timepicker: true,
    datepicker: true,
-   format: 'Y-m-d',
-   value: '<%= @holiday.start.blank? ? '' : @holiday.start.to_date.to_s %>'
+   format: 'Y-m-d H:00',
+   value: '<%= @holiday.start.blank? ? '' : @holiday.start.to_datetime.strftime("%Y-%m-%d %H:%M").to_s %>'
  };
  var options_end = {
    i18n: {
@@ -75,10 +76,10 @@
      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
     }
    },
-   timepicker: false,
+   timepicker: true,
    datepicker: true,
-   format: 'Y-m-d',
-   value: '<%= @holiday.end.blank? ? '' : @holiday.end.to_date.to_s %>'
+   format: 'Y-m-d H:00',
+   value: '<%= @holiday.end.blank? ? '' : @holiday.end.to_datetime.strftime("%Y-%m-%d %H:%M").to_s %>'
  };
  $("#holiday_start").datetimepicker(options_start);
  $("#holiday_end").datetimepicker(options_end);

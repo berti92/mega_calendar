@@ -9,15 +9,15 @@
     </tr>
     <tr>
       <td><label><%= translate 'start' %></label></td>
-      <td><%= @holiday.start.blank? ? '' : @holiday.start.to_date.to_s %></td>
+      <td><%= @holiday.start.blank? ? '' : @holiday.start.to_datetime.strftime("%Y-%m-%d %H:%M").to_s %></td>
     </tr>
     <tr>
       <td><label><%= translate 'end' %></label></td>
-      <td><%= @holiday.end.blank? ? '' : @holiday.end.to_date.to_s %></td>
+      <td><%= @holiday.end.blank? ? '' : @holiday.end.to_datetime.strftime("%Y-%m-%d %H:%M").to_s %></td>
     </tr>
     <tr>
       <td><label><%= translate 'reason' %></label></td>
-      <td><%= @holiday.reason==1 ? (translate 'on_vacation') : @holiday.reason==2 ? (translate 'ill_days') : @holiday.reason==3 ? (translate 'buisness_trip') : @holiday.reason==4 ? (translate 'remote_work') : '' %></td>
+      <td><%= @holiday.reason==1 ? (translate 'on_vacation') : @holiday.reason==2 ? (translate 'ill_days') : @holiday.reason==3 ? (translate 'buisness_trip') : @holiday.reason==4 ? (translate 'remote_work') : @holiday.reason==5 ? (translate 'meeting') : '' %></td>
     </tr>
   </table>
 <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/edit?id=<%= @holiday.id.to_s %>"><%= translate 'edit' %></a>

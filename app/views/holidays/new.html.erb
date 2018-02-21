@@ -35,6 +35,7 @@
                 <option value="2"><%= translate 'ill_days' %></option>
                 <option value="3"><%= translate 'buisness_trip' %></option>
 		<option value="4"><%= translate 'remote_work' %></option>
+        	<option value="5"><%= translate 'meeting' %></option>
             </select>
         </td>
     </tr>
@@ -67,9 +68,9 @@
       dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
     }
    },
-   timepicker: false,
+   timepicker: true,
    datepicker: true,
-   format: 'Y-m-d',
+   format: 'Y-m-d H:00',
    value: getUrlParameter('start')
  };
  
@@ -80,9 +81,9 @@
       dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
     }
    },
-   timepicker: false,
+   timepicker: true,
    datepicker: true,
-   format: 'Y-m-d',
+   format: 'Y-m-d H:00',
    value: getUrlParameter('end')
  };
  

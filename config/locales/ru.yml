@@ -55,6 +55,7 @@ ru:
   ill_days: "Больничный"
   buisness_trip: "Командировка"
   remote_work: "Удаленно"
+  meeting: "Встреча"
   activerecord:
     errors:
       models:
