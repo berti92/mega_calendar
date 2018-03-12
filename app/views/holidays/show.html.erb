@@ -17,7 +17,7 @@
     </tr>
     <tr>
       <td><label><%= translate 'reason' %></label></td>
-      <td><%= @holiday.reason==1 ? (translate 'on_vacation') : @holiday.reason==2 ? (translate 'ill_days') : @holiday.reason==3 ? (translate 'buisness_trip') : @holiday.reason==4 ? (translate 'remote_work') : @holiday.reason==5 ? (translate 'meeting') : '' %></td>
+      <td><%= @holiday.reason==1 ? (translate 'on_vacation') : @holiday.reason==2 ? (translate 'ill_days') : @holiday.reason==3 ? (translate 'buisness_trip') : @holiday.reason==4 ? (translate 'remote_work') : @holiday.reason==5 ? (translate 'meeting') : @holiday.reason==6 ? (translate 'timeoff') : '' %></td>
     </tr>
   </table>
 <a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/edit?id=<%= @holiday.id.to_s %>"><%= translate 'edit' %></a>
