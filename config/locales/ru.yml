@@ -56,6 +56,7 @@ ru:
   buisness_trip: "Командировка"
   remote_work: "Удаленно"
   meeting: "Встреча"
+  tmeeting: "Совещание"
   timeoff: "Отгул"
   def_remote_work_color: "Цвет для удаленной работы"
   def_meeting_color: "Цвет для встреч"
