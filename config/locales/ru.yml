@@ -52,7 +52,7 @@ ru:
   allowed_users_edit: "Доступно пользователям для редактирования:"
   displayed_within_calendar: "Пользователи отображаемые на календаре:"
   on_vacation: "Отпуск"
-  ill_days: "Больничный"
+  ill_days: "Болеет"
   buisness_trip: "Командировка"
   remote_work: "Удаленно"
   meeting: "Встреча"
