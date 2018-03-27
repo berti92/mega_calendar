@@ -138,11 +138,11 @@ class CalendarController < ApplicationController
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'start') + '</td>'
-    ret_var << '<td>' + holiday.start.to_datetime.strftime("%Y-%m-%d %H:%M").to_s + '</td>' rescue '<td></td>'
+    ret_var << '<td>' + holiday.start.to_datetime.in_time_zone(User.current.time_zone).strftime("%Y-%m-%d %H:%M").to_s + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'end') + '</td>'
-    ret_var << '<td>' + holiday.end.to_datetime.strftime("%Y-%m-%d %H:%M").to_s + '</td>' rescue '<td></td>'
+    ret_var << '<td>' + holiday.end.to_datetime.in_time_zone(User.current.time_zone).strftime("%Y-%m-%d %H:%M").to_s + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'reason') + '</td>'
@@ -242,10 +242,10 @@ class CalendarController < ApplicationController
     @events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.lastname + " " + h.user.firstname + ' - ') + (translate 'on_vacation'), :start => h.start.to_date.to_s, :end => (h.end + 1.day).to_date.to_s, :allDay => true, :color => def_holiday, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }} 
     @events = @events + illdays.collect {|ild| {:id => ild.id.to_s, :controller_name => 'holiday', :title => (ild.user.blank? ? '' : ild.user.lastname + " " + ild.user.firstname + ' - ') + (translate 'ill_days'), :start => ild.start.to_date.to_s, :end => (ild.end + 1.day).to_date.to_s, :allDay => true, :color => def_illday, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + ild.id.to_s, :className => 'calendar_event', :description => form_holiday(ild) }} 
     @events = @events + buisnesstripdays.collect {|bt| {:id => bt.id.to_s, :controller_name => 'holiday', :title => (bt.user.blank? ? '' : bt.user.lastname + " " + bt.user.firstname + ' - ') + (translate 'buisness_trip'), :start => bt.start.to_date.to_s, :end => (bt.end + 1.day).to_date.to_s, :allDay => true, :color => def_buitrip, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + bt.id.to_s, :className => 'calendar_event', :description => form_holiday(bt) }} 
-    @events = @events + meetingdays.collect {|m| {:id => m.id.to_s, :controller_name => 'holiday', :title => (m.user.blank? ? '' : m.user.lastname + " " + m.user.firstname + ' - ') + (translate 'meeting'), :start => m.start.to_datetime.strftime("%Y-%m-%d %H:%M").to_s, :end => m.end.to_datetime.strftime("%Y-%m-%d %H:%M").to_s, :allDay => false, :color => def_meeting, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + m.id.to_s, :className => 'calendar_event', :description => form_holiday(m) }} 
+    @events = @events + meetingdays.collect {|m| {:id => m.id.to_s, :controller_name => 'holiday', :title => (m.user.blank? ? '' : m.user.lastname + " " + m.user.firstname + ' - ') + (translate 'meeting'), :start => m.start.to_datetime.in_time_zone(User.current.time_zone).strftime("%Y-%m-%d %H:%M").to_s, :end => m.end.to_datetime.in_time_zone(User.current.time_zone).strftime("%Y-%m-%d %H:%M").to_s, :allDay => false, :color => def_meeting, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + m.id.to_s, :className => 'calendar_event', :description => form_holiday(m) }} 
     @events = @events + remoteworkdays.collect {|rw| {:id => rw.id.to_s, :controller_name => 'holiday', :title => (rw.user.blank? ? '' : rw.user.lastname + " " + rw.user.firstname + ' - ') + (translate 'remote_work'), :start => rw.start.to_date.to_s, :end => (rw.end + 1.day).to_date.to_s, :allDay => true, :color => def_remotework, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + rw.id.to_s, :className => 'calendar_event', :description => form_holiday(rw) }} 
     @events = @events + timeoffdays.collect {|to| {:id => to.id.to_s, :controller_name => 'holiday', :title => (to.user.blank? ? '' : to.user.lastname + " " + to.user.firstname + ' - ') + (translate 'timeoff'), :start => to.start.to_date.to_s, :end => (to.end + 1.day).to_date.to_s, :allDay => true, :color => def_timeoff, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + to.id.to_s, :className => 'calendar_event', :description => form_holiday(to) }} 
-    @events = @events + tmeetingdays.collect {|tm| {:id => tm.id.to_s, :controller_name => 'holiday', :title => (tm.user.blank? ? '' : tm.user.lastname + " " + tm.user.firstname + ' - ') + (translate 'tmeeting'), :start => tm.start.to_datetime.strftime("%Y-%m-%d %H:%M").to_s, :end => tm.end.to_datetime.strftime("%Y-%m-%d %H:%M").to_s, :allDay => false, :color => def_tmeeting, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + tm.id.to_s, :className => 'calendar_event', :description => form_holiday(tm) }} 
+    @events = @events + tmeetingdays.collect {|tm| {:id => tm.id.to_s, :controller_name => 'holiday', :title => (tm.user.blank? ? '' : tm.user.lastname + " " + tm.user.firstname + ' - ') + (translate 'tmeeting'), :start => tm.start.to_datetime.in_time_zone(User.current.time_zone).strftime("%Y-%m-%d %H:%M").to_s, :end => tm.end.to_datetime.in_time_zone(User.current.time_zone).strftime("%Y-%m-%d %H:%M").to_s, :allDay => false, :color => def_tmeeting, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + tm.id.to_s, :className => 'calendar_event', :description => form_holiday(tm) }} 
 
     if Setting.plugin_mega_calendar['display_issues'].to_i == 0
       issues = issues + issues2 + issues3 + issues4
@@ -284,9 +284,9 @@ class CalendarController < ApplicationController
   def change_holiday
     h = Holiday.find(params[:id])
     if !params[:event_end].blank?
-      h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => (params[:event_end].to_date - 1.day).to_s}) rescue nil
+      h.update_attributes({:start => params[:event_begin].to_datetime.in_time_zone(User.current.time_zone).to_s, :end => (params[:event_end].to_datetime - 1.day).in_time_zone(User.current.time_zone).to_s}) rescue nil
     else
-      h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => params[:event_begin].to_date.to_s}) rescue nil
+      h.update_attributes({:start => params[:event_begin].to_datetime.in_time_zone(User.current.time_zone).to_s, :end => params[:event_begin].to_datetime.in_time_zone(User.current.time_zone).to_s}) rescue nil
     end
     render(:text => "")
   end

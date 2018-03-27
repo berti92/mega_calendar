@@ -73,7 +73,7 @@
    timepicker: true,
    datepicker: true,
    format: 'Y-m-d H:00',
-   value: getUrlParameter('start')
+   value: getUrlParameter('start') + ' 12:00'
  };
  
  var options_end = {
@@ -86,7 +86,7 @@
    timepicker: true,
    datepicker: true,
    format: 'Y-m-d H:00',
-   value: getUrlParameter('end')
+   value: getUrlParameter('end') + ' 12:00'
  };
  
  $("#holiday_start").datetimepicker(options_start);
