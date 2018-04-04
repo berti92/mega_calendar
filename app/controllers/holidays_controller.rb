@@ -4,7 +4,8 @@ class HolidaysController < ApplicationController
   before_filter(:check_plugin_right)
   
   def check_plugin_right
-    right = (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) ? true : false)
+    right = (!Setting.plugin_mega_calendar['allowed_users_edit'].blank? && Setting.plugin_mega_calendar['allowed_users_edit'].include?(User.current.id.to_s) ? true : false)
+    #right = (Setting.plugin_mega_calendar['allowed_users_edit'].include?(User.current.id.to_s) ? false : true)
     if !right
       flash[:error] = translate 'no_right'
       redirect_to({:controller => :welcome})

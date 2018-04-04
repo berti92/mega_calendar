@@ -14,7 +14,7 @@
         <select name="holiday[user_id]" id="holiday_user_id">
             <option value=""><%= translate 'select_default' %></option>
           <% Holiday.get_activated_users.each do |u| %>
-            <option value="<%= u.id.to_s %>"><%= u.login.to_s %></option>
+            <option value="<%= u.id.to_s %>"><%= u.lastname.to_s %> <%= u.firstname.to_s %></option>
           <% end %>
         </select>
       </td>
@@ -26,6 +26,21 @@
     <tr>
       <td><label><%= translate 'end' %></label></td>
       <td><input type="text" id="holiday_end" name="holiday[end]" /></td>
+    </tr>
+    <tr>
+      <td><label><%= translate 'reason' %></label></td>
+      <td>
+        <select name="holiday[reason]" id="holiday_reason">
+            <option value=""><%= translate 'select_default' %></option>
+            <option value="1"><%= translate 'on_vacation' %></option>
+            <option value="2"><%= translate 'ill_days' %></option>
+            <option value="3"><%= translate 'buisness_trip' %></option>
+	    <option value="4"><%= translate 'remote_work' %></option>
+	    <option value="5"><%= translate 'meeting' %></option>
+	    <option value="6"><%= translate 'timeoff' %></option>
+	    <option value="7"><%= translate 'tmeeting' %></option>
+        </select>
+      </td>
     </tr>
   </table>
 <input type="submit" value="<%= translate 'save' %>" />
@@ -51,10 +66,10 @@
      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
     }
    },
-   timepicker: false,
+   timepicker: true,
    datepicker: true,
-   format: 'Y-m-d',
-   value: '<%= @holiday.start.blank? ? '' : @holiday.start.to_date.to_s %>'
+   format: 'Y-m-d H:00',
+   value: '<%= @holiday.start.blank? ? '' : @holiday.start.to_datetime.in_time_zone(User.current.time_zone).strftime("%Y-%m-%d %H:%M").to_s %>'
  };
  var options_end = {
    i18n: {
@@ -63,13 +78,14 @@
      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
     }
    },
-   timepicker: false,
+   timepicker: true,
    datepicker: true,
-   format: 'Y-m-d',
-   value: '<%= @holiday.end.blank? ? '' : @holiday.end.to_date.to_s %>'
+   format: 'Y-m-d H:00',
+   value: '<%= @holiday.end.blank? ? '' : @holiday.end.to_datetime.in_time_zone(User.current.time_zone).strftime("%Y-%m-%d %H:%M").to_s %>'
  };
  $("#holiday_start").datetimepicker(options_start);
  $("#holiday_end").datetimepicker(options_end);
  $("#holiday_user_id").val('<%= @holiday.user_id %>');
+ $("#holiday_reason").val('<%= @holiday.reason %>');
  });
 </script>

@@ -1,3 +1,4 @@
+<% if Setting.plugin_mega_calendar['display_issues'].to_i == 0 %>
 <form id="calendar_filter">
 <fieldset id="filters" class="collapsible  collapsed" style="padding-bottom: 20px;">
   <legend onclick="toggleFieldset(this);"><%= translate 'description_filter' %></legend>
@@ -95,3 +96,4 @@
     });
   }
 </script>
+<% end %>

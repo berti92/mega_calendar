@@ -13,7 +13,7 @@
         <select name="holiday[user_id]">
             <option value=""><%= translate 'select_default' %></option>
           <% Holiday.get_activated_users.each do |u| %>
-            <option value="<%= u.id.to_s %>"><%= u.login.to_s %></option>
+            <option value="<%= u.id.to_s %>"><%= u.lastname.to_s %> <%= u.firstname.to_s %></option>
           <% end %>
         </select>
       </td>
@@ -25,6 +25,21 @@
     <tr>
       <td><label><%= translate 'end' %></label></td>
       <td><input type="text" id="holiday_end" name="holiday[end]" /></td>
+    </tr>
+    <tr>
+	<td><label><%= translate 'reason' %></label></td>
+        <td>
+            <select name="holiday[reason]" id="holiday_reason">
+                <option value=""><%= translate 'select_default' %></option>
+                <option value="1"><%= translate 'on_vacation' %></option>
+                <option value="2"><%= translate 'ill_days' %></option>
+                <option value="3"><%= translate 'buisness_trip' %></option>
+		<option value="4"><%= translate 'remote_work' %></option>
+		<option value="5"><%= translate 'meeting' %></option>
+		<option value="6"><%= translate 'timeoff' %></option>
+		<option value="7"><%= translate 'tmeeting' %></option>
+            </select>
+        </td>
     </tr>
   </table>
 <input type="submit" value="<%= translate 'save' %>" />
@@ -40,18 +55,41 @@
 <script type="text/javascript">
  $(document).ready(function() {
  $.datetimepicker.setLocale('<%= js_locale %>');
- var options = {
+
+ function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+ };
+
+ var options_start = {
    i18n: {
     de: {
-     months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
-     dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
+      months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
     }
    },
-   timepicker: false,
+   timepicker: true,
    datepicker: true,
-   format: 'Y-m-d'
+   format: 'Y-m-d H:00',
+   value: getUrlParameter('start') + ' 12:00'
  };
- $("#holiday_start").datetimepicker(options);
- $("#holiday_end").datetimepicker(options);
+ 
+ var options_end = {
+   i18n: {
+    de: {
+      months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
+    }
+   },
+   timepicker: true,
+   datepicker: true,
+   format: 'Y-m-d H:00',
+   value: getUrlParameter('end') + ' 12:00'
+ };
+ 
+ $("#holiday_start").datetimepicker(options_start);
+ $("#holiday_end").datetimepicker(options_end);
  });
 </script>
