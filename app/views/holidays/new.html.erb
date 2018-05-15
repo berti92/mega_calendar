@@ -6,14 +6,14 @@
 <%= error_messages_for 'holiday' %>
 
 <form action="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/create">
-  <table>
+  <table class="box">
     <tr>
       <td><label><%= translate 'user' %></label></td>
       <td>
         <select name="holiday[user_id]">
             <option value=""><%= translate 'select_default' %></option>
           <% Holiday.get_activated_users.each do |u| %>
-            <option value="<%= u.id.to_s %>"><%= u.login.to_s %></option>
+            <option value="<%= u.id.to_s %>"><%= u.name.to_s %></option>
           <% end %>
         </select>
       </td>

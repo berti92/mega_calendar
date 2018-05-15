@@ -1,14 +1,14 @@
 <h1><%= translate 'holidays' %></h1>
 
-<table width="100%" height="80%">
+<table class="list issues">
   <tr>
-    <td><%= translate 'user'%></td>
-    <td><%= translate 'start' %></td>
-    <td><%= translate 'end' %></td>
-    <td><%= translate 'action' %></td>
+    <th><%= translate 'user'%></th>
+    <th><%= translate 'start' %></th>
+    <th><%= translate 'end' %></th>
+    <th><%= translate 'action' %></th>
   </tr>
   <% @res.each do |row| %>
-      <td><%= row.user.blank? ? '' : row.user.login.to_s %></td>
+      <td><%= row.user.blank? ? '' : row.user.name %></td>
       <td><%= row.start.blank? ? '' : row.start.to_date.to_s %></td>
       <td><%= row.end.blank? ? '' : row.end.to_date.to_s %></td>
       <td><a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/show?id=<%= row.id.to_s %>"><%= translate 'show' %></a>&nbsp;<a href="<%= Setting.plugin_mega_calendar['sub_path'] %>holidays/destroy?id=<%= row.id.to_s %>"><%= translate 'destroy' %></a></td>
