@@ -128,7 +128,7 @@ class CalendarController < ApplicationController
     ret_var = '<table>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'user') + '</td>'
-    ret_var << '<td>' + holiday.user.login + '</td>' rescue '<td></td>'
+    ret_var << '<td>' + holiday.user.name + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'start') + '</td>'
@@ -156,7 +156,7 @@ class CalendarController < ApplicationController
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'user') + '</td>'
-    ret_var << '<td>' + issue.assigned_to.login + '</td>' rescue '<td></td>'
+    ret_var << '<td>' + issue.assigned_to.name + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'start') + '</td>'
@@ -210,7 +210,7 @@ class CalendarController < ApplicationController
     @events = []
     def_holiday = '#' + Setting.plugin_mega_calendar['default_holiday_color']
     def_color = '#' + Setting.plugin_mega_calendar['default_event_color']
-    @events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.login + ' - ') + (translate 'holiday'), :start => h.start.to_date.to_s, :end => (h.end + 1.day).to_date.to_s, :allDay => true, :color => def_holiday, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }}
+    @events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.name + ' - ') + (translate 'holiday'), :start => h.start.to_date.to_s, :end => (h.end + 1.day).to_date.to_s, :allDay => true, :color => def_holiday, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }}
     issues = issues + issues2 + issues3 + issues4
     issues = issues.compact.uniq
     issues.each do |i|

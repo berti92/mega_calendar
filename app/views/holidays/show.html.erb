@@ -1,8 +1,8 @@
 <h1><%= translate 'holiday' %></h1>
 <%
-  user = @holiday.user.login rescue ''
+  user = @holiday.user.name rescue ''
 %>
-  <table>
+  <table class="box">
     <tr>
       <td><label><%= translate 'user' %></label></td>
       <td><%= user %></td>
