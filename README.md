@@ -91,12 +91,9 @@ If you want to stay up to date, you can subscribe to the MegaCalendar newsletter
 
 <h2>You like my work?</h2>
 
-If you like my work, you can buy me a coffee [![Paypal Donate](https://img.shields.io/badge/Paypal-donate-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=simplyanamedude@gmail.com&lc=GB&item_name=Andreas%20Treubert&no_note=0&currency_code=EUR&bn=PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest) or try my new browser game:
-<a href="http://sketcharama.com/">Sketcharama</a> 
+If you like my work, you can buy me a coffee [![Paypal Donate](https://img.shields.io/badge/Paypal-donate-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=simplyanamedude@gmail.com&lc=GB&item_name=Andreas%20Treubert&no_note=0&currency_code=EUR&bn=PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest)
 
 If you need customized software, you can contact me <a href="mailto:support@devbert.de">support@devbert.de</a> or visit my company website <a href="http://www.devbert.de">www.devbert.de</a>.
-
-You need a good document management system? Then try me newest work <a href="https://one-folder.com/">https://one-folder.com/</a> - only available in german.
 
 <h2>License</h2>
 
