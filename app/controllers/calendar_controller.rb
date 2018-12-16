@@ -1,7 +1,7 @@
 class CalendarController < ApplicationController
   unloadable
 
-  before_filter(:check_plugin_right)
+  before_action(:check_plugin_right)
 
   def check_plugin_right
     right = (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) ? true : false)
@@ -13,16 +13,16 @@ class CalendarController < ApplicationController
 
   def save_filters
     uf = UserFilter.find_or_initialize_by({:filter_name => params["name"]})
-    uf.filter_code = params["filter"].inspect
+    uf.filter_code = params["filter"].to_json
     uf.user_id = (params["global"] == "true" ? nil : User.current.id)
     uf.save!
-    render(:text => uf.id)
+    render(:plain => uf.id)
   end
 
   def get_saved_filters
     uf = UserFilter.find(params["id"])
     ret_val = {
-      "filter" => JSON.parse(uf.filter_code.gsub("=>", ":")), #prevent dangerous calls from eval
+      "filter" => JSON.parse(uf.filter_code), #prevent dangerous calls from eval
       "name" => uf.filter_name,
       "global" => (uf.user_id.blank? ? true : false)
     }
@@ -241,7 +241,7 @@ class CalendarController < ApplicationController
       end
       @events << i_event
     end
-    render(:text => @events.to_json.html_safe)
+    render(:json => @events.to_json)
   end
   def change_holiday
     h = Holiday.find(params[:id])
@@ -250,7 +250,7 @@ class CalendarController < ApplicationController
     else
       h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => params[:event_begin].to_date.to_s}) rescue nil
     end
-    render(:text => "")
+    render(:plain => "")
   end
   def change_issue
     i = Issue.find(params[:id])
@@ -282,6 +282,6 @@ class CalendarController < ApplicationController
         tt.destroy()
       end
     end
-    render(:text => "")
+    render(:plain => "")
   end
 end

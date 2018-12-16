@@ -1,5 +1,7 @@
-require 'filters.rb'
+require 'mega_calendar/filters.rb'
 require 'vpim'
+require_dependency 'mega_calendar/users_controller_patch'
+require_dependency 'mega_calendar/issues_controller_patch'
 
 Redmine::Plugin.register :mega_calendar do
   name 'Mega Calendar plugin'
@@ -15,6 +17,6 @@ Redmine::Plugin.register :mega_calendar do
 end
 
 Rails.configuration.to_prepare do
-  require_dependency File.join( File.dirname(File.realpath(__FILE__)), 'lib', 'users_controller_patch' )
-  require_dependency File.join( File.dirname(File.realpath(__FILE__)), 'lib', 'issues_controller_patch' )
+  UsersController.send(:prepend, MegaCalendar::UsersControllerPatch)
+  IssuesController.send(:prepend, MegaCalendar::IssuesControllerPatch)
 end

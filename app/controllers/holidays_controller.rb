@@ -1,7 +1,7 @@
 class HolidaysController < ApplicationController
   unloadable
   
-  before_filter(:check_plugin_right)
+  before_action(:check_plugin_right)
   
   def check_plugin_right
     right = (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) ? true : false)
@@ -37,7 +37,7 @@ class HolidaysController < ApplicationController
   end
 
   def create
-    @holiday = Holiday.new(params[:holiday])
+    @holiday = Holiday.new(holiday_params)
     if @holiday.save
       redirect_to(:controller => 'holidays', :action => 'show', :id => @holiday.id)
     else
@@ -57,7 +57,7 @@ class HolidaysController < ApplicationController
 
   def update
     @holiday = Holiday.find(params[:holiday][:id]) rescue nil
-    @holiday.assign_attributes(params[:holiday])
+    @holiday.assign_attributes(holiday_params)
     if @holiday.save
       redirect_to(:controller => 'holidays', :action => 'show', :id => @holiday.id)
     else
@@ -72,5 +72,11 @@ class HolidaysController < ApplicationController
     holiday = Holiday.where(:id => params[:id]).first rescue nil
     holiday.destroy()
     redirect_to(:controller => 'holidays', :action => 'index')
+  end
+
+  private
+
+  def holiday_params
+    params.require(:holiday).permit(:start, :end, :user_id)
   end
 end
