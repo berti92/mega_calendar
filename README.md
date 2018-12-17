@@ -55,6 +55,8 @@ If you want to stay up to date, you can subscribe to the MegaCalendar newsletter
 
 <h2>History</h2>
 
+1.7.1: Fixed #83 - "No URL" by right click on a subtask
+
 1.7.0: Added support for redmine 3.4.X
 
 1.6.0: Added possibilty to show issues with empty dates. Added possibility to save/edit and delete filters within the calendar. Added possibilty to create global holidays.<br> Please make sure that you migrate your database.<br>
