@@ -1,4 +1,4 @@
-class CreateHolidays < ActiveRecord::Migration
+class CreateHolidays < ActiveRecord::Migration[ActiveRecord::VERSION::MAJOR.to_s + '.' + ActiveRecord::VERSION::MINOR.to_s]
   def up
     create_table :holidays do |t|
       t.datetime :start

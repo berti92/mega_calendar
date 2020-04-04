@@ -1,4 +1,4 @@
-<% if Redmine::VERSION.to_s.starts_with?('3.2') || Redmine::VERSION.to_s.starts_with?('3.3') || Redmine::VERSION.to_s.starts_with?('3.4') %>
+<% if Redmine::VERSION.to_s.starts_with?('3.2') || Redmine::VERSION.to_s.starts_with?('3.3') || Redmine::VERSION.to_s.starts_with?('3.4') || Redmine::VERSION.to_s.starts_with?('4.0') %>
 
 <%= render :partial => 'action_menu' %>
 
@@ -80,7 +80,7 @@
     end
   end
 end %>
-<% if Redmine::VERSION.to_s.starts_with?('3.4') %>
+<% if Redmine::VERSION.to_s.starts_with?('3.4') || Redmine::VERSION.to_s.starts_with?('4.0') %>
   <%= render_half_width_custom_fields_rows(@issue) %>
 <% else %>
   <%= render_custom_fields_rows(@issue) %>
@@ -190,7 +190,7 @@ end %>
     <%= auto_discovery_link_tag(:atom, {:format => 'atom', :key => User.current.rss_key}, :title => "#{@issue.project} - #{@issue.tracker} ##{@issue.id}: #{@issue.subject}") %>
 <% end %>
 
-<% if Redmine::VERSION.to_s.starts_with?('3.4') %>
+<% if Redmine::VERSION.to_s.starts_with?('3.4') || Redmine::VERSION.to_s.starts_with?('4.0') %>
   <%= context_menu %>
 <% else %>
   <%= context_menu issues_context_menu_path %>
@@ -275,7 +275,7 @@ end %>
     rows.right l(:label_spent_time), (@issue.total_spent_hours > 0 ? link_to(l_hours(@issue.total_spent_hours), issue_time_entries_path(@issue)) : "-"), :class => 'spent-time'
   end
 end %>
-<% if Redmine::VERSION.to_s.starts_with?('3.4') %>
+<% if Redmine::VERSION.to_s.starts_with?('3.4') || Redmine::VERSION.to_s.starts_with?('4.0') %>
   <%= render_half_width_custom_fields_rows(@issue) %>
 <% else %>
   <%= render_custom_fields_rows(@issue) %>
@@ -370,7 +370,7 @@ end %>
     <%= auto_discovery_link_tag(:atom, {:format => 'atom', :key => User.current.rss_key}, :title => "#{@issue.project} - #{@issue.tracker} ##{@issue.id}: #{@issue.subject}") %>
 <% end %>
 
-<% if Redmine::VERSION.to_s.starts_with?('3.4') %>
+<% if Redmine::VERSION.to_s.starts_with?('3.4') || Redmine::VERSION.to_s.starts_with?('4.0') %>
   <%= context_menu %>
 <% else %>
   <%= context_menu issues_context_menu_path %>
