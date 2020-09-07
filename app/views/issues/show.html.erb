@@ -80,11 +80,7 @@
     end
   end
 end %>
-<% if Redmine::VERSION.to_s.starts_with?('3.4') || Redmine::VERSION.to_s.starts_with?('4.') %>
-  <%= render_half_width_custom_fields_rows(@issue) %>
-<% else %>
-  <%= render_custom_fields_rows(@issue) %>
-<% end %>
+<%= render_half_width_custom_fields_rows(@issue) %>
 <%= call_hook(:view_issues_show_details_bottom, :issue => @issue) %>
 </div>
 
@@ -107,30 +103,16 @@ end %>
 
 <%= call_hook(:view_issues_show_description_bottom, :issue => @issue) %>
 
-<% if Redmine::VERSION.to_s.starts_with?('3.4') %>
-  <% if !@issue.leaf? || User.current.allowed_to?(:manage_subtasks, @project) %>
-  <hr />
-  <div id="issue_tree">
-  <div class="contextual">
-    <%= link_to_new_subtask(@issue) if User.current.allowed_to?(:manage_subtasks, @project) %>
-  </div>
-  <p><strong><%=l(:label_subtask_plural)%></strong></p>
-  <%= form_tag({}, :data => {:cm_url => issues_context_menu_path}) do %>
-  <%= render_descendants_tree(@issue) unless @issue.leaf? %>
-  <% end %>
-  </div>
-  <% end %>
-<% else %>
-  <% if !@issue.leaf? || User.current.allowed_to?(:manage_subtasks, @project) %>
-  <hr />
-  <div id="issue_tree">
-  <div class="contextual">
-    <%= link_to_new_subtask(@issue) if User.current.allowed_to?(:manage_subtasks, @project) %>
-  </div>
-  <p><strong><%=l(:label_subtask_plural)%></strong></p>
-  <%= render_descendants_tree(@issue) unless @issue.leaf? %>
-  </div>
-  <% end %>
+
+<% if !@issue.leaf? || User.current.allowed_to?(:manage_subtasks, @project) %>
+<hr />
+<div id="issue_tree">
+<div class="contextual">
+  <%= link_to_new_subtask(@issue) if User.current.allowed_to?(:manage_subtasks, @project) %>
+</div>
+<p><strong><%=l(:label_subtask_plural)%></strong></p>
+<%= render_descendants_tree(@issue) unless @issue.leaf? %>
+</div>
 <% end %>
 
 <% if @relations.present? || User.current.allowed_to?(:manage_issue_relations, @project) %>
@@ -142,20 +124,11 @@ end %>
 
 </div>
 
-<% if @changesets.present? %>
-<div id="issue-changesets">
-<h3><%=l(:label_associated_revisions)%></h3>
-<%= render :partial => 'changesets', :locals => { :changesets => @changesets} %>
-</div>
-<% end %>
+<%= render partial: 'action_menu_edit' if User.current.wants_comments_in_reverse_order? %>
 
-<% if @journals.present? %>
 <div id="history">
-<h3><%=l(:label_history)%></h3>
-<%= render :partial => 'history', :locals => { :issue => @issue, :journals => @journals } %>
+<%= render_tabs issue_history_tabs, issue_history_default_tab %>
 </div>
-<% end %>
-
 
 <div style="clear: both;"></div>
 <%= render :partial => 'action_menu' %>
@@ -190,11 +163,7 @@ end %>
     <%= auto_discovery_link_tag(:atom, {:format => 'atom', :key => User.current.rss_key}, :title => "#{@issue.project} - #{@issue.tracker} ##{@issue.id}: #{@issue.subject}") %>
 <% end %>
 
-<% if Redmine::VERSION.to_s.starts_with?('3.4') || Redmine::VERSION.to_s.starts_with?('4.') %>
-  <%= context_menu %>
-<% else %>
-  <%= context_menu issues_context_menu_path %>
-<% end %>
+<%= context_menu %>
 
 
 <% else %>
