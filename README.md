@@ -53,6 +53,8 @@ If you want to stay up to date, you can subscribe to the MegaCalendar newsletter
 
 <h2>History</h2>
 
+1.7.3 Fixed specific redmine 4.1 bugs, were issues were not shown or issues could not be saved. Holidays are using now the format_date function
+
 1.7.2: Dropped support for redmine < 4 and added support for redmine 4
 
 1.7.1: Fixed #83 - "No URL" by right click on a subtask
