@@ -126,9 +126,16 @@ end %>
 
 <%= render partial: 'action_menu_edit' if User.current.wants_comments_in_reverse_order? %>
 
-<div id="history">
-<%= render_tabs issue_history_tabs, issue_history_default_tab %>
-</div>
+<% if Redmine::VERSION.to_s.starts_with?('4.0') %>
+  <div id="history">
+    <h3><%=l(:label_history)%></h3>
+    <%= render :partial => 'history', :locals => { :issue => @issue, :journals => @journals } %>
+  </div>
+<% else %>
+  <div id="history">
+    <%= render_tabs issue_history_tabs, issue_history_default_tab %>
+  </div>
+<% end %>
 
 <div style="clear: both;"></div>
 <%= render :partial => 'action_menu' %>
