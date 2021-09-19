@@ -7,7 +7,9 @@ $mc_filters['assignee'] = {
   :lookup_id => 'id',
   :operators => [:contains, :not_contains],
   :lookup_value => 'login',
-  :lookup_query => 'Holiday.get_activated_users',
+  :lookup_query_model => 'Holiday',
+  :lookup_query_method => 'get_activated_users',
+  :lookup_query_order => nil,
   :condition => nil,
   :condition_holiday => nil
 }
@@ -19,7 +21,9 @@ $mc_filters['assignee_group'] = {
   :lookup_id => 'id',
   :operators => [:contains, :not_contains],
   :lookup_value => 'lastname',
-  :lookup_query => 'Holiday.get_activated_groups',
+  :lookup_query_model => 'Holiday',
+  :lookup_query_method => 'get_activated_groups',
+  :lookup_query_order => nil,
   :condition => '##FIELD_ID## IN (SELECT user_id FROM groups_users WHERE group_id ##OPERATOR## (?))',
   :condition_holiday => '##FIELD_ID## IN (SELECT user_id FROM groups_users WHERE group_id ##OPERATOR## (?))'
 }
@@ -30,7 +34,9 @@ $mc_filters['status'] = {
   :lookup_id => 'id',
   :operators => [:contains, :not_contains],
   :lookup_value => 'name',
-  :lookup_query => 'IssueStatus.all.order("issue_statuses.name ASC")',
+  :lookup_query_model => 'IssueStatus',
+  :lookup_query_method => 'all',
+  :lookup_query_order => "issue_statuses.name ASC",
   :condition => nil,
   :condition_holiday => nil
 }
@@ -41,7 +47,9 @@ $mc_filters['project'] = {
   :lookup_id => 'id',
   :operators => [:contains, :not_contains],
   :lookup_value => 'name',
-  :lookup_query => 'Project.all.order("projects.name ASC")',
+  :lookup_query_model => 'Project',
+  :lookup_query_method => 'all',
+  :lookup_query_order => "projects.name ASC",
   :condition => nil,
   :condition_holiday => nil
 }
@@ -52,7 +60,9 @@ $mc_filters['tracker'] = {
   :lookup_id => 'id',
   :operators => [:contains, :not_contains],
   :lookup_value => 'name',
-  :lookup_query => 'Tracker.all.order("trackers.name ASC")',
+  :lookup_query_model => 'Tracker',
+  :lookup_query_method => 'all',
+  :lookup_query_order => "trackers.name ASC",
   :condition => nil,
   :condition_holiday => nil
 }
@@ -63,7 +73,9 @@ $mc_filters['priority'] = {
   :lookup_id => 'id',
   :operators => [:contains, :not_contains],
   :lookup_value => 'name',
-  :lookup_query => 'IssuePriority.all',
+  :lookup_query_model => 'IssuePriority',
+  :lookup_query_method => 'all',
+  :lookup_query_order => nil,
   :condition => nil,
   :condition_holiday => nil
 }
@@ -74,7 +86,9 @@ $mc_filters['version'] = {
   :lookup_id => 'id',
   :operators => [:contains, :not_contains],
   :lookup_value => 'name',
-  :lookup_query => 'Version.all.order("versions.name ASC")',
+  :lookup_query_model => 'Version',
+  :lookup_query_method => 'all',
+  :lookup_query_order => "versions.name ASC",
   :condition => nil,
   :condition_holiday => nil
 }

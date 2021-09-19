@@ -21,7 +21,13 @@
         </td>
         <td style="padding-left: 10px;">
           <% if filter[:type] == 'lookup' %>
-            <% lookup_items = eval(filter[:lookup_query]+".collect {|x| [x."+filter[:lookup_id]+",x."+filter[:lookup_value]+"]}") %>
+            <% 
+              lookup_query = filter[:lookup_query_model].constantize.send(filter[:lookup_query_method])
+              if filter[:lookup_query_order]
+                lookup_query = lookup_query.order(filter[:lookup_query_order])
+              end
+              lookup_items = lookup_query.collect {|x| [x.send(filter[:lookup_id]),x.send(filter[:lookup_value])]}
+            %>
             <select style="width: 200px;" id="filter_id_<%= filter_name %>_value" name="filter[<%= filter_name %>][value][]" data-sel="filter_value_select" multiple>
               <% lookup_items.each do |item| %>
                 <option value="<%= item[0] %>"><%= item[1] %></option>
