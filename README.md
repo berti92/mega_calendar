@@ -1,6 +1,6 @@
 [![Paypal Donate](https://img.shields.io/badge/Paypal-donate-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=simplyanamedude@gmail.com&lc=GB&item_name=Andreas%20Treubert&no_note=0&currency_code=EUR&bn=PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest)
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1e9f23bef62d487bb634bd26f05a7d7e)](https://www.codacy.com/app/simplyanamedude/mega_calendar?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=berti92/mega_calendar&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/abb6b7c5711b498b87fe09e7c0597a08)](https://www.codacy.com/gh/berti92/mega_calendar/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=berti92/mega_calendar&amp;utm_campaign=Badge_Grade)
 
 <h1>mega_calendar</h1>
 
