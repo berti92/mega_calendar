@@ -68,7 +68,7 @@ class CalendarController < ApplicationController
           tmpcondition = tmpcondition.gsub('##OPERATOR##','NOT IN')
         end
         condition[0] << tmpcondition
-        (1..count_values).each do |x|
+        count_values.times.each do
           condition << filter_param[:value]
         end
       end
