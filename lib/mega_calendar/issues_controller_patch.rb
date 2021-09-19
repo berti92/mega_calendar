@@ -3,7 +3,7 @@ module MegaCalendar
   module IssuesControllerPatch
     def create
       super
-      if !@issue.id.blank?
+      unless @issue.id.blank?
         if !params[:issue][:start_date].blank? && !params[:issue][:due_date].blank? && !params[:issue][:time_begin].blank? && !params[:issue][:time_end].blank?
           tbegin = params[:issue][:start_date] + ' ' + params[:issue][:time_begin]
           tend = params[:issue][:due_date] + ' ' + params[:issue][:time_end]
@@ -13,7 +13,7 @@ module MegaCalendar
     end
     def update
       super
-      if !@issue.id.blank?
+      unless @issue.id.blank?
         if !params[:issue][:start_date].blank? && !params[:issue][:due_date].blank? && !params[:issue][:time_begin].blank? && !params[:issue][:time_end].blank?
           tbegin = params[:issue][:start_date] + ' ' + params[:issue][:time_begin]
           tend = params[:issue][:due_date] + ' ' + params[:issue][:time_end]

@@ -5,7 +5,7 @@ class CalendarController < ApplicationController
 
   def check_plugin_right
     right = (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) ? true : false)
-    if !right
+    unless right
       flash[:error] = translate 'no_right'
       redirect_to({:controller => :welcome})
     end
@@ -109,7 +109,7 @@ class CalendarController < ApplicationController
         e.uid("RedmineMegaCalendarIssueID:"+issue.id.to_s)
         #e.sequence(seq.to_i)
         e.description(issue.description.gsub("\n\n",""))
-        #if !issue.assigned_to.blank?
+        #unless issue.assigned_to.blank?
         #  e.organizer do |o|
         #    o.cn = issue.assigned_to.firstname + " " + issue.assigned_to.lastname
         #    o.uri = "mailto:#{issue.assigned_to.email_address.address}" rescue nil
@@ -245,7 +245,7 @@ class CalendarController < ApplicationController
   end
   def change_holiday
     h = Holiday.find(params[:id])
-    if !params[:event_end].blank?
+    unless params[:event_end].blank?
       h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => (params[:event_end].to_date - 1.day).to_date.to_s}) rescue nil
     else
       h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => params[:event_begin].to_date.to_s}) rescue nil
@@ -259,7 +259,7 @@ class CalendarController < ApplicationController
     else
       event_end = params[:event_end]
     end
-    if !params[:event_end].include?(':')
+    unless params[:event_end].include?(':')
       event_end = event_end.to_date - 1.day
     end
     i.update_attributes({:start_date => params[:event_begin].to_date.to_s, :due_date => event_end.to_date.to_s}) rescue nil
@@ -269,7 +269,7 @@ class CalendarController < ApplicationController
         tt = TicketTime.new(:issue_id => params[:id])
       end
       tt.time_begin = params[:event_begin].to_datetime.to_s
-      if !params[:event_end].blank?
+      unless params[:event_end].blank?
         tt.time_end = params[:event_end].to_datetime.to_s rescue nil
       else
         i.update_attributes({:due_date => (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s})
@@ -278,7 +278,7 @@ class CalendarController < ApplicationController
       tt.save
     else
       tt = TicketTime.where(:issue_id => params[:id]).first rescue nil
-      if !tt.blank?
+      unless tt.blank?
         tt.destroy()
       end
     end
