@@ -16,6 +16,7 @@
   end
 %>
 
+<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/stylesheets/mega_calendar.css' />
 <link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/fullcalendar.css' />
 <link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.css' />
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/lib/jquery.min.js'></script>
@@ -24,26 +25,9 @@
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/qtip2/jquery.qtip.min.js'></script>
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar/lang-all.js'></script>
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/jquery-serialize-object.min.js'></script>
-<style>
-.calendar_event {
-  pointer:cursor !important;
-  color:#000000 !important;
-}
-
-.calendar_event_closed {
-  text-decoration: line-through !important;
-  opacity: 0.6 !important;
-}
-@media screen and (max-width: 900px) {
-  #calendar {
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-  }
-}
-</style>
 <h2><%= translate 'calendar' %></h2>
 <%= render :partial => 'calendar/filter_panel', :locals => {} %>
-<center><div id='calendar'" style="<%= calendar_style %>"></div></center>
+<center><div id='mega_calendar__calendar'" style="<%= calendar_style %>"></div></center>
 
 <%
   js_locale = User.current.language  rescue nil
@@ -66,7 +50,7 @@
     }
   }
   $(document).ready(function() {
-    $('#calendar').fullCalendar({
+    $('#mega_calendar__calendar').fullCalendar({
         lang: '<%= js_locale %>',
         defaultView: '<%= default_view %>',
         height: <%= calendar_height %>,

@@ -1,25 +1,25 @@
 <form id="calendar_filter">
-<fieldset id="filters" class="collapsible  collapsed" style="padding-bottom: 20px;">
+<fieldset id="filters" class="collapsible collapsed mega_calendar__filter_fieldset">
   <legend onclick="toggleFieldset(this);"><%= translate 'description_filter' %></legend>
-  <div style="display: none;">
+  <div class="mega_calendar__hide">
     <table>
     <% $mc_filters.keys.each do |filter_name|%>
     <% filter = $mc_filters[filter_name] %>
       <tr>
-        <td style="padding-left: 10px;">
+        <td class="mega_calendar__filter_td">
           <input type="checkbox" id="filter_id_<%= filter_name %>_enabled" name="filter[<%= filter_name %>][enabled]" />
         </td>
-        <td style="padding-left: 10px;">
+        <td class="mega_calendar__filter_td">
           <%= translate filter[:label] %>
         </td>
-        <td style="padding-left: 10px;">
-          <select style="width: 100px;" id="filter_id_<%= filter_name %>_operator" name="filter[<%= filter_name %>][operator]" data-sel="filter_operator">
+        <td class="mega_calendar__filter_td">
+          <select class="mega_calendar__select_operator" id="filter_id_<%= filter_name %>_operator" name="filter[<%= filter_name %>][operator]" data-sel="filter_operator">
             <% filter[:operators].each do |op| %>
               <option value="<%= op.to_s %>"><%= translate 'label_'+op.to_s %></option>
             <% end %>
           </select>
         </td>
-        <td style="padding-left: 10px;">
+        <td class="mega_calendar__filter_td">
           <% if filter[:type] == 'lookup' %>
             <% 
               lookup_query = filter[:lookup_query_model].constantize.send(filter[:lookup_query_method])
@@ -28,7 +28,7 @@
               end
               lookup_items = lookup_query.collect {|x| [x.send(filter[:lookup_id]),x.send(filter[:lookup_value])]}
             %>
-            <select style="width: 200px;" id="filter_id_<%= filter_name %>_value" name="filter[<%= filter_name %>][value][]" data-sel="filter_value_select" multiple>
+            <select class="mega_calendar__select_value" id="filter_id_<%= filter_name %>_value" name="filter[<%= filter_name %>][value][]" data-sel="filter_value_select" multiple>
               <% lookup_items.each do |item| %>
                 <option value="<%= item[0] %>"><%= item[1] %></option>
               <% end %>
@@ -44,11 +44,11 @@
       <table>
         <tr>
           <td><%= translate 'filter_name' %></td>
-          <td style="padding-left: 10px;"><input type="text" id="inp_filter_name" name="filter_name" /></td>
+          <td class="mega_calendar__filter_td"><input type="text" id="inp_filter_name" name="filter_name" /></td>
         </tr>
         <tr>
           <td><%= translate 'global_filter' %></td>
-          <td style="padding-left: 10px;"><input type="checkbox" id="inp_filter_global" name="filter_global" /></td>
+          <td class="mega_calendar__filter_td"><input type="checkbox" id="inp_filter_global" name="filter_global" /></td>
         </tr>
       </table>
       <a href="#" class="icon icon-save" onclick="save_filters();"><%= translate 'button_save' %></a>
@@ -56,7 +56,7 @@
       <table>
         <tr>
           <td><%= translate 'use_saved_filter' %></td>
-          <td style="padding-left: 10px;">
+          <td class="mega_calendar__filter_td">
             <select id="sel_saved_filter" name="saved_filter">
               <option value=""></option>
               <% UserFilter.where(["user_filters.user_id = ? OR user_filters.user_id IS NULL",User.current.id]).each do |saved_filter| %>

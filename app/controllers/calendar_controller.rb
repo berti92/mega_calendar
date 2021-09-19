@@ -210,16 +210,16 @@ class CalendarController < ApplicationController
     @events = []
     def_holiday = '#' + Setting.plugin_mega_calendar['default_holiday_color']
     def_color = '#' + Setting.plugin_mega_calendar['default_event_color']
-    @events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.login + ' - ') + (translate 'holiday'), :start => h.start.to_date.to_s, :end => (h.end + 1.day).to_date.to_s, :allDay => true, :color => def_holiday, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + h.id.to_s, :className => 'calendar_event', :description => form_holiday(h) }}
+    @events = @events + holidays.collect {|h| {:id => h.id.to_s, :controller_name => 'holiday', :title => (h.user.blank? ? '' : h.user.login + ' - ') + (translate 'holiday'), :start => h.start.to_date.to_s, :end => (h.end + 1.day).to_date.to_s, :allDay => true, :color => def_holiday, :url => Setting.plugin_mega_calendar['sub_path'] + 'holidays/show?id=' + h.id.to_s, :className => 'mega_calendar_event', :description => form_holiday(h) }}
     issues = issues + issues2 + issues3 + issues4
     issues = issues.compact.uniq
     issues.each do |i|
       ticket_time = TicketTime.where({:issue_id => i.id}).first rescue nil
       tbegin = ticket_time.time_begin.strftime(" %H:%M") rescue ''
       tend = ticket_time.time_end.strftime(" %H:%M") rescue ''
-      css_classes = ['calendar_event']
+      css_classes = ['mega_calendar_event']
       if !i.status.blank? && i.status.is_closed == true
-        css_classes << 'calendar_event_closed'
+        css_classes << 'mega_calendar_event_closed'
       end
       if i.start_date.blank?
         i.start_date = i.due_date
