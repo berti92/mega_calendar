@@ -254,7 +254,6 @@ class CalendarController < ApplicationController
   end
   def change_issue
     i = Issue.find(params[:id])
-    i.init_journal(User.current)
     if params[:event_end].blank?
       event_end = params[:event_begin]
     else
@@ -263,7 +262,13 @@ class CalendarController < ApplicationController
     unless params[:event_end].include?(':')
       event_end = event_end.to_date - 1.day
     end
-    i.update_attributes({:start_date => params[:event_begin].to_date.to_s, :due_date => event_end.to_date.to_s}) rescue nil
+    
+    begin
+      i.init_journal(User.current)
+      i.update_attributes({:start_date => params[:event_begin].to_date.to_s, :due_date => event_end.to_date.to_s}) 
+    rescue nil
+    end
+    
     if params[:allDay] != 'true'
       tt = TicketTime.where(:issue_id => params[:id]).first
       if tt.blank?
