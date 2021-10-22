@@ -254,6 +254,7 @@ class CalendarController < ApplicationController
   end
   def change_issue
     i = Issue.find(params[:id])
+    i.init_journal(User.current)
     if params[:event_end].blank?
       event_end = params[:event_begin]
     else
