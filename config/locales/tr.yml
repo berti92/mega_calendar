@@ -5,6 +5,7 @@ tr:
   my_issues: "İşlerim"
   all_issues: "Tüm İşler"
   user: "Kullanıcı"
+  group: "Grup"
   start: "Başlangıç"
   end: "Bitiş"
   action: "İşlem"

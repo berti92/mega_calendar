@@ -5,6 +5,7 @@ pl:
   my_issues: "Moje zagadnienia"
   all_issues: "Wszystkie zagadnienia"
   user: "Użytkownik"
+  group: "Grupa"
   start: "Początek"
   end: "Koniec"
   action: "Akcja"

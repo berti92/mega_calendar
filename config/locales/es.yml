@@ -5,6 +5,7 @@ es:
   my_issues: "Mis peticiones"
   all_issues: "Todas las peticiones"
   user: "Usuario"
+  group: "Grupo"
   start: "Inicio"
   end: "Fin"
   action: "Acción"

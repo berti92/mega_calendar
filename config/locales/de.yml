@@ -5,6 +5,7 @@ de:
   my_issues: "Meine Tickets"
   all_issues: "Alle Tickets"
   user: "Benutzer"
+  group: "Gruppe"
   start: "Start"
   end: "Ende"
   action: "Aktion"

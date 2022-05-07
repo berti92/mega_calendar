@@ -5,6 +5,7 @@ en:
   my_issues: "My issues"
   all_issues: "All issues"
   user: "User"
+  group: "Group"
   start: "Start"
   end: "End"
   action: "Action"

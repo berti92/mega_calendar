@@ -5,6 +5,7 @@ fr:
   my_issues: "Mes demandes"
   all_issues: "Toutes les demandes"
   user: "Utilisateur"
+  group: "Grouper"
   start: "Début"
   end: "Fin"
   action: "Action"
