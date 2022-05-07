@@ -24,7 +24,7 @@ $mc_filters['assignee_group'] = {
   :lookup_query_model => 'Holiday',
   :lookup_query_method => 'get_activated_groups',
   :lookup_query_order => nil,
-  :condition => '##FIELD_ID## IN (SELECT user_id FROM groups_users WHERE group_id ##OPERATOR## (?))',
+  :condition => '##FIELD_ID## IN (SELECT user_id FROM groups_users WHERE group_id ##OPERATOR## (?)) OR ##FIELD_ID## ##OPERATOR## (?)',
   :condition_holiday => '##FIELD_ID## IN (SELECT user_id FROM groups_users WHERE group_id ##OPERATOR## (?))'
 }
 $mc_filters['status'] = {

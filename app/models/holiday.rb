@@ -13,18 +13,10 @@ class Holiday < ActiveRecord::Base
   end
 
   def self.get_activated_users
-    if Setting.plugin_mega_calendar['displayed_type'] == 'users'
-      return User.where(["users.id IN (?) AND users.login IS NOT NULL AND users.login <> ''",Setting.plugin_mega_calendar['displayed_users']]).order("users.login ASC")
-    else
-      return User.where(["users.id IN (SELECT user_id FROM groups_users WHERE group_id IN (?)) AND users.login IS NOT NULL AND users.login <> ''",Setting.plugin_mega_calendar['displayed_users']]).order("users.login ASC")
-    end
+    return User.where(["users.id IN (?) AND users.login IS NOT NULL AND users.login <> ''",Setting.plugin_mega_calendar['displayed_users']]).order("users.login ASC")
   end
 
   def self.get_activated_groups
-    if Setting.plugin_mega_calendar['displayed_type'] != 'users'
-      return Group.where(["users.id IN (?)",Setting.plugin_mega_calendar['displayed_users']]).order("users.lastname ASC")
-    else
-      return Group.all.order("users.lastname ASC")
-    end
+    return Group.all.order("users.lastname ASC")
   end
 end
