@@ -4,7 +4,11 @@ class CalendarController < ApplicationController
   before_action(:check_plugin_right)
 
   def check_plugin_right
-    right = (!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) ? true : false)
+    user_id_of_api_key = '-1'
+    unless params[:key].blank?
+      user_id_of_api_key = User.find_by_api_key(params[:key]).id rescue '-1'
+    end
+    right = (!Setting.plugin_mega_calendar['allowed_users'].blank? && (Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) || Setting.plugin_mega_calendar['allowed_users'].include?(user_id_of_api_key.to_s)) ? true : false)
     unless right
       flash[:error] = translate 'no_right'
       redirect_to({:controller => :welcome})
@@ -185,6 +189,7 @@ class CalendarController < ApplicationController
     fend = (Time.zone.today + 1.month) if(fend.blank?)
     issues_condition = query_filter('Issue', params[:filter])
     holidays_condition = query_filter('Holiday', params[:filter])
+    debugger
     if fuser.blank?
       holidays = Holiday.where(['((holidays.start <= ? AND holidays.end >= ?) OR (holidays.start BETWEEN ? AND ?)  OR (holidays.end BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(holidays_condition) rescue []
       issues = Issue.where(['((issues.start_date <= ? AND issues.due_date >= ?) OR (issues.start_date BETWEEN ? AND ?)  OR (issues.due_date BETWEEN ? AND ?))',fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s,fbegin.to_s,fend.to_s]).where(issues_condition) rescue []
