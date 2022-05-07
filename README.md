@@ -45,10 +45,6 @@ Please make sure that you set your users, that will be allowed to use this plugi
 
 A quick overview about this plugin, you'll get on <a href="http://www.devbert.de/index.php/en/project/megacalendar/">http://www.devbert.de/index.php/en/project/megacalendar/</a>
 
-<h2>Newsletter</h2>
-
-If you want to stay up to date, you can subscribe to the MegaCalendar newsletter <a href="https://devbert.us15.list-manage.com/subscribe?u=ce1f4237d49c936e451ef9e82&id=7fa4fd4275">here</a>.
-
 <h2>History</h2>
 
 1.8.0: Fixed groups, custom-fields, configuration. And added webcal feature
