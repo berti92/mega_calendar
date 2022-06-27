@@ -47,6 +47,8 @@ A quick overview about this plugin, you'll get on <a href="http://www.devbert.de
 
 <h2>History</h2>
 
+1.8.1: Added more height to the filter selectboxes
+
 1.8.0: Fixed groups, custom-fields, configuration. And added webcal feature
 
 1.7.4:  Fixed redmine 4.0.x bug, where issues could not be opened
