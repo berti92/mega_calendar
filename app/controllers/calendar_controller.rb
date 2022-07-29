@@ -256,9 +256,9 @@ class CalendarController < ApplicationController
   def change_holiday
     h = Holiday.find(params[:id])
     unless params[:event_end].blank?
-      h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => (params[:event_end].to_date - 1.day).to_date.to_s}) rescue nil
+      h.update({:start => params[:event_begin].to_date.to_s, :end => (params[:event_end].to_date - 1.day).to_date.to_s}) rescue nil
     else
-      h.update_attributes({:start => params[:event_begin].to_date.to_s, :end => params[:event_begin].to_date.to_s}) rescue nil
+      h.update({:start => params[:event_begin].to_date.to_s, :end => params[:event_begin].to_date.to_s}) rescue nil
     end
     render(:plain => "")
   end
@@ -275,7 +275,7 @@ class CalendarController < ApplicationController
     
     begin
       i.init_journal(User.current)
-      i.update_attributes({:start_date => params[:event_begin].to_date.to_s, :due_date => event_end.to_date.to_s}) 
+      i.update({:start_date => params[:event_begin].to_date.to_s, :due_date => event_end.to_date.to_s}) 
     rescue nil
     end
     
@@ -288,7 +288,7 @@ class CalendarController < ApplicationController
       unless params[:event_end].blank?
         tt.time_end = params[:event_end].to_datetime.to_s rescue nil
       else
-        i.update_attributes({:due_date => (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s})
+        i.update({:due_date => (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s})
         tt.time_end = (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s
       end
       tt.save
