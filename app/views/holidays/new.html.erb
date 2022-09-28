@@ -20,11 +20,11 @@
     </tr>
     <tr>
       <td><label><%= translate 'start' %></label></td>
-      <td><input type="text" id="holiday_start" name="holiday[start]" /></td>
+      <td><input type="text" id="holiday_start" name="holiday[start]" autocomplete="off" /></td>
     </tr>
     <tr>
       <td><label><%= translate 'end' %></label></td>
-      <td><input type="text" id="holiday_end" name="holiday[end]" /></td>
+      <td><input type="text" id="holiday_end" name="holiday[end]" autocomplete="off" /></td>
     </tr>
   </table>
 <input type="submit" value="<%= translate 'save' %>" />
@@ -49,7 +49,8 @@
    },
    timepicker: false,
    datepicker: true,
-   format: 'Y-m-d'
+   format: 'Y-m-d',
+   dayOfWeekStart: <%= (Setting.plugin_mega_calendar['week_start'].blank? ? '1' : Setting.plugin_mega_calendar['week_start'].to_s ) %>
  };
  $("#holiday_start").datetimepicker(options);
  $("#holiday_end").datetimepicker(options);
