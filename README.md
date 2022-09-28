@@ -45,56 +45,6 @@ Please make sure that you set your users, that will be allowed to use this plugi
 
 A quick overview about this plugin, you'll get on <a href="http://www.devbert.de/index.php/en/project/megacalendar/">http://www.devbert.de/index.php/en/project/megacalendar/</a>
 
-<h2>History</h2>
-
-1.9.0: Added support for redmine 5 and dropped support for redmine < 5
-
-1.8.1: Added more height to the filter selectboxes
-
-1.8.0: Fixed groups, custom-fields, configuration. And added webcal feature
-
-1.7.4:  Fixed redmine 4.0.x bug, where issues could not be opened
-
-1.7.3:  Fixed specific redmine 4.1 bugs, were issues were not shown or issues could not be saved. Holidays are using now the format_date function
-
-1.7.2: Dropped support for redmine < 4 and added support for redmine 4
-
-1.7.1: Fixed #83 - "No URL" by right click on a subtask
-
-1.7.0: Added support for redmine 3.4.X
-
-1.6.0: Added possibilty to show issues with empty dates. Added possibility to save/edit and delete filters within the calendar. Added possibilty to create global holidays.<br> Please make sure that you migrate your database.<br>
-<code>cd /srv/redmine</code><br>
-<code>bundle exec rake redmine:plugins:migrate RAILS_ENV=production</code>
-
-1.5.0: Added filters. Added functionality to include users to the calendar within the plugin settings. Mobile optimization 
-
-1.4.0: Added export functionality (ics) - Please make sure, that you have installed the gems -> <a href="https://github.com/berti92/mega_calendar/wiki/Installation">WIKI</a>
-
-1.3.8: Now you are able to set the start of the week within the plugin settings
-
-1.3.7: Bugfix
-
-1.3.6: Bugfix
-
-1.3.5: Bugfix
-
-1.3.4: Added ability to create issues from the calendar, just click on a free space on the calendar
-
-1.3.3: Added support for Redmine 3.3.X
-
-1.3.2: Added support for Redmine 3.2.X
-
-1.3.1: Bugfix
-
-1.3.0: Added right for this plugin
-
-1.2.0: Added support for sub paths
-
-1.1.0: Fixed a few bugs, added widget to MyPage
-
-1.0.0: First release
-
 <h2>You like my work?</h2>
 
 If you like my work, you can buy me a coffee [![Paypal Donate](https://img.shields.io/badge/Paypal-donate-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=simplyanamedude@gmail.com&lc=GB&item_name=Andreas%20Treubert&no_note=0&currency_code=EUR&bn=PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest)
