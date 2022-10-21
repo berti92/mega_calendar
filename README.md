@@ -6,7 +6,7 @@
 
 Plugin for redmine: Brings a better calendar and more oppurtunities to set holidays.<br/>
 
-<h2>Installation</h2>
+<h2>Installation & Update</h2>
 
 Standard redmine plugin installation: You can read the generic plugin installation guide <a href="http://www.redmine.org/projects/redmine/wiki/Plugins" target="_blank">here</a> or you can use the following guide (Debian 7, Apache2/Passenger).
 
