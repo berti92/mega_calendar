@@ -8,6 +8,8 @@ Plugin for redmine: Brings a better calendar and more oppurtunities to set holid
 
 <h2>Installation & Update</h2>
 
+!!! PLEASE USE RUBY 2.X !!! Version 3.X isn't supported. (as for now)
+
 Standard redmine plugin installation: You can read the generic plugin installation guide <a href="http://www.redmine.org/projects/redmine/wiki/Plugins" target="_blank">here</a> or you can use the following guide (Debian 7, Apache2/Passenger).
 
 Go to your redmine plugins-folder<br>
