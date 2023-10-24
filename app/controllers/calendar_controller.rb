@@ -47,7 +47,7 @@ class CalendarController < ApplicationController
     filters.keys.each do |x|
       filter_param = filters[x]
       filter = $mc_filters[x]
-      if((filter_param[:enabled] != 'true') || ((model == 'Holiday' && filter[:db_field_holiday].blank?) || (model == 'Issue' && filter[:db_field].blank?)))
+      if((filter_param[:enabled].to_s != 'true') || ((model == 'Holiday' && filter[:db_field_holiday].blank?) || (model == 'Issue' && filter[:db_field].blank?)))
         next
       end
       condition[0] << ' AND '
@@ -181,6 +181,7 @@ class CalendarController < ApplicationController
     fbegin = params[:start].to_date rescue nil
     fend = params[:end].to_date rescue nil
     fuser = params[:user].to_s == 'true'
+    params[:filter] = JSON.parse(params[:filter])
     if params[:save_values].to_s == 'true'
       session[:mega_calendar_js_user_query] = fuser
       if fbegin.to_date == fbegin.to_date.beginning_of_month
@@ -272,13 +273,13 @@ class CalendarController < ApplicationController
     unless params[:event_end].include?(':')
       event_end = event_end.to_date - 1.day
     end
-    
+
     begin
       i.init_journal(User.current)
-      i.update({:start_date => params[:event_begin].to_date.to_s, :due_date => event_end.to_date.to_s}) 
+      i.update({:start_date => params[:event_begin].to_date.to_s, :due_date => event_end.to_date.to_s})
     rescue nil
     end
-    
+
     if params[:allDay] != 'true'
       tt = TicketTime.where(:issue_id => params[:id]).first
       if tt.blank?
