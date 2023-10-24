@@ -5,7 +5,7 @@
   end
 %>
 
-<%= render :partial => 'calendar/megacalendar', :locals => {:show_view_buttons => true, :default_view => 'month', :use_values_from_session => true, :calendar_height => '700', :calendar_style => 'padding: 0px 100px;'} %>
+<%= render :partial => 'calendar/megacalendar', :locals => {:show_view_buttons => true, :default_view => 'dayGridMonth', :use_values_from_session => true, :calendar_height => '700', :calendar_style => 'padding: 0px 100px;'} %>
 
 <link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/jquery.datetimepicker.css' />
 <script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
@@ -48,7 +48,7 @@
  $("#inp_export_end").datetimepicker(options);
  });
  function show_time_range() {
-   $('#div_export_time_range').fadeIn(); 
+   $('#div_export_time_range').fadeIn();
  }
  function remove_time_range() {
    $('#div_export_time_range').fadeOut();
