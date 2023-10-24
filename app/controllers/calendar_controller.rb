@@ -280,7 +280,7 @@ class CalendarController < ApplicationController
     rescue nil
     end
 
-    if params[:allDay] != 'true'
+    if params[:allDay].to_s != 'true'
       tt = TicketTime.where(:issue_id => params[:id]).first
       if tt.blank?
         tt = TicketTime.new(:issue_id => params[:id])
