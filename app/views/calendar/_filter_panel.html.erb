@@ -21,7 +21,7 @@
         </td>
         <td class="mega_calendar__filter_td">
           <% if filter[:type] == 'lookup' %>
-            <% 
+            <%
               lookup_query = filter[:lookup_query_model].constantize.send(filter[:lookup_query_method])
               if filter[:lookup_query_order]
                 lookup_query = lookup_query.order(filter[:lookup_query_order])
@@ -38,7 +38,7 @@
       </tr>
     <% end %>
     </table>
-    <a href="#" class="icon icon-checked" onclick="$('#calendar').fullCalendar( 'refetchEvents' );"><%= translate 'button_apply' %></a> &nbsp; <a href="#" class="icon icon-reload" onclick="reset_and_reload_filters();"><%= translate 'button_reset' %></a>
+    <a href="#" class="icon icon-checked" onclick="window.calendar.refetchEvents();"><%= translate 'button_apply' %></a> &nbsp; <a href="#" class="icon icon-reload" onclick="reset_and_reload_filters();"><%= translate 'button_reset' %></a>
     <div>
       <hr>
       <table>
@@ -76,7 +76,7 @@
     $('#calendar_filter input[type="checkbox"]').prop( "checked", false );
     $('#calendar_filter select[data-sel="filter_operator"] option:first-child').attr("selected", "selected");
     $('#calendar_filter select[data-sel="filter_value_select"] option:selected').removeAttr("selected");
-    $('#calendar').fullCalendar( 'refetchEvents' );
+    calendar.refetchEvents();
   }
   function save_filters() {
     form_data = {
@@ -97,7 +97,7 @@
       });
       $("#inp_filter_name").val(data["name"]);
       $("#inp_filter_global").prop('checked', data["global"]);
-      $('#calendar').fullCalendar( 'refetchEvents' );
+      calendar.refetchEvents();
     });
   }
 </script>
