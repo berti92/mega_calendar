@@ -4,7 +4,7 @@ module MegaCalendar
     def create
       super
       unless @user.id.blank?
-        UserColor.create({:user_id => @user.id, :color_code => params[:user][:color]})
+        UserColor.create({:user_id => @user.id, :color_code => params[:user][:color], :text_color_code => params[:user][:text_color]})
       end
     end
     def update
@@ -15,6 +15,7 @@ module MegaCalendar
           uc = UserColor.new({:user_id => @user.id})
         end
         uc.color_code = params[:user][:color]
+        uc.text_color_code = params[:user][:text_color]
         uc.save
       end
     end

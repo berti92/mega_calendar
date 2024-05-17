@@ -2,6 +2,7 @@
 <%= error_messages_for 'user' %>
 <%
   user_color = UserColor.where({:user_id => @user.id}).first.color_code rescue ''
+  text_color = UserColor.where({:user_id => @user.id}).first.text_color_code rescue ''
 %>
 
 <div id="user_form">
@@ -14,6 +15,7 @@
   <p><%= f.text_field :lastname, :required => true %></p>
   <p><%= f.text_field :mail, :required => true %></p>
   <p><label>Color:</label><input name="user[color]" class="color" type="text" value="<%= user_color %>" /></p>
+  <p><label>TextColor:</label><input name="user[text_color]" class="color" type="text" value="<%= text_color %>" /></p>
   <% unless @user.force_default_language? %>
   <p><%= f.select :language, lang_options_for_select %></p>
   <% end %>
