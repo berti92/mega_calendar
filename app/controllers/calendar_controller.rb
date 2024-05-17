@@ -273,6 +273,9 @@ class CalendarController < ApplicationController
     unless params[:event_end].include?(':')
       event_end = event_end.to_date - 1.day
     end
+    if params[:allDay].to_s == 'true'
+      event_end = event_end.to_date - 1.day
+    end
 
     begin
       i.init_journal(User.current)
