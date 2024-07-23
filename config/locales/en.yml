@@ -6,6 +6,8 @@ en:
   all_issues: "All issues"
   user: "User"
   group: "Group"
+  group_and_users: "Group and Users"
+  users_of_group: "Users of Groups"
   start: "Start"
   end: "End"
   action: "Action"
