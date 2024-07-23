@@ -6,6 +6,8 @@ tr:
   all_issues: "Tüm İşler"
   user: "Kullanıcı"
   group: "Grup"
+  group_and_users: "Grup ve Kullanıcılar"
+  users_of_group: "Grupların Kullanıcıları"
   start: "Başlangıç"
   end: "Bitiş"
   action: "İşlem"
