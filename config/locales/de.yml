@@ -6,6 +6,8 @@ de:
   all_issues: "Alle Tickets"
   user: "Benutzer"
   group: "Gruppe"
+  group_and_users: "Gruppe und Benutzer"
+  users_of_group: "Benutzer der Gruppen"
   start: "Start"
   end: "Ende"
   action: "Aktion"
