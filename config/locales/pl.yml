@@ -6,6 +6,8 @@ pl:
   all_issues: "Wszystkie zagadnienia"
   user: "Użytkownik"
   group: "Grupa"
+  group_and_users: "Grupa i Użytkownicy"
+  users_of_group: "Użytkownicy grup"
   start: "Początek"
   end: "Koniec"
   action: "Akcja"

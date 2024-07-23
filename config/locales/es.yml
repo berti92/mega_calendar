@@ -6,6 +6,8 @@ es:
   all_issues: "Todas las peticiones"
   user: "Usuario"
   group: "Grupo"
+  group_and_users: "Grupo y Usuarios"
+  users_of_group: "Usuarios de los grupos"
   start: "Inicio"
   end: "Fin"
   action: "Acción"
