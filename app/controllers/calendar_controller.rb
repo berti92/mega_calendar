@@ -40,9 +40,17 @@ class CalendarController < ApplicationController
 
   def query_filter(model, filters)
     condition = [""]
-
-    condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (?) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id') + " IS NULL)"
-    condition << Setting.plugin_mega_calendar['displayed_users']
+    if Setting.plugin_mega_calendar['displayed_type'] == 'users'|| Setting.plugin_mega_calendar['displayed_type'] == 'groups'
+      condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (?) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id') + " IS NULL)"
+      condition << Setting.plugin_mega_calendar['displayed_users']
+    elsif Setting.plugin_mega_calendar['displayed_type'] == 'users_of_groups'
+      condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (SELECT user_id FROM groups_users WHERE group_id IN (?)) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+ " IS NULL)"
+      condition << Setting.plugin_mega_calendar['displayed_users']
+    else
+      condition[0] << "(" + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+' IN (SELECT user_id FROM groups_users WHERE group_id IN (?)UNION SELECT id FROM users WHERE id IN (?)) OR ' + (model == 'Holiday' ? 'holidays.user_id' : 'issues.assigned_to_id')+ " IS NULL)"
+      condition << Setting.plugin_mega_calendar['displayed_users']
+      condition << Setting.plugin_mega_calendar['displayed_users'] 
+   end
 
     filters.keys.each do |x|
       filter_param = filters[x]
