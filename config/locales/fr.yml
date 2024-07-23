@@ -5,7 +5,9 @@ fr:
   my_issues: "Mes demandes"
   all_issues: "Toutes les demandes"
   user: "Utilisateur"
-  group: "Grouper"
+  group: "Groupe"
+  group_and_users: "Groupe et Utilisateurs"
+  users_of_group: "Utilisateurs des groupes"
   start: "Début"
   end: "Fin"
   action: "Action"
@@ -46,7 +48,7 @@ fr:
   export: "Exporter"
   select_time_range_for_export: "Sélectionner une plage horaire"
   cancel: "Annuler"
-  please_select_time_range: "Merci de sélectionner une plage horaire!"
+  please_select_time_range: "Merci de sélectionner une plage horaire !"
   activerecord:
     errors:
       models:
