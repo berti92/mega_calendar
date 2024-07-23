@@ -65,8 +65,8 @@
       <td>
         <input onclick="show_user_group_select('users');" type="radio" name="settings[displayed_type]" value="users" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'users' ? 'checked' : '') %>> <%= translate 'field_user' %><br>
         <input onclick="show_user_group_select('groups');" type="radio" name="settings[displayed_type]" value="groups" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'groups' ? 'checked' : '') %>> <%= translate 'label_group' %>
-        <input onclick="show_user_group_select('groups');" type="radio" name="settings[displayed_type]" value="groups_and_users" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'groups_and_users' ? 'checked' : '') %>> <%= translate 'label_group_and_users' %>
-        <input onclick="show_user_group_select('groups');" type="radio" name="settings[displayed_type]" value="users_of_groups" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'users_of_groups' ? 'checked' : '') %>> <%= translate 'label_users_of_group' %><br>
+        <input onclick="show_user_group_select('groups');" type="radio" name="settings[displayed_type]" value="groups_and_users" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'groups_and_users' ? 'checked' : '') %>> <%= translate 'group_and_users' %>
+        <input onclick="show_user_group_select('groups');" type="radio" name="settings[displayed_type]" value="users_of_groups" <%= (!Setting.plugin_mega_calendar['displayed_type'].blank? && Setting.plugin_mega_calendar['displayed_type'] == 'users_of_groups' ? 'checked' : '') %>> <%= translate 'users_of_group' %><br>
      </td>
     </tr>
     <tr>
