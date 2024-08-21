@@ -45,6 +45,9 @@ Please make sure that you set your users, that will be allowed to use this plugi
 
 A quick overview about this plugin, you'll get on <a href="http://www.devbert.de/index.php/en/project/megacalendar/">http://www.devbert.de/index.php/en/project/megacalendar/</a>
 
+<h2>You need your redmine hosted in germany?</h2>
+<a href="https://www.devbert.de/index.php/de/redmine-hosting/">Our hosting offer</a>
+
 <h2>You like my work?</h2>
 
 If you like my work, you can buy me a coffee [![Paypal Donate](https://img.shields.io/badge/Paypal-donate-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=simplyanamedude@gmail.com&lc=GB&item_name=Andreas%20Treubert&no_note=0&currency_code=EUR&bn=PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest)
