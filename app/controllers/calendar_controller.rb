@@ -1,7 +1,8 @@
 class CalendarController < ApplicationController
   unloadable
 
-  before_action(:check_plugin_right)
+  before_action :check_plugin_right
+  before_action :check_if_login_required, except:[:export]
 
   def check_plugin_right
     user_id_of_api_key = '-1'
