@@ -1,4 +1,4 @@
-<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/jscolor/jscolor.js'></script>
+<%= javascript_link_tag :"jscolor/jscolor.js", :plugin => 'mega_calendar' %>
 <%= error_messages_for 'user' %>
 <%
   user_color = UserColor.where({:user_id => @user.id}).first.color_code rescue ''

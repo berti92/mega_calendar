@@ -16,11 +16,11 @@
   end
 %>
 
-<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/stylesheets/mega_calendar.css' />
-<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar-6.1.9/dist/index.global.min.js'></script>
-<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/fullcalendar-6.1.9/packages/core/locales-all.global.min.js'></script>
-<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/moment-with-locales.js'></script>
-<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/jquery-serialize-object.min.js'></script>
+<%= stylesheet_link_tag :"mega_calendar.css", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"fullcalendar-6.1.9/dist/index.global.min.js", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"fullcalendar-6.1.9/packages/core/locales-all.global.min.js", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"moment-with-locales.js", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"jquery-serialize-object.min.js", :plugin => 'mega_calendar' %>
 <h2><%= translate 'calendar' %></h2>
 <%= render :partial => 'calendar/filter_panel', :locals => {} %>
 <center><div id='mega_calendar__calendar'" style="<%= calendar_style %>"></div></center>

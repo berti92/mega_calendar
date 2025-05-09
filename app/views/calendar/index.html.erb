@@ -7,8 +7,8 @@
 
 <%= render :partial => 'calendar/megacalendar', :locals => {:show_view_buttons => true, :default_view => 'dayGridMonth', :use_values_from_session => true, :calendar_height => '700', :calendar_style => 'padding: 0px 100px;'} %>
 
-<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/jquery.datetimepicker.css' />
-<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
+<%= stylesheet_link_tag :"datetimepicker/jquery.datetimepicker.css", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"datetimepicker/build/jquery.datetimepicker.full.min.js", :plugin => 'mega_calendar' %>
 
 <a href="#" onclick="show_time_range();"><%= translate 'export_to_ics' %></a>
 <input type="hidden" name="time_start" value=""/>

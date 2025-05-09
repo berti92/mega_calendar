@@ -1,6 +1,4 @@
 class HolidaysController < ApplicationController
-  unloadable
-  
   before_action(:check_plugin_right)
   
   def check_plugin_right
