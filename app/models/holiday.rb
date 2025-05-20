@@ -1,5 +1,4 @@
 class Holiday < ActiveRecord::Base
-  unloadable
   belongs_to(:user)
   validates :start, :date => true
   validates :end, :date => true

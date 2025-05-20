@@ -1,5 +1,5 @@
-<link rel='stylesheet' href='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/jquery.datetimepicker.css' />
-<script src='<%= Setting.plugin_mega_calendar['sub_path'] %>plugin_assets/mega_calendar/javascripts/datetimepicker/build/jquery.datetimepicker.full.min.js'></script>
+<%= stylesheet_link_tag :"datetimepicker/jquery.datetimepicker.css", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"datetimepicker/build/jquery.datetimepicker.full.min.js", :plugin => 'mega_calendar' %>
 
 <%= labelled_fields_for :issue, @issue do |f| %>
 <%= call_hook(:view_issues_form_details_top, { :issue => @issue, :form => f }) %>
