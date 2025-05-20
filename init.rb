@@ -103,10 +103,10 @@ Redmine::Plugin.register :mega_calendar do
   name 'Mega Calendar plugin'
   author 'Andreas Treubert'
   description 'Better calendar for redmine'
-  version '2.0.0'
+  version '2.0.1'
   url 'https://github.com/berti92/mega_calendar'
   author_url 'https://github.com/berti92'
-  requires_redmine :version_or_higher => '5.1.1'
+  requires_redmine :version_or_higher => '6.0.0'
   menu(:top_menu, :calendar, { :controller => 'calendar', :action => 'index' }, :caption => :calendar, :if => Proc.new {(!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) ? true : false)})
   menu(:top_menu, :holidays, { :controller => 'holidays', :action => 'index' }, :caption => :holidays, :if => Proc.new {(!Setting.plugin_mega_calendar['allowed_users'].blank? && Setting.plugin_mega_calendar['allowed_users'].include?(User.current.id.to_s) ? true : false)})
   settings :default => {
