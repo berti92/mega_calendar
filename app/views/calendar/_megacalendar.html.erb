@@ -33,7 +33,11 @@
 %>
 
 <script type="text/javascript">
-  var user_query = <%= js_user_query.to_s %>;
+  var user_query = (function() {
+    const saved = localStorage.getItem("mega_calendar_user_query");
+    return saved === null ? <%= js_user_query.to_s %> : (saved === "true");
+  })();
+
   function set_active_button(user) {
     var btn_mytickets = $('.fc-myTickets-button');
     var btn_alltickets = $('.fc-allTickets-button');
@@ -49,7 +53,8 @@
     var calendarEl = document.getElementById('mega_calendar__calendar');
 
     window.calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: '<%= default_view %>',
+      initialView: localStorage.getItem("mega_calendar_view") || '<%= default_view %>',
+      initialDate: localStorage.getItem("mega_calendar_current_date") || '<%= js_default_date %>',
       locale: '<%= js_locale %>',
       selectable: true,
       editable: true,
@@ -65,6 +70,7 @@
           text: '<%= translate 'my_issues' %>',
           click: function() {
             user_query = true;
+            localStorage.setItem("mega_calendar_user_query", "true");
             set_active_button(user_query);
             calendar.refetchEvents();
           }
@@ -73,6 +79,7 @@
           text: '<%= translate 'all_issues' %>',
           click: function() {
             user_query = false;
+            localStorage.setItem("mega_calendar_user_query", "false");
             set_active_button(user_query);
             calendar.refetchEvents();
           }
@@ -126,8 +133,16 @@
           $.get('<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/change_' + info.event.extendedProps.controller_name, { id: info.event.id, event_begin: moment(event_begin).format("YYYY-MM-DD HH:mm"), event_end: moment(event_end).format("YYYY-MM-DD HH:mm"), allDay: allDay });
         }
       },
+      viewDidMount: function(view) {
+        localStorage.setItem("mega_calendar_view", view.view.type);
+      },
+      datesSet: function(info) {
+        const date = moment(info.view.currentStart).format("YYYY-MM-DD");
+        localStorage.setItem("mega_calendar_current_date", date);
+      },
     });
     calendar.render();
+    load_filter_from_localStorage();
     set_active_button(user_query);
   //   $('#mega_calendar__calendar').fullCalendar({
   //       lang: '<%= js_locale %>',

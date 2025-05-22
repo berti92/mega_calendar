@@ -38,7 +38,7 @@
       </tr>
     <% end %>
     </table>
-    <a href="#" class="icon icon-checked" onclick="window.calendar.refetchEvents();"><%= translate 'button_apply' %></a> &nbsp; <a href="#" class="icon icon-reload" onclick="reset_and_reload_filters();"><%= translate 'button_reset' %></a>
+    <a href="#" class="icon icon-checked" onclick="save_filter_to_localStorage();window.calendar.refetchEvents();"><%= translate 'button_apply' %></a> &nbsp; <a href="#" class="icon icon-reload" onclick="reset_and_reload_filters();"><%= translate 'button_reset' %></a>
     <div>
       <hr>
       <table>
@@ -99,5 +99,24 @@
       $("#inp_filter_global").prop('checked', data["global"]);
       calendar.refetchEvents();
     });
+  }
+  function save_filter_to_localStorage() {
+    const filterData = $('#calendar_filter').serializeObject()["filter"];
+    localStorage.setItem("mega_calendar_filter", JSON.stringify(filterData));
+  }
+  function load_filter_from_localStorage() {
+    const filterStr = localStorage.getItem("mega_calendar_filter");
+    if (!filterStr) return;
+    try {
+      const filter = JSON.parse(filterStr);
+      Object.keys(filter).forEach(function(key) {
+        $("#filter_id_" + key + "_enabled").prop('checked', (filter[key]["enabled"] === "true" || filter[key]["enabled"] === true));
+        $("#filter_id_" + key + "_value").val(filter[key]["value"]);
+        $("#filter_id_" + key + "_operator").val(filter[key]["operator"]);
+      });
+      calendar.refetchEvents();
+    } catch (e) {
+      console.error("Failed to parse filter from localStorage", e);
+    }
   }
 </script>
