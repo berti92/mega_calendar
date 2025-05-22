@@ -98,11 +98,12 @@
         }
       ],
       eventDidMount: function(info) {
-        info.el.title = info.event.extendedProps.description;
+        const title = info.event.title;
+        const desc = info.event.extendedProps.description || "";
+        const fullTooltip = `<strong>${title}</strong><br>${desc}`;
+        info.el.title = `${title} - ${desc}`;
         $(info.el).tooltip({
-          content: function () {
-            return $(this).prop('title');
-          }
+          content: fullTooltip
         });
       },
       select: function(info) {
