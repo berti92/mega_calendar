@@ -110,6 +110,7 @@
         window.open('<%= Setting.plugin_mega_calendar['sub_path'] %>issues/new?issue[start_date]='+moment(info.start).format("YYYY-MM-DD")+'&issue[due_date]='+moment(info.end).format("YYYY-MM-DD")+'&issue[time_begin]='+moment(info.start).format("HH:mm")+'&issue[time_end]='+moment(info.end).format("HH:mm"), '_blank');
       },
       eventResize: function(info) {
+        $('.ui-tooltip').remove();
         if(!confirm("<%= (translate 'save_question') %>")) {
           info.revert();
         } else {
@@ -117,6 +118,7 @@
         }
       },
       eventDrop: function(info) {
+        $('.ui-tooltip').remove();
         if(!confirm("<%= (translate 'save_question') %>")) {
           info.revert();
         } else {
