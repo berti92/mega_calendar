@@ -77,7 +77,7 @@ class CalendarController < ApplicationController
   end
 
   def export
-    ical = Vpim::Icalendar.create({ 'METHOD' => 'REQUEST', 'CHARSET' => 'UTF-8' })
+    ical = Icalendar::Calendar.new
     time_start = params['time_start']
     time_end = params['time_end']
     time_start = Date.today.to_s if time_start.nil?
@@ -87,7 +87,8 @@ class CalendarController < ApplicationController
       issues = issues.where(["(issues.assigned_to_id = ? OR issues.assigned_to_id IN (SELECT user_id FROM groups_users WHERE group_id = ?))",params['assigned_to'],params['assigned_to']])
     end
     issues.each do |issue|
-      ical.add_event do |e|
+      event = Icalendar::Event.new
+      ical.event do |e|
         ticket_time = TicketTime.where({:issue_id => issue.id}).first rescue nil
         tbegin = ticket_time.time_begin.strftime(" %H:%M") rescue ''
         tend = ticket_time.time_end.strftime(" %H:%M") rescue ''
@@ -106,24 +107,16 @@ class CalendarController < ApplicationController
         end
         time_start = Time.parse(time_start)
         time_end = Time.parse(time_end)
-        e.summary(issue.id.to_s + ' - ' + (issue.assigned_to.blank? ? '' : issue.assigned_to.firstname + " " + issue.assigned_to.lastname + ' - ') + issue.subject)
-        e.dtstart(time_start)
-        e.dtend(time_end)
-        e.dtstamp(issue.updated_on)
-        e.lastmod(issue.updated_on)
-        e.created(issue.created_on)
-        e.uid("RedmineMegaCalendarIssueID:"+issue.id.to_s)
-        #e.sequence(seq.to_i)
-        e.description(issue.description.gsub("\n\n",""))
-        #unless issue.assigned_to.blank?
-        #  e.organizer do |o|
-        #    o.cn = issue.assigned_to.firstname + " " + issue.assigned_to.lastname
-        #    o.uri = "mailto:#{issue.assigned_to.email_address.address}" rescue nil
-        #  end
-        #end
+        e.summary = issue.id.to_s + ' - ' + (issue.assigned_to.blank? ? '' : issue.assigned_to.firstname + " " + issue.assigned_to.lastname + ' - ') + issue.subject
+        e.dtstart = time_start
+        e.dtend = time_end
+        e.last_modified = issue.updated_on
+        e.created = issue.created_on
+        e.uid = "RedmineMegaCalendarIssueID:"+issue.id.to_s
+        e.description = issue.description.gsub("\n\n","")
       end
     end
-    send_data ical.encode(), filename: 'Redmine_calendar.ics'
+    send_data ical.to_ical, filename: 'Redmine_calendar.ics'
   end
 
   def index
@@ -303,11 +296,15 @@ class CalendarController < ApplicationController
     else
       event_end = params[:event_end]
     end
-    unless params[:event_end].include?(':')
-      event_end = event_end.to_date - 1.day
-    end
-    if params[:allDay].to_s == 'true'
-      event_end = event_end.to_date - 1.day
+    if params[:event_end].to_s.downcase == 'invalid date'
+      event_end = params[:event_begin].to_date
+    else
+      unless params[:event_end].include?(':')
+        event_end = event_end.to_date - 1.day
+      end
+      if params[:allDay].to_s == 'true'
+        event_end = event_end.to_date - 1.day
+      end
     end
 
     begin
@@ -322,11 +319,14 @@ class CalendarController < ApplicationController
         tt = TicketTime.new(:issue_id => params[:id])
       end
       tt.time_begin = params[:event_begin].to_datetime.to_s
-      unless params[:event_end].blank?
-        tt.time_end = params[:event_end].to_datetime.to_s rescue nil
+      if params[:event_end].to_s.downcase == 'invalid date'
+        tt.time_end = (params[:event_begin].to_datetime + 1.hours).to_datetime.to_s
       else
-        i.update({:due_date => (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s})
-        tt.time_end = (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s
+        unless params[:event_end].blank?
+          tt.time_end = params[:event_end].to_datetime.to_s rescue nil
+        else
+          i.update({:due_date => (params[:event_begin].to_datetime + 2.hours).to_datetime.to_s})
+        end
       end
       tt.save
     else

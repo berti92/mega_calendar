@@ -1,10 +1,29 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    vpim (13.11.11)
+    base64 (0.3.0)
+    icalendar (2.12.3)
+      base64
+      ice_cube (~> 0.16)
+      logger
+      ostruct
+    ice_cube (0.17.0)
+    logger (1.7.0)
+    ostruct (0.6.3)
 
 PLATFORMS
+  aarch64-linux
   ruby
 
 DEPENDENCIES
-  vpim (= 13.11.11)
+  icalendar (= 2.12.3)
+
+CHECKSUMS
+  base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
+  icalendar (2.12.3) sha256=37dea76c36f5b21dd745bcd3cb53e7bacfbb4ad0a8d9c2a1c0aa9d39af83c850
+  ice_cube (0.17.0) sha256=32deb45dda4b4acc53505c2f581f6d32b5afc04d29b9004769944a0df5a5fcbe
+  logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
+  ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
+
+BUNDLED WITH
+  4.0.16
