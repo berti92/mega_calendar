@@ -84,3 +84,8 @@
 #mega_calendar__calendar th[role=columnheader]:hover:after {
     display: none !important;
 }
+
+#mega_calendar__calendar .fc-button-primary:not(.fc-button-active, :hover) {
+    background-color: #54799b;
+    border-color: #54799b;
+}
