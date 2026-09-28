@@ -22,7 +22,7 @@ class CalendarController < ApplicationController
   end
 
   def get_saved_filters
-    uf = UserFilter.find(params["id"])
+    uf = UserFilter.where(:id => params["id"], :user_id => [nil, User.current.id]).first!
     ret_val = {
       "filter" => JSON.parse(uf.filter_code), #prevent dangerous calls from eval
       "name" => uf.filter_name,
@@ -32,7 +32,7 @@ class CalendarController < ApplicationController
   end
 
   def destroy_filter
-    UserFilter.find(params[:id]).destroy
+    UserFilter.where(:user_id => [nil, User.current.id]).find(params[:id]).destroy
     redirect_to(:controller => 'calendar', :action => 'index')
   end
 
