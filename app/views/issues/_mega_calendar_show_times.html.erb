@@ -1,0 +1,19 @@
+<% ticket_time = TicketTime.where({:issue_id => @issue.id}).first rescue nil %>
+<% time_begin_str = (!ticket_time.blank? && !ticket_time.time_begin.blank?) ? ticket_time.time_begin.strftime('%H:%M') : '' %>
+<% time_end_str = (!ticket_time.blank? && !ticket_time.time_end.blank?) ? ticket_time.time_end.strftime('%H:%M') : '' %>
+<% if time_begin_str.present? || time_end_str.present? %>
+<script type="text/javascript">
+$(function(){
+  var time_begin = '<%= time_begin_str %>';
+  var time_end = '<%= time_end_str %>';
+  if (time_begin) {
+    var $start_val = $('.attributes div.start-date .value').first();
+    if ($start_val.length) { $start_val.append(' ' + time_begin); }
+  }
+  if (time_end) {
+    var $due_val = $('.attributes div.due-date .value').first();
+    if ($due_val.length) { $due_val.append(' ' + time_end); }
+  }
+});
+</script>
+<% end %>

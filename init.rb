@@ -98,6 +98,7 @@ $mc_filters['version'] = {
 require 'icalendar'
 require_dependency Rails.root.join('plugins','mega_calendar','lib','mega_calendar','users_controller_patch')
 require_dependency Rails.root.join('plugins','mega_calendar','lib','mega_calendar','issues_controller_patch')
+require_dependency Rails.root.join('plugins','mega_calendar','lib','mega_calendar','issues_hook')
 
 Redmine::Plugin.register :mega_calendar do
   name 'Mega Calendar plugin'

@@ -1,0 +1,64 @@
+<%= stylesheet_link_tag :"datetimepicker/jquery.datetimepicker.css", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"datetimepicker/build/jquery.datetimepicker.full.min.js", :plugin => 'mega_calendar' %>
+
+<%
+  js_locale = User.current.language  rescue nil
+  if js_locale.blank?
+    js_locale = Setting.default_language
+  end
+  js_format = 'H:i'
+  js_val_start = ''
+  js_val_end = ''
+  ticket_time = TicketTime.find_by_issue_id(@issue.id)
+  if !@issue.new_record? && !ticket_time.blank? && !ticket_time.time_begin.blank? && !ticket_time.time_end.blank?
+    js_val_start = ticket_time.time_begin.to_time.utc.strftime("%H:%M").to_s
+    js_val_end = ticket_time.time_end.to_time.utc.strftime("%H:%M").to_s
+  end
+%>
+<div id="mega_calendar_time_fields" style="display:none">
+  <input type="text" id="time_begin" name="issue[time_begin]" style="margin-left: 5px" value="<%= (!params[:issue].blank? && !params[:issue][:time_begin].blank? ? params[:issue][:time_begin].to_s : '') %>" />
+  <input type="text" id="time_end" name="issue[time_end]" style="margin-left: 5px" value="<%= (!params[:issue].blank? && !params[:issue][:time_end].blank? ? params[:issue][:time_end].to_s : '') %>" />
+</div>
+<script type="text/javascript">
+$(function(){
+  var $begin = $('#time_begin');
+  var $end = $('#time_end');
+  if ($('#start_date_area').length) {
+    $('#start_date_area').append($begin);
+  }
+  if ($('#due_date_area').length) {
+    $('#due_date_area').append($end);
+  }
+  if ($begin.parent().attr('id') === 'mega_calendar_time_fields' ||
+      $end.parent().attr('id') === 'mega_calendar_time_fields') {
+    $('#mega_calendar_time_fields').show();
+  }
+  $.datetimepicker.setLocale('<%= js_locale %>');
+  var options_start = {
+    i18n: {
+     de: {
+      months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
+     }
+    },
+    timepicker: true,
+    datepicker: false,
+    format: '<%= js_format %>'
+  };
+  var options_end = {
+    i18n: {
+     de: {
+      months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+      dayOfWeek: ["So.", "Mo", "Di", "Mi","Do", "Fr", "Sa."]
+     }
+    },
+    timepicker: true,
+    datepicker: false,
+    format: '<%= js_format %>'
+  };
+  options_start['value'] = '<%= js_val_start %>';
+  options_end['value'] = '<%= js_val_end %>';
+  $("#time_begin").datetimepicker(options_start);
+  $("#time_end").datetimepicker(options_end);
+});
+</script>
